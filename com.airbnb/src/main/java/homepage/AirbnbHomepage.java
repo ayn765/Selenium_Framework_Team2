@@ -15,8 +15,14 @@ import static homepage.AirbnbHomepageLocators.webElementSearchButton;
 
 public class AirbnbHomepage extends BaseAPI {
 
+    @FindBy(css = webElementLocation)
+    WebElement location;
+
     @FindBy(css = webElementWhereAreYouGoingInput)
     WebElement whereAreYouGoingInput;
+
+    @FindBy(css = webElementExpectedVacationLocation)
+    WebElement expectedVacationLocation;
 
     @FindBy(xpath = webElementCheckInAddDates)
     WebElement checkInAddDates;
@@ -27,11 +33,23 @@ public class AirbnbHomepage extends BaseAPI {
     @FindBy(xpath = webElementCheckOutAddDates)
     WebElement checkOutAddDates;
 
+    @FindBy(css = webElementDate12May2021)
+    WebElement date12May2021;
+
+    @FindBy(css = webElementDate19May2021)
+    WebElement date19May2021;
+
+    @FindBy(xpath = getWebElementExpectedVacationDate)
+    WebElement expectedVacationDate;
+
     @FindBy(xpath = webElementAddGuests)
     WebElement addGuests;
 
     @FindBy(css = webElementIncreaseAdultGuest)
     WebElement increaseAdultGuest;
+
+    @FindBy(xpath = webElementExpectedNumOfGuests)
+    WebElement expectedNumOfGuests;
 
     @FindBy(css = webElementSearchButton)
     WebElement searchButton;
@@ -42,6 +60,9 @@ public class AirbnbHomepage extends BaseAPI {
     @FindBy(css = webElementListOfLanguages)
     List<WebElement> listOfLanguages;
 
+    @FindBy(css = webElementExploreNearbyDest)
+    WebElement exploreNearbyDest;
+
     public AirbnbHomepage() {
         PageFactory.initElements(driver, this);
     }
@@ -51,12 +72,27 @@ public class AirbnbHomepage extends BaseAPI {
     }
 
 
-    public void createFlexibleSearch() {
+    public void verifyFlexibleSearch() {
         checkInAddDates.click();
         iAmFlexible.click();
         addGuests.click();
         increaseAdultGuest.click();
         searchButton.click();
+    }
+
+    public void verifyPickDatesSearch() {
+        location.click();
+        exploreNearbyDest.click();
+        checkInAddDates.click();
+        date12May2021.click();
+        checkOutAddDates.click();
+        date19May2021.click();
+        addGuests.click();
+        increaseAdultGuest.click();
+        searchButton.click();
+        boolean isExpectedLocationDisplayed = expectedVacationLocation.isDisplayed();
+        boolean isExpectedVacationDateDisplayed = expectedVacationDate.isDisplayed();
+        boolean isExpectedNumOfGuestsDisplayed = expectedNumOfGuests.isDisplayed();
     }
 
     public void verifyNumOfLanguages() {
@@ -88,4 +124,5 @@ public class AirbnbHomepage extends BaseAPI {
         }
 
     }
+
 }

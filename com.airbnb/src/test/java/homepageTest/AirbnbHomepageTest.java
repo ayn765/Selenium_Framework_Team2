@@ -9,25 +9,26 @@ public class AirbnbHomepageTest extends BaseAPI {
 
 //    AirbnbHomepage airbnbHomepage;
 
-    @Test
+    @Test (enabled = false)
     public void testTripSearch(){
 
         AirbnbHomepage airbnbHomepage = new AirbnbHomepage();
 
         airbnbHomepage.sendKeysToDestination("New York");
-        airbnbHomepage.createFlexibleSearch();
+        airbnbHomepage.verifyFlexibleSearch();
         String actualTitle = driver.getTitle();
         String expectedTitle = "Vacation Rentals, Homes, Hotels, Experiences & More - Airbnb";
         Assert.assertEquals(actualTitle, expectedTitle, "Title is incorrect.");
     }
-    @Test
+    @Test(enabled = false)
     public void testNumberOfLanguages(){
         AirbnbHomepage airbnbHomepage = new AirbnbHomepage();
         airbnbHomepage.verifyNumOfLanguages();
     }
-    @Test
+    @Test(enabled = false)
     public void testVerifyLanguages(){
         AirbnbHomepage airbnbHomepage = new AirbnbHomepage();
         airbnbHomepage.verifyLanguages();
     }
+
 }
