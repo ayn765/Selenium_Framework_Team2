@@ -20,4 +20,14 @@ public class AirbnbHomepageTest extends BaseAPI {
         String expectedTitle = "Vacation Rentals, Homes, Hotels, Experiences & More - Airbnb";
         Assert.assertEquals(actualTitle, expectedTitle, "Title is incorrect.");
     }
+    @Test
+    public void testNumberOfLanguages(){
+        AirbnbHomepage airbnbHomepage = new AirbnbHomepage();
+        airbnbHomepage.verifyNumOfLanguages();
+    }
+    @Test
+    public void testVerifyLanguages(){
+        AirbnbHomepage airbnbHomepage = new AirbnbHomepage();
+        airbnbHomepage.verifyLanguages();
+    }
 }
