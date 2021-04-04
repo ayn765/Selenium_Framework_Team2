@@ -1,67 +1,79 @@
 package homepage;
 
+import adventuresPage.AirbnbAdventuresPage;
+import becomeAHostPage.AirbnbBecomeAHostPage;
 import common.BaseAPI;
+import onlineExperiencesPage.AirbnbOnlineExperiencesPage;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
+
 
 import java.util.List;
 
 import static homepage.AirbnbHomepageLocators.*;
-import static homepage.AirbnbHomepageLocators.webElementSearchButton;
 
 public class AirbnbHomepage extends BaseAPI {
 
+    @FindBy(css = webElementOnlineExperiences)
+    public WebElement onlineExperiences;
+
+    @FindBy(css = webElementBecomeAHost)
+    public WebElement becomeAHost;
+
+    @FindBy(xpath = webElementAdventures)
+    public WebElement adventures;
+
     @FindBy(css = webElementLocation)
-    WebElement location;
+    public WebElement location;
 
     @FindBy(css = webElementWhereAreYouGoingInput)
-    WebElement whereAreYouGoingInput;
+    public WebElement whereAreYouGoingInput;
 
-    @FindBy(css = webElementExpectedVacationLocation)
-    WebElement expectedVacationLocation;
+    @FindBy(xpath = webElementExpectedVacationLocation)
+    public WebElement expectedVacationLocation;
 
     @FindBy(xpath = webElementCheckInAddDates)
-    WebElement checkInAddDates;
+    public WebElement checkInAddDates;
 
     @FindBy(css = webElementIAmFlexible)
-    WebElement iAmFlexible;
+    public WebElement iAmFlexible;
 
     @FindBy(xpath = webElementCheckOutAddDates)
-    WebElement checkOutAddDates;
+    public WebElement checkOutAddDates;
 
     @FindBy(css = webElementDate12May2021)
-    WebElement date12May2021;
+    public WebElement date12May2021;
 
     @FindBy(css = webElementDate19May2021)
-    WebElement date19May2021;
+    public WebElement date19May2021;
 
     @FindBy(xpath = getWebElementExpectedVacationDate)
-    WebElement expectedVacationDate;
+    public WebElement expectedVacationDate;
 
     @FindBy(xpath = webElementAddGuests)
-    WebElement addGuests;
+    public WebElement addGuests;
 
-    @FindBy(css = webElementIncreaseAdultGuest)
-    WebElement increaseAdultGuest;
+    @FindBy(xpath = webElementIncreaseAdultGuest)
+    public WebElement increaseAdultGuest;
+
+    @FindBy(css = webElementIncreaseChildGuest)
+    public WebElement increaseChildGuest;
 
     @FindBy(xpath = webElementExpectedNumOfGuests)
-    WebElement expectedNumOfGuests;
+    public WebElement expectedNumOfGuests;
 
     @FindBy(css = webElementSearchButton)
-    WebElement searchButton;
+    public WebElement searchButton;
 
     @FindBy(css = webElementLanguageIcon)
-    WebElement languageIcon;
+    public WebElement languageIcon;
 
     @FindBy(css = webElementListOfLanguages)
-    List<WebElement> listOfLanguages;
+    public List<WebElement> listOfLanguages;
 
     @FindBy(css = webElementExploreNearbyDest)
-    WebElement exploreNearbyDest;
+    public WebElement exploreNearbyDest;
 
     public AirbnbHomepage() {
         PageFactory.initElements(driver, this);
@@ -71,8 +83,24 @@ public class AirbnbHomepage extends BaseAPI {
         whereAreYouGoingInput.sendKeys(keysToSend);
     }
 
+    public AirbnbOnlineExperiencesPage navigateToOnlineExperiencesPage() {
+        onlineExperiences.click();
+        return new AirbnbOnlineExperiencesPage();
+    }
 
-    public void verifyFlexibleSearch() {
+    public AirbnbBecomeAHostPage navigateToBecomeAHostPage(){
+        actionClassClickOnElement(becomeAHost);
+        return new AirbnbBecomeAHostPage();
+    }
+
+    public AirbnbAdventuresPage navigateToAdventuresPage(){
+        waitUntilWebElementVisible(adventures);
+        actionClassClickOnElement(adventures);
+        return new AirbnbAdventuresPage();
+    }
+
+    public void doFlexibleSearch() {
+        sendKeysToDestination("Los Angeles");
         checkInAddDates.click();
         iAmFlexible.click();
         addGuests.click();
@@ -80,27 +108,28 @@ public class AirbnbHomepage extends BaseAPI {
         searchButton.click();
     }
 
-    public void verifyPickDatesSearch() {
-        location.click();
-        exploreNearbyDest.click();
+//    public void verifyVacationDateDisplayed() {
+//        boolean isVacationDateDisplayed = expectedVacationDate.isDisplayed();
+//        Assert.assertTrue(isVacationDateDisplayed);
+//    }
+//
+//    public void verifyNumOfGuestsDisplayed() {
+//        boolean isNumOfGuestsDisplayed = expectedNumOfGuests.isDisplayed();
+//        Assert.assertTrue(isNumOfGuestsDisplayed);
+//    }
+
+    public void pickDatesSearch() {
+        sendKeysToDestination("Los Angeles");
         checkInAddDates.click();
         date12May2021.click();
-        checkOutAddDates.click();
         date19May2021.click();
         addGuests.click();
-        increaseAdultGuest.click();
+        waitUntilWebElementClickable(increaseAdultGuest);
+        actionClassClickOnElement(increaseAdultGuest);
+        increaseChildGuest.click();
         searchButton.click();
-        boolean isExpectedLocationDisplayed = expectedVacationLocation.isDisplayed();
-        boolean isExpectedVacationDateDisplayed = expectedVacationDate.isDisplayed();
-        boolean isExpectedNumOfGuestsDisplayed = expectedNumOfGuests.isDisplayed();
     }
 
-    public void verifyNumOfLanguages() {
-        languageIcon.click();
-        int actualNumOfLanguages = listOfLanguages.size();
-        int expectedNumOfLanguages = 91;
-        Assert.assertEquals(actualNumOfLanguages, expectedNumOfLanguages, "The number of languages is incorrect.");
-    }
 
     public void verifyLanguages() {
         languageIcon.click();
@@ -111,7 +140,7 @@ public class AirbnbHomepage extends BaseAPI {
                 "English\nUnited Kingdom", "Español\nArgentina", "Español\nBelice", "Español\nBolivia", "Español\nChile"};
 
 
-        waitUntilWebElementsVisible(listOfLanguages);
+        waitUntilWebElementListVisible(listOfLanguages);
 
         for (int i = 0; i < 25; i++) {
             String langValue = listOfLanguages.get(i).getText();
