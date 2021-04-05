@@ -11,15 +11,16 @@ import java.util.concurrent.TimeUnit;
 public class BaseAPI {
 
     public static WebDriver driver;
-    static final String URL = "https://www.airbnb.com";
+    static final String URL = "https://careers.airbnb.com/";
 
     @BeforeMethod
     public static void setUp() {
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
         driver.get(URL);
-        driver.manage().deleteAllCookies();
         driver.manage().window().maximize();
+        driver.manage().deleteAllCookies();
+
 //        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
     }
 
