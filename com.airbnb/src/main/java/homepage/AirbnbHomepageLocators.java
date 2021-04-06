@@ -9,4 +9,5 @@ public class AirbnbHomepageLocators {
     public static final String webElementAddGuests = "//div[contains(text(),'Add guests')]";
     public static final String webElementIncreaseAdultGuest = "._7hhhl3[aria-label='decrease value'][aria-describedby='searchFlow-title-label-stepper-adults']>._8ovatg";
     public static final String webElementSearchButton = "span._m9v25n";
+    public static final String webElementGuestCapacity=" //div[@aria-labelledby='capacity-dropdown']";
 }
