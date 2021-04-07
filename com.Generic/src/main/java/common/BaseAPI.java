@@ -21,7 +21,7 @@ public class BaseAPI {
         driver.manage().window().maximize();
         driver.manage().deleteAllCookies();
 
-//        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
     }
 
     @AfterMethod
