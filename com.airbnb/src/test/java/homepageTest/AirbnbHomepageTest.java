@@ -81,7 +81,7 @@ public class AirbnbHomepageTest extends BaseAPI {
 
     }
 
-    @Test(enabled = false)
+    @Test(enabled = true)
     public void testInvalidPhoneNumLogin() throws IOException {
         AirbnbHomepage airbnbHomepage = new AirbnbHomepage();
         airbnbHomepage.invalidPhoneNumLogin();

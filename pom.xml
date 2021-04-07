@@ -105,6 +105,20 @@
                     <testFailureIgnore>true</testFailureIgnore>
 
                     <suiteXmlFiles>
+                        <suiteXmlFile>target/test-classes/AirbnbTestNGRunner.xml</suiteXmlFile>
+                        <suiteXmlFile>target/test-classes/ATTTestNGRunner.xml</suiteXmlFile>
+                        <suiteXmlFile>target/test-classes/BankOfAmericaTestNGRunner.xml</suiteXmlFile>
+                        <suiteXmlFile>target/test-classes/BMWTestNGRunner.xml</suiteXmlFile>
+                        <suiteXmlFile>target/test-classes/CBSSportsTestNGRunner.xml</suiteXmlFile>
+                        <suiteXmlFile>target/test-classes/ChaseTestNGRunner.xml</suiteXmlFile>
+                        <suiteXmlFile>target/test-classes/EBayTestNGRunner.xml</suiteXmlFile>
+                        <suiteXmlFile>target/test-classes/ESPNTestNGRunner.xml</suiteXmlFile>
+                        <suiteXmlFile>target/test-classes/ExpediaTestNGRunner.xml</suiteXmlFile>
+                        <suiteXmlFile>target/test-classes/MacysTestNGRunner.xml</suiteXmlFile>
+                        <suiteXmlFile>target/test-classes/MercedesBenzTestNGRunner.xml</suiteXmlFile>
+                        <suiteXmlFile>target/test-classes/RedfinTestNGRunner.xml</suiteXmlFile>
+                        <suiteXmlFile>target/test-classes/TruliaTestNGRunner.xml</suiteXmlFile>
+                        <suiteXmlFile>target/test-classes/VerizonTestNGRunner.xml</suiteXmlFile>
                     </suiteXmlFiles>
                 </configuration>
             </plugin>

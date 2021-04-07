@@ -55,7 +55,7 @@ public class EBaySellerCenterPage extends BaseAPI {
     public boolean verifyCallCenterMenuOption() throws IOException {
         boolean flag = false;
         DataReader dataReader = new DataReader();
-        flag = dataReader.verifyListWebElements(sellerCenterMenuOptions, System.getProperty("user.dir") + "/src/test/resources/TestData.xlsx", "MenuOptions");
+        flag = dataReader.compareListWebElementsToExcelDoc(sellerCenterMenuOptions, System.getProperty("user.dir") + "/src/test/resources/TestData.xlsx", "MenuOptions");
         return flag;
     }
 
