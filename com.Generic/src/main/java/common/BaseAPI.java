@@ -15,6 +15,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
 import utilities.DataReader;
+import utilities.TextFileReader;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -30,6 +31,7 @@ public class BaseAPI {
     public static WebDriver driver;
     public static WebDriverWait driverWait;
     public DataReader dataReader;
+    public TextFileReader textFileReader;
     public Properties properties;
 
     String propertiesFilePath = "src/main/resources/secret.properties";

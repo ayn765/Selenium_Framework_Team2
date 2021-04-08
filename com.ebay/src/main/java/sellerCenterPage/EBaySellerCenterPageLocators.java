@@ -1,4 +1,4 @@
-package sellerCenter;
+package sellerCenterPage;
 
 public class EBaySellerCenterPageLocators {
 

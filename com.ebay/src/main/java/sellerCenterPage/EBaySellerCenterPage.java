@@ -1,4 +1,4 @@
-package sellerCenter;
+package sellerCenterPage;
 
 import common.BaseAPI;
 import org.openqa.selenium.WebElement;
@@ -12,7 +12,7 @@ import utilities.TextFileReader;
 import java.io.IOException;
 import java.util.List;
 
-import static sellerCenter.EBaySellerCenterPageLocators.*;
+import static sellerCenterPage.EBaySellerCenterPageLocators.*;
 
 
 public class EBaySellerCenterPage extends BaseAPI {

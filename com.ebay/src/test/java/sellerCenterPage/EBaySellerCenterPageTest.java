@@ -1,4 +1,4 @@
-package sellerCenter;
+package sellerCenterPage;
 
 import common.BaseAPI;
 import org.testng.Assert;
