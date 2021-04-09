@@ -1,4 +1,4 @@
-package homepage;
+package homepageTest;
 
 public class ExpediaHomepageTest {
 }

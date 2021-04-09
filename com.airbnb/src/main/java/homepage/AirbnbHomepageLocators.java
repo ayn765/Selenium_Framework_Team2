@@ -24,7 +24,7 @@ public class AirbnbHomepageLocators {
     public static final String webElementExploreNearbyDest = "#Koan-query__description";
     public static final String webElementButtonMainMenu = "button._1usxwsg6";
     public static final String webElementButtonLogin = "//div[contains(text(),'Log in')]";
-    public static final String webElementInputPhoneNumber = "input._1vf8o5y";
+    public static final String webElementInputPhoneNumber = "#phoneNumber";
     public static final String webElementButtonLogInContinue = "span._m9v25n";
     public static final String webElementInvPhoneErrorMessage = "#phone-number-error._1yhfti2";
     public static final String webElementsInspirationGetaways = "._qc3ank>button";

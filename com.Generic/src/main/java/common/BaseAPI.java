@@ -1,5 +1,6 @@
 package common;
 
+import io.cucumber.java.bs.A;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -9,6 +10,7 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.opera.OperaDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -17,6 +19,8 @@ import org.testng.annotations.Parameters;
 import utilities.DataReader;
 import utilities.TextFileReader;
 
+import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -33,6 +37,8 @@ public class BaseAPI {
     public DataReader dataReader;
     public TextFileReader textFileReader;
     public Properties properties;
+    public Robot robot;
+    public Actions actions;
 
     String propertiesFilePath = "src/main/resources/secret.properties";
 
@@ -97,22 +103,56 @@ public class BaseAPI {
     }
 
     /**
-     * Helper Methods
+     * Action Helper Methods
      */
+
+    public void pressEnterKey() throws AWTException {
+        robot = new Robot();
+        try{
+            robot.keyPress(KeyEvent.VK_ENTER);
+            robot.keyRelease(KeyEvent.VK_ENTER);
+        }catch (Exception e){
+            e.printStackTrace();
+            System.out.println("UNABLE TO PRESS ENTER KEY");
+        }
+
+    }
+    public void pressEscapeKey() throws AWTException {
+        robot = new Robot();
+        try{
+            robot.keyPress(KeyEvent.VK_ESCAPE);
+            robot.keyRelease(KeyEvent.VK_ENTER);
+        }catch (Exception e){
+            e.printStackTrace();
+            System.out.println("UNABLE TO PRESS ESC KEY");
+        }
+
+    }
+
+    public void javaScriptExecutorClickOnElement(WebElement element) {
+        JavascriptExecutor jse = (JavascriptExecutor) driver;
+        try {
+            jse.executeScript("arguments[0].click()", element);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void actionClassClickOnElement(WebElement element) {
+        Actions actions = new Actions(driver);
+        try {
+            waitUntilWebElementClickable(element);
+            actions.moveToElement(element).click().perform();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     public void sendKeysToElement(WebElement element, String keysToSend) {
 
         try {
-            driverWait.until(ExpectedConditions.visibilityOf(element));
+            waitUntilWebElementVisible(element);
             element.sendKeys(keysToSend);
-
-        } catch (StaleElementReferenceException staleElementReferenceException) {
-            staleElementReferenceException.printStackTrace();
-            System.out.println("ELEMENT IS STALE");
-
-        } catch (ElementNotVisibleException elementNotVisibleException) {
-            elementNotVisibleException.printStackTrace();
-            System.out.println("ELEMENT IS NOT VISIBLE IN THE DOM");
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -123,17 +163,9 @@ public class BaseAPI {
     public void clickElement(WebElement elementToClick) {
 
         try {
-            driverWait.until(ExpectedConditions.elementToBeClickable(elementToClick));
+            waitUntilWebElementClickable(elementToClick);
             elementToClick.click();
-        } catch (StaleElementReferenceException staleElementReferenceException) {
-            staleElementReferenceException.printStackTrace();
-            System.out.println("ELEMENT IS STALE");
-
-        } catch (ElementNotVisibleException elementNotVisibleException) {
-            elementNotVisibleException.printStackTrace();
-            System.out.println("ELEMENT IS NOT VISIBLE IN THE DOM");
-
-        } catch (Exception e) {
+        }  catch (Exception e) {
             e.printStackTrace();
             System.out.println("UNABLE TO CLICK ON WEB ELEMENT" );
         }
@@ -142,17 +174,11 @@ public class BaseAPI {
     public String getTextFromElement(WebElement element) {
         String elementText = "";
 
-        driverWait.until(ExpectedConditions.visibilityOf(element));
+        waitUntilWebElementVisible(element);
 
         try {
             elementText = element.getText();
             return elementText;
-        } catch (StaleElementReferenceException staleElementReferenceException) {
-            staleElementReferenceException.printStackTrace();
-            System.out.println("ELEMENT IS STALE");
-        } catch (ElementNotVisibleException elementNotVisibleException) {
-            elementNotVisibleException.printStackTrace();
-            System.out.println("ELEMENT IS NOT VISIBLE IN THE DOM");
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("UNABLE TO GET TEXT FROM WEB ELEMENT" );
@@ -164,17 +190,11 @@ public class BaseAPI {
     public String getAttributeFromElement(WebElement element, String attribute) {
         String elementText = "";
 
-        driverWait.until(ExpectedConditions.visibilityOf(element));
+        waitUntilWebElementVisible(element);
 
         try {
             elementText = element.getAttribute(attribute);
             return elementText;
-        } catch (StaleElementReferenceException staleElementReferenceException) {
-            staleElementReferenceException.printStackTrace();
-            System.out.println("ELEMENT IS STALE");
-        } catch (ElementNotVisibleException elementNotVisibleException) {
-            elementNotVisibleException.printStackTrace();
-            System.out.println("ELEMENT IS NOT VISIBLE IN THE DOM");
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("UNABLE TO GET ATTRIBUTE FROM WEB ELEMENT");
@@ -205,9 +225,120 @@ public class BaseAPI {
         return elementList;
     }
 
+    //Select methods
+    public void selectFromDropDownByIndex(WebElement dropdown, int index){
+        Select select = new Select(dropdown);
+        try{
+            waitUntilWebElementVisible(dropdown);
+            select.selectByIndex(index);
+        }catch(Exception e){
+            e.printStackTrace();
+            System.out.println("UNABLE TO SELECT AN ELEMENT");
+        }
+    }
+    public void selectFromDropDownByValue(WebElement dropdown, String value){
+        Select select = new Select(dropdown);
+        try{
+            waitUntilWebElementVisible(dropdown);
+            select.selectByValue(value);
+        }catch(Exception e){
+            e.printStackTrace();
+            System.out.println("UNABLE TO SELECT AN ELEMENT");
+        }
+    }
+    public void selectFromDropDownByVisibleText(WebElement dropdown, String visibleText){
+        Select select = new Select(dropdown);
+        try{
+            waitUntilWebElementVisible(dropdown);
+            select.selectByVisibleText(visibleText);
+        }catch(Exception e){
+            e.printStackTrace();
+            System.out.println("UNABLE TO SELECT AN ELEMENT");
+        }
+    }
+    public void hoverOverElement(WebElement elementToHoverOver) {
+        try {
+            actions = new Actions(driver);
+            waitUntilWebElementVisible(elementToHoverOver);
+            actions.moveToElement(elementToHoverOver).build().perform();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("UNABLE TO HOVER OVER ELEMENT");
+        }
+    }
+
     /**
      * Assertion Helper Methods
      */
+
+    //VERIFY VALID OR BROKEN LINKS:
+
+    public boolean verifyLinks(List<WebElement> linkElements, String attribute) {
+        Iterator<WebElement> links = linkElements.iterator();
+        boolean flag = false;
+        int flagCount = 0;
+        HttpURLConnection urlConnection = null;
+        int responseCode = 0;
+        String url = " ";
+        int validLinks = 0;
+        int brokenLinks = 0;
+        while (links.hasNext()) {
+            url = links.next().getAttribute(attribute);
+            if ((url == null) || (url.isEmpty())) {
+                System.out.println("URL is either not configured for " + attribute + " tag or it is empty");
+                continue;
+            }
+            try {
+                urlConnection = (HttpURLConnection) (new URL(url).openConnection());
+                urlConnection.setRequestMethod("HEAD");
+                urlConnection.connect();
+                responseCode = urlConnection.getResponseCode();
+                if (responseCode >= 400) {
+                    System.out.println(url + " is a broken link.");
+                    brokenLinks++;
+                    flagCount++;
+                } else {
+                    System.out.println(url + " is a valid link.");
+                    validLinks++;
+                    flag = true;
+                }
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+                e.printStackTrace();
+            }
+        }
+        System.out.println("Detection of broken links completed with " + brokenLinks + " broken links and " + validLinks + " valid links\n");
+        if (flagCount > 0) {
+            flag = false;
+        }
+        return flag;
+    }
+
+    public boolean compareListWebElementsToExcelDoc(List<WebElement> elements, String excelDocPath, String sheetName) throws IOException {
+
+        dataReader = new DataReader();
+        String[] excelData = dataReader.fileReaderStringArrayXSSF(excelDocPath, sheetName);
+//        waitUntilWebElementListVisible(elements);
+        boolean flag = false;
+        int count = 0;
+
+        for (int i = 0; i < elements.size(); i++) {
+            String elementsData = elements.get(i).getText();
+            if (elementsData.equals(excelData[i])) {
+                flag = true;
+                System.out.println("PASSED ON: " + elementsData);
+            } else {
+                System.out.println("FAILED ON: " + elementsData);
+                count++;
+            }
+        }
+        if (count > 0) {
+            flag = false;
+        }
+        return flag;
+
+    }
 
     public boolean compareStrings(String str1, String str2) {
         boolean flag = false;
@@ -254,103 +385,48 @@ public class BaseAPI {
         return flag;
     }
 
+    /**
+     * Wait helper methods:
+     */
+
     public void waitUntilWebElementListVisible(List<WebElement> elements) {
         WebDriverWait wait = new WebDriverWait(driver, 10);
-        elements = wait.until(ExpectedConditions.visibilityOfAllElements(elements));
+        try {
+            elements = wait.until(ExpectedConditions.visibilityOfAllElements(elements));
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("ELEMENTS ARE NOT VISIBLE");
+        }
     }
 
     public void waitUntilWebElementVisible(WebElement element) {
         WebDriverWait wait = new WebDriverWait(driver, 10);
-        element = wait.until(ExpectedConditions.visibilityOf(element));
+        try {
+            element = wait.until(ExpectedConditions.visibilityOf(element));
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("ELEMENT IS NOT VISIBLE");
+        }
     }
 
     public void waitUntilWebElementInvisible(WebElement element) {
         WebDriverWait wait = new WebDriverWait(driver, 10);
+        try{
         wait.until(ExpectedConditions.invisibilityOf(element));
+        }catch (Exception e){
+            e.printStackTrace();
+            System.out.println("INVISIBILITY OF ELEMENTS FAILED");
+        }
     }
 
     public void waitUntilWebElementClickable(WebElement element) {
         WebDriverWait wait = new WebDriverWait(driver, 10);
-        element = wait.until(ExpectedConditions.elementToBeClickable(element));
-    }
-
-    public void javaScriptExecutorClickOnElement(WebElement element) {
-        JavascriptExecutor jse = (JavascriptExecutor) driver;
-        jse.executeScript("arguments[0].click()", element);
-    }
-
-    public void actionClassClickOnElement(WebElement element) {
-        Actions actions = new Actions(driver);
-        actions.moveToElement(element).click().perform();
-
-    }
-//VERIFY VALID OR BROKEN LINKS:
-
-    public boolean verifyLinks(List<WebElement> linkElements, String attribute) {
-        Iterator<WebElement> links = linkElements.iterator();
-        boolean flag = false;
-        int flagCount = 0;
-        HttpURLConnection urlConnection = null;
-        int responseCode = 0;
-        String url = " ";
-        int validLinks = 0;
-        int brokenLinks = 0;
-        while (links.hasNext()) {
-            url = links.next().getAttribute(attribute);
-            if ((url == null) || (url.isEmpty())) {
-                System.out.println("URL is either not configured for " + attribute + " tag or it is empty");
-                continue;
-            }
-            try {
-                urlConnection = (HttpURLConnection) (new URL(url).openConnection());
-                urlConnection.setRequestMethod("HEAD");
-                urlConnection.connect();
-                responseCode = urlConnection.getResponseCode();
-                if (responseCode >= 400) {
-                    System.out.println(url + " is a broken link.");
-                    brokenLinks++;
-                    flagCount++;
-                } else {
-                    System.out.println(url + " is a valid link.");
-                    validLinks++;
-                    flag = true;
-                }
-            } catch (IOException e) {
-                System.out.println(e.getMessage());
-                e.printStackTrace();
-            }
+        try {
+            element = wait.until(ExpectedConditions.elementToBeClickable(element));
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("ELEMENT IS NOT CLICKABLE");
         }
-        System.out.println("Detection of broken links completed with " + brokenLinks + " broken links and " + validLinks + " valid links\n");
-        if (flagCount > 0) {
-            flag = false;
-        }
-        return flag;
-    }
-
-    public boolean compareListWebElementsToExcelDoc(List<WebElement> elements, String excelDocPath, String sheetName) throws IOException {
-
-        DataReader dataReader = new DataReader();
-        String[] expectedGetawayOptions = dataReader.fileReaderStringArrayXSSF(excelDocPath, sheetName);
-//        waitUntilWebElementListVisible(elements);
-        boolean flag = false;
-        int count = 0;
-        System.out.println(elements.size());
-
-
-        for (int i = 0; i <= elements.size()-1; i++) {
-            String getawayOption = elements.get(i).getText();
-            if (getawayOption.equals(expectedGetawayOptions[i])) {
-                flag = true;
-                System.out.println("Passed on: " + getawayOption);
-            } else {
-                System.out.println("Failed on: " + getawayOption);
-                count++;
-            }
-        }
-        if (count > 0) {
-            flag = false;
-        }
-        return flag;
 
     }
 }

@@ -31,6 +31,9 @@ public class EBaySellerCenterPage extends BaseAPI {
     @FindBy(css = webElementSellerCenterMenuOptions)
     public List<WebElement> sellerCenterMenuOptions;
 
+    @FindBy(xpath = WEBELEMENT_HEADER_SELLER_CENTER_PAGE)
+    public WebElement headerSellerCenterPage;
+
     public EBaySellerCenterPage() {
         PageFactory.initElements(driver, this);
     }

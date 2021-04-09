@@ -10,7 +10,7 @@
         <parameter name="url" value="https://www.expedia.com/"/>
 
         <classes>
-<!--            <class name=""/>-->
+            <class name="flightsPageTest.ExpediaFlightsPageTest"/>
         </classes>
 
     </test>

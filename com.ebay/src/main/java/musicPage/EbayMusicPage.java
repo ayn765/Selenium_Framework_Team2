@@ -1,19 +1,17 @@
 package musicPage;
 
 import common.BaseAPI;
-import concersPage.ConcertsPage;
+import concertsPage.EbayConcertsPage;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import utilities.DataReader;
 
-import java.io.IOException;
+import java.awt.*;
 import java.util.List;
-import java.util.Properties;
 
-import static musicPage.MusicPageLocators.*;
+import static musicPage.EbayMusicPageLocators.*;
 
-public class MusicPage extends BaseAPI {
+public class EbayMusicPage extends BaseAPI {
     @FindBy(xpath = WEBELEMENT_BUTTON_NAVIGATE_TO_MUSIC_PAGE)
     public WebElement buttonNavigateToMusicPage;
 
@@ -44,7 +42,22 @@ public class MusicPage extends BaseAPI {
     @FindBy(xpath = WEBELEMENT_LINK_CONCERT_TICKETS_PAGE)
     public WebElement linkConcertTicketsPage;
 
-    public MusicPage() {
+    @FindBy(xpath = WEBELEMENT_DROPDOWN_SELECT)
+    public WebElement dropdownSelect;
+
+    @FindBy(xpath = WEBELEMENT_INPUT_SEARCH)
+    public WebElement inputSearch;
+
+    @FindBy(xpath = WEBELEMENT_SEARCH_RESULT_MADONNA)
+    public WebElement searchResultMadonna;
+
+    @FindBy(css = WEBELEMENT_ICON_NOTIFICATIONS)
+    public WebElement iconNotifications;
+
+    @FindBy(xpath = WEBELEMENT_MESSAGE_ICON_NOTIFICATIONS)
+    public WebElement messageIconNotifications;
+
+    public EbayMusicPage() {
         PageFactory.initElements(driver, this);
     }
 
@@ -61,9 +74,18 @@ public class MusicPage extends BaseAPI {
         clickElement(submitPriceRange);
 
     }
-    public ConcertsPage navigateToConcertTicketsPage(){
+    public EbayConcertsPage navigateToConcertsPage(){
         clickElement(linkConcertTicketsPage);
-     return new ConcertsPage();
+     return new EbayConcertsPage();
     }
 
+    public void searchInMusicCategory() throws AWTException {
+        selectFromDropDownByVisibleText(dropdownSelect,"Music");
+        sendKeysToElement(inputSearch, "Madonna");
+        pressEnterKey();
+    }
+
+    public void hoverOverIconNotifications(){
+        hoverOverElement(iconNotifications);
+    }
 }

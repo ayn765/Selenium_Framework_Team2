@@ -187,7 +187,8 @@ public class AirbnbHomepage extends BaseAPI {
 
     public void invalidPhoneNumLogin() {
         buttonMainMenu.click();
-        buttonLogin.click();
+        clickElement(buttonLogin);
+        waitUntilWebElementVisible(inputPhoneNumber);
         inputPhoneNumber.sendKeys("1234567890");
         buttonLoginContinue.click();
     }
