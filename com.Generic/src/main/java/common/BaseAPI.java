@@ -24,10 +24,8 @@ import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.*;
 import java.util.List;
-import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 public class BaseAPI {
@@ -80,6 +78,7 @@ public class BaseAPI {
         driver.close();
         driver.quit();
     }
+
     // Method to get local driver, based on the browserName parameter in testNG.xml runner file
     public static WebDriver getLocalDriver(String browserName) {
         if (browserName.toLowerCase().equals("chrome")) {
@@ -108,21 +107,22 @@ public class BaseAPI {
 
     public void pressEnterKey() throws AWTException {
         robot = new Robot();
-        try{
+        try {
             robot.keyPress(KeyEvent.VK_ENTER);
             robot.keyRelease(KeyEvent.VK_ENTER);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             System.out.println("UNABLE TO PRESS ENTER KEY");
         }
 
     }
+
     public void pressEscapeKey() throws AWTException {
         robot = new Robot();
-        try{
+        try {
             robot.keyPress(KeyEvent.VK_ESCAPE);
             robot.keyRelease(KeyEvent.VK_ENTER);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             System.out.println("UNABLE TO PRESS ESC KEY");
         }
@@ -145,9 +145,18 @@ public class BaseAPI {
             actions.moveToElement(element).click().perform();
         } catch (Exception e) {
             e.printStackTrace();
+            System.out.println("UNABLE TO CLICK ON " + element);
         }
     }
 
+    public void jsScrollIntoView(WebElement element){
+        ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();", element);
+    }
+
+    public void removeAttributeNone(WebElement element){
+        ((JavascriptExecutor)driver).executeScript("arguments[0].removeAttribute('style')", element);
+
+    }
     public void sendKeysToElement(WebElement element, String keysToSend) {
 
         try {
@@ -156,7 +165,7 @@ public class BaseAPI {
 
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("UNABLE TO SEND KEYS TO WEB ELEMENT" );
+            System.out.println("UNABLE TO SEND KEYS TO WEB ELEMENT");
         }
     }
 
@@ -165,9 +174,9 @@ public class BaseAPI {
         try {
             waitUntilWebElementClickable(elementToClick);
             elementToClick.click();
-        }  catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("UNABLE TO CLICK ON WEB ELEMENT" );
+            System.out.println("UNABLE TO CLICK ON WEB ELEMENT");
         }
     }
 
@@ -181,7 +190,7 @@ public class BaseAPI {
             return elementText;
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("UNABLE TO GET TEXT FROM WEB ELEMENT" );
+            System.out.println("UNABLE TO GET TEXT FROM WEB ELEMENT");
         }
 
         return elementText;
@@ -226,36 +235,39 @@ public class BaseAPI {
     }
 
     //Select methods
-    public void selectFromDropDownByIndex(WebElement dropdown, int index){
+    public void selectFromDropDownByIndex(WebElement dropdown, int index) {
         Select select = new Select(dropdown);
-        try{
+        try {
             waitUntilWebElementVisible(dropdown);
             select.selectByIndex(index);
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             System.out.println("UNABLE TO SELECT AN ELEMENT");
         }
     }
-    public void selectFromDropDownByValue(WebElement dropdown, String value){
+
+    public void selectFromDropDownByValue(WebElement dropdown, String value) {
         Select select = new Select(dropdown);
-        try{
+        try {
             waitUntilWebElementVisible(dropdown);
             select.selectByValue(value);
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             System.out.println("UNABLE TO SELECT AN ELEMENT");
         }
     }
-    public void selectFromDropDownByVisibleText(WebElement dropdown, String visibleText){
+
+    public void selectFromDropDownByVisibleText(WebElement dropdown, String visibleText) {
         Select select = new Select(dropdown);
-        try{
+        try {
             waitUntilWebElementVisible(dropdown);
             select.selectByVisibleText(visibleText);
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             System.out.println("UNABLE TO SELECT AN ELEMENT");
         }
     }
+
     public void hoverOverElement(WebElement elementToHoverOver) {
         try {
             actions = new Actions(driver);
@@ -267,13 +279,23 @@ public class BaseAPI {
             System.out.println("UNABLE TO HOVER OVER ELEMENT");
         }
     }
+    public void switchToNewWindow() {
+        String parentWindow = driver.getWindowHandle();
+
+        Set<String> windowHandles = driver.getWindowHandles();
+
+        for (String handle : windowHandles) {
+            if (!(handle.equals(parentWindow))) {
+                driver.switchTo().window(handle);
+            }
+        }
+    }
 
     /**
      * Assertion Helper Methods
      */
 
     //VERIFY VALID OR BROKEN LINKS:
-
     public boolean verifyLinks(List<WebElement> linkElements, String attribute) {
         Iterator<WebElement> links = linkElements.iterator();
         boolean flag = false;
@@ -358,7 +380,7 @@ public class BaseAPI {
 
         String[] actual = new String[actualList.size()];
 
-        for (int j = 0; j<actualList.size(); j++) {
+        for (int j = 0; j < actualList.size(); j++) {
             actual[j] = actualList.get(j).getAttribute(attribute).replaceAll("&amp;", "&").replaceAll("’", "'").replaceAll("<br>", "\n").trim();
             actual[j].replaceAll("&amp;", "&").replaceAll("’", "'").replaceAll("<br>", "\n").trim();
 //            escapeHtml4(actual[j]);
@@ -374,7 +396,7 @@ public class BaseAPI {
                 System.out.println("ACTUAL " + attribute.toUpperCase() + " " + (i + 1) + ": " + actual[i]);
                 System.out.println("EXPECTED " + attribute.toUpperCase() + " " + (i + 1) + ": " + expectedList[i] + "\n");
             } else {
-                System.out.println("FAILED AT INDEX " + (i+1) + "\nEXPECTED " + attribute.toUpperCase() + ": " + expectedList[i] +
+                System.out.println("FAILED AT INDEX " + (i + 1) + "\nEXPECTED " + attribute.toUpperCase() + ": " + expectedList[i] +
                         "\nACTUAL " + attribute.toUpperCase() + ": " + actual[i] + "\n");
                 falseCount++;
             }
@@ -411,9 +433,9 @@ public class BaseAPI {
 
     public void waitUntilWebElementInvisible(WebElement element) {
         WebDriverWait wait = new WebDriverWait(driver, 10);
-        try{
-        wait.until(ExpectedConditions.invisibilityOf(element));
-        }catch (Exception e){
+        try {
+            wait.until(ExpectedConditions.invisibilityOf(element));
+        } catch (Exception e) {
             e.printStackTrace();
             System.out.println("INVISIBILITY OF ELEMENTS FAILED");
         }
@@ -429,4 +451,6 @@ public class BaseAPI {
         }
 
     }
+
 }
+
