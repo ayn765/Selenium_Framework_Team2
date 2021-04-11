@@ -4,15 +4,17 @@ import adventuresPage.AirbnbAdventuresPage;
 import becomeAHostPage.AirbnbBecomeAHostPage;
 import common.BaseAPI;
 import onlineExperiencesPage.AirbnbOnlineExperiencesPage;
+
 import static homepage.AirbnbHomepageLocators.*;
+
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import utilities.DataReader;
 import utilities.TextFileReader;
+
 import java.io.IOException;
 import java.util.List;
-
 
 
 public class AirbnbHomepage extends BaseAPI {
@@ -147,49 +149,19 @@ public class AirbnbHomepage extends BaseAPI {
         searchButton.click();
     }
 
-
     public boolean verifyLanguages() throws IOException {
-        boolean flag = false;
-        int flagCount = 0;
-        languageIcon.click();
-        DataReader dataReader = new DataReader();
-        String[] expectedListOfLanguages = dataReader.fileReaderStringArrayXSSF(System.getProperty("user.dir") + "/src/test/resources/TestData.xlsx", "Languages");
-
-//        String[] expectedListOfLanguages = {"English\nUnited States", "Azərbaycan dili\nAzərbaycan", "Bahasa Indonesia\nIndonesia",
-//                "Bosanski\nBosna i Hercegovina", "Català\nEspanya", "Čeština\nČeská republika", "Crnogorski\nCrna Gora", "Dansk\nDanmark",
-//                "Deutsch\nDeutschland", "Deutsch\nÖsterreich", "Deutsch\nSchweiz", "Eesti\nEesti", "English\nAustralia", "English\nCanada", "English\nGuyana",
-//                "English\nIndia", "English\nIreland", "English\nNew Zealand", "English\nSingapore", "English\nUnited Arab Emirates",
-//                "English\nUnited Kingdom", "Español\nArgentina", "Español\nBelice", "Español\nBolivia", "Español\nChile"};
-
-
+        clickElement(languageIcon);
         waitUntilWebElementListVisible(listOfLanguages);
-
-        for (int i = 0; i < 4; i++) {
-
-            String langValue = listOfLanguages.get(i).getText();
-
-            if (langValue.equals(expectedListOfLanguages[i])) {
-                System.out.println("Passed on: " + langValue);
-                flag = true;
-            } else {
-                System.out.println("Failed on: " + langValue);
-                flag = false;
-                flagCount++;
-            }
-
-        }
-        if (flagCount > 0) {
-            flag = false;
-
-        }
-        return flag;
+        boolean flag = compareListWebElementsToExcelDoc(listOfLanguages, System.getProperty("user.dir") + "/src/test/resources/TestData.xlsx", "Languages1" );
+    return flag;
     }
+
+
 
     public void invalidPhoneNumLogin() {
         buttonMainMenu.click();
         clickElement(buttonLogin);
-        waitUntilWebElementVisible(inputPhoneNumber);
-        inputPhoneNumber.sendKeys("1234567890");
+        sendKeysToElement(inputPhoneNumber, "1234567890");
         buttonLoginContinue.click();
     }
 
@@ -243,7 +215,7 @@ public class AirbnbHomepage extends BaseAPI {
         return flag;
     }
 
-    public boolean verifyLinksLiveAnywhere(){
+    public boolean verifyLinksLiveAnywhere() {
         BaseAPI baseAPI = new BaseAPI();
         boolean flag = baseAPI.verifyLinks(linksLiveAnywhere, "src");
         return flag;

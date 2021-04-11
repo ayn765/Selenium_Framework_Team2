@@ -1,6 +1,5 @@
 package common;
 
-import io.cucumber.java.bs.A;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -75,8 +74,8 @@ public class BaseAPI {
 
     @AfterMethod
     public static void tearDown() {
-        driver.close();
-        driver.quit();
+//        driver.close();
+//        driver.quit();
     }
 
     // Method to get local driver, based on the browserName parameter in testNG.xml runner file
@@ -149,14 +148,15 @@ public class BaseAPI {
         }
     }
 
-    public void jsScrollIntoView(WebElement element){
-        ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();", element);
+    public void jsScrollIntoView(WebElement elements) {
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", elements);
     }
 
-    public void removeAttributeNone(WebElement element){
-        ((JavascriptExecutor)driver).executeScript("arguments[0].removeAttribute('style')", element);
+    public void removeAttributeNone(WebElement element) {
+        ((JavascriptExecutor) driver).executeScript("arguments[0].removeAttribute('style')", element);
 
     }
+
     public void sendKeysToElement(WebElement element, String keysToSend) {
 
         try {
@@ -279,6 +279,7 @@ public class BaseAPI {
             System.out.println("UNABLE TO HOVER OVER ELEMENT");
         }
     }
+
     public void switchToNewWindow() {
         String parentWindow = driver.getWindowHandle();
 
@@ -297,7 +298,7 @@ public class BaseAPI {
 
     //VERIFY VALID OR BROKEN LINKS:
     public boolean verifyLinks(List<WebElement> linkElements, String attribute) {
-        Iterator<WebElement> links = linkElements.iterator();
+        Iterator<WebElement> iterator = linkElements.iterator();
         boolean flag = false;
         int flagCount = 0;
         HttpURLConnection urlConnection = null;
@@ -305,8 +306,8 @@ public class BaseAPI {
         String url = " ";
         int validLinks = 0;
         int brokenLinks = 0;
-        while (links.hasNext()) {
-            url = links.next().getAttribute(attribute);
+        while (iterator.hasNext()) {
+            url = iterator.next().getAttribute(attribute);
             if ((url == null) || (url.isEmpty())) {
                 System.out.println("URL is either not configured for " + attribute + " tag or it is empty");
                 continue;
@@ -337,6 +338,28 @@ public class BaseAPI {
         return flag;
     }
 
+
+    public void verifyLinksTitles(List<WebElement> linkElements, String attribute) {
+        Iterator<WebElement> links = linkElements.iterator();
+        boolean flag = false;
+        String url;
+        while (links.hasNext()) {
+            url = links.next().getAttribute(attribute);
+            if ((url == null) || (url.isEmpty())) {
+                System.out.println("URL is either not configured for " + attribute + " tag or it is empty");
+                continue;
+            }
+            try {
+                driver.navigate().to(url);
+                System.out.println(driver.getTitle());
+                driver.navigate().back();
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                e.printStackTrace();
+            }
+        }
+    }
+
     public boolean compareListWebElementsToExcelDoc(List<WebElement> elements, String excelDocPath, String sheetName) throws IOException {
 
         dataReader = new DataReader();
@@ -362,6 +385,31 @@ public class BaseAPI {
 
     }
 
+    public boolean compareListStringsToExcelDoc(ArrayList<String> string, String excelDocPath, String sheetName) throws IOException {
+
+        dataReader = new DataReader();
+        String[] excelData = dataReader.fileReaderStringArrayXSSF(excelDocPath, sheetName);
+//        waitUntilWebElementListVisible(elements);
+        boolean flag = false;
+        int count = 0;
+
+        for (int i = 0; i < string.size(); i++) {
+            String elementsData = string.get(i);
+            if (elementsData.equals(excelData[i])) {
+                flag = true;
+                System.out.println("PASSED ON: " + elementsData);
+            } else {
+                System.out.println("FAILED ON: " + elementsData);
+                count++;
+            }
+        }
+        if (count > 0) {
+            flag = false;
+        }
+        return flag;
+
+    }
+
     public boolean compareStrings(String str1, String str2) {
         boolean flag = false;
 
@@ -372,6 +420,25 @@ public class BaseAPI {
 
         return flag;
     }
+    //Get links and link's titles form List of WebElements and compare titles to data from Excel Doc
+    public boolean getUrlsAndTitlesFromListWebElementAndCompareToExcelDoc(List<WebElement>elements, String attributeThatContainsUrl, String excelDocPath, String sheetName) throws IOException {
+        Iterator<WebElement> iterator = elements.iterator();
+        String url;
+        List<String> links = new ArrayList<>();
+        ArrayList<String> titles = new ArrayList<>();
+        while (iterator.hasNext()) {
+            url = iterator.next().getAttribute(attributeThatContainsUrl);
+            links.add(url);
+        }
+        for (String x : links) {
+            driver.navigate().to(x);
+            String pageTitle = driver.getTitle();
+            titles.add(pageTitle);
+        }
+        boolean flag = compareListStringsToExcelDoc(titles, excelDocPath, sheetName);
+        return flag;
+    }
+
 
     // Gets text from List<WebElements> and compares against expected String array from Excel workbook
     public boolean compareAttributeListToExpectedStringArray(By by, String attribute, String path, String sheetName) throws IOException {
@@ -448,6 +515,16 @@ public class BaseAPI {
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("ELEMENT IS NOT CLICKABLE");
+        }
+
+    }
+    public void waitUntilWebElementsArePresent() {
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        try {
+            wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.cssSelector("li.uitk-carousel-item>div>div>div>div>a")));
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("ELEMENTS ARE NOT PRESENT");
         }
 
     }

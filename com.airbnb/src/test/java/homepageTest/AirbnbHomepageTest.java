@@ -65,7 +65,7 @@ public class AirbnbHomepageTest extends BaseAPI {
         Assert.assertEquals(actualNumOfLanguages, expectedNumOfLanguages, "The number of languages is incorrect.");
     }
 
-    @Test(enabled = false)
+    @Test(enabled = true)
     public void testLanguages() throws IOException {
         AirbnbHomepage airbnbHomepage = new AirbnbHomepage();
         Assert.assertTrue(airbnbHomepage.verifyLanguages(), "The languages are displayed incorrectly.");
@@ -81,9 +81,10 @@ public class AirbnbHomepageTest extends BaseAPI {
 
     }
 
-    @Test(enabled = true)
+    @Test(enabled = false)
     public void testInvalidPhoneNumLogin() throws IOException {
         AirbnbHomepage airbnbHomepage = new AirbnbHomepage();
+
         airbnbHomepage.invalidPhoneNumLogin();
         String expectedErrorMessage = airbnbHomepage.getInvalidPhoneErrorMessage();
         Assert.assertEquals(airbnbHomepage.invPhoneErrorMessage.getText(),expectedErrorMessage, "The message is incorrect.");
