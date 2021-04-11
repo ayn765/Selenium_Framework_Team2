@@ -1,9 +1,11 @@
 package flightsPage;
 
 import common.BaseAPI;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import signIn.ExpediaSignInPage;
 
 import java.awt.*;
 import java.io.IOException;
@@ -21,6 +23,9 @@ public class ExpediaFlightsPage extends BaseAPI {
 
     @FindBy(xpath = WEBELEMTET_TAB_FLIGHTS)
     public WebElement tabFlights;
+
+    @FindBy(xpath = WEBELEMTET_TAB_ONEWAY)
+    public WebElement tabOneway;
 
     @FindBy(css = WEBELEMENT_DROPDOWN_NUM_TRAVELERS)
     public WebElement dropdownNumTravelers;
@@ -52,17 +57,35 @@ public class ExpediaFlightsPage extends BaseAPI {
     @FindBy(css = WEBELEMENT_BUTTON_RETURNING)
     public WebElement buttonReturning;
 
-    @FindBy(css = WEBELEMENT_SELECT_DEPARTING_DATE)
+    @FindBy(xpath = WEBELEMENT_SELECT_DEPARTING_DATE)
     public WebElement selectDepartingDate;
 
-    @FindBy(css = WEBELEMENT_SELECT_RETURNING_DATE)
+    @FindBy(xpath = WEBELEMENT_SELECT_RETURNING_DATE)
     public WebElement selectReturningDate;
+
+    @FindBy(xpath = WEBELEMENT_BUTTON_DATE_DONE)
+    public WebElement buttonDateDone;
 
     @FindBy(css = WEBELEMENT_BUTTON_SUBMIT_FLIGHT_SEARCH)
     public WebElement buttonSubmitFlightSearch;
 
+    @FindBy(css = WEBELEMENT_CHECKBOX_NON_STOP)
+    public WebElement checkboxNonStop;
+
+    @FindBy(css = WEBELEMENT_BUTTON_NON_STOP)
+    public WebElement buttonNonStop;
+
     @FindBy(css = WEBELEMENT_MESSAGE_COVID)
     public WebElement messageCovid;
+
+    @FindBy(css = WEBELEMENT_BUTTON_CHANGE_TRIP)
+    public WebElement buttonChangeTrip;
+
+    @FindBy(css = WEBELEMENT_CHAT_WITH_VIRTUAL_AGENT)
+    public WebElement chatWithVirtualAgent;
+
+    @FindBy(css = WEBELEMENT_BUTTON_USE_CREDIT_OR_COUPON)
+    public WebElement buttonUseCreditOrCoupon;
 
     @FindBy(css = WEBELEMENTS_SELECT_COUNTRY_CODE)
     public List<WebElement> selectCountryCode;
@@ -88,6 +111,20 @@ public class ExpediaFlightsPage extends BaseAPI {
         clickElement(tabFlights);
     }
 
+    public void onewaySearch(){
+        clickElement(tabOneway);
+        sendKeysToElement(inputLeavingFrom, "Washington DC");
+        clickElement(leavingAirportSelection);
+        sendKeysToElement(inputGoingTo, "Tampa, FL");
+        clickElement(goingToAirportSelection);
+        clickElement(buttonDeparting);
+        clickElement(selectDepartingDate);
+        clickElement(buttonDateDone);
+        clickElement(buttonSubmitFlightSearch);
+        waitUntilWebElementVisible(checkboxNonStop);
+        checkboxNonStop.click();
+    }
+
     public void verifyAirlineAgeRules() {
         clickElement(dropdownNumTravelers);
         actionClassClickOnElement(increaseNumChildren);
@@ -102,9 +139,17 @@ public class ExpediaFlightsPage extends BaseAPI {
         clickElement(buttonSubmitFlightSearch);
     }
 
+    public void changeOrCancelTrip(){
+        clickElement(buttonChangeTrip);
+    }
+
+    public ExpediaSignInPage useCreditOrCoupon(){
+        clickElement(buttonUseCreditOrCoupon);
+        return new ExpediaSignInPage();
+    }
+
     public boolean verifyCountryCodeOptions() throws IOException {
-        boolean flag = compareListWebElementsToExcelDoc(selectCountryCode, System.getProperty("user.dir") + "/src/test/resources/ExpediaTestData.xlsx", "CountryCodes");
-        return flag;
+        return compareListWebElementsToExcelDoc(selectCountryCode, System.getProperty("user.dir") + "/src/test/resources/ExpediaTestData.xlsx", "CountryCodes");
     }
 
     public void sendInvalidPhoneNumToGetApp() {

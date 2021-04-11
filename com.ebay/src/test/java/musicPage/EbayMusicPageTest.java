@@ -49,7 +49,7 @@ public class EbayMusicPageTest extends BaseAPI {
 
     //Test a Menu Options on Concert Page from Music Page using method chaining
     //Reading Test Date from Excel
-    @Test(enabled = false)
+    @Test(enabled = false, groups = "smoke", priority = 1)
     public void testMenuTicketsOptionsOnConcertPage() throws IOException {
         ebayMusicPage = new EbayMusicPage();
         ebayMusicPage.navigateToMusicPage();
@@ -57,7 +57,7 @@ public class EbayMusicPageTest extends BaseAPI {
     }
 
     //Test adding ticket to cart on Concert Page from Music Page
-    @Test(enabled = false)
+    @Test(enabled = false, groups = "smoke", priority = 2)
     public void testAddingConcertTicketToCart() {
         ebayMusicPage = new EbayMusicPage();
         ebayMusicPage.navigateToMusicPage();
@@ -67,14 +67,14 @@ public class EbayMusicPageTest extends BaseAPI {
     }
     //Test search in Music Category using Select dropdown
     //Press Enter Key with Robot Class
-    @Test(enabled = false)
+    @Test(enabled = false, groups = "smoke", priority = 3)
     public void testSearchInMusicCategory() throws AWTException {
         ebayMusicPage = new EbayMusicPage();
         ebayMusicPage.searchInMusicCategory();
         Assert.assertTrue(ebayMusicPage.searchResultMadonna.isDisplayed());
     }
     //Hover over
-    @Test
+    @Test(enabled = false, groups = "sanity", priority = 4)
     public void testIconNotificationMessage(){
         ebayMusicPage = new EbayMusicPage();
         ebayMusicPage.hoverOverIconNotifications();

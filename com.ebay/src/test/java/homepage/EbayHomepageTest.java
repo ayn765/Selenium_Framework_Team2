@@ -13,21 +13,21 @@ public class EbayHomepageTest extends BaseAPI {
     EbayConcertsPage concertTicketsPage;
     EBaySellerCenterPage eBaySellerCenterPage;
 
-    @Test
+    @Test(groups = "regression", priority = 1)
     public void testNavigateToMusicPage() {
         ebayHomepage = new EbayHomepage();
         musicPage = ebayHomepage.navigateToMusicPage();
         Assert.assertTrue(musicPage.headerMusicPage.isDisplayed());
 
     }
-    @Test
+    @Test(groups = "regression", priority = 2)
     public void testNavigateToConcertTicketsPage() {
         ebayHomepage = new EbayHomepage();
         concertTicketsPage = ebayHomepage.navigateToMusicPage().navigateToConcertsPage();
         Assert.assertTrue(concertTicketsPage.headerConcertTicketsPage.isDisplayed());
 
     }
-    @Test
+    @Test(groups = "regression", priority = 3)
     public void testNavigateToSellerCenterPage() {
         ebayHomepage = new EbayHomepage();
         eBaySellerCenterPage = ebayHomepage.navigateToSellerCenterPage();

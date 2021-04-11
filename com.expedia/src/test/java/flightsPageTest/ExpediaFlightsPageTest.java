@@ -2,8 +2,10 @@ package flightsPageTest;
 
 import common.BaseAPI;
 import flightsPage.ExpediaFlightsPage;
+import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import signIn.ExpediaSignInPage;
 
 import java.awt.*;
 import java.io.IOException;
@@ -11,14 +13,24 @@ import java.io.IOException;
 public class ExpediaFlightsPageTest extends BaseAPI {
 
     ExpediaFlightsPage expediaFlightsPage;
+    ExpediaSignInPage expediaSignInPage;
 
-    @Test(enabled = false)
+    @Test(enabled = false, groups = "smoke")
     public void testAirlineAgeRules() throws AWTException {
         expediaFlightsPage = new ExpediaFlightsPage();
         expediaFlightsPage.navigateToFlightsPage();
         expediaFlightsPage.verifyAirlineAgeRules();
         switchToNewWindow();
         Assert.assertTrue(expediaFlightsPage.linkTravelWithChild.isDisplayed(), "The Airline Age Rules Page is not properly displayed.");
+    }
+
+    @Test(enabled = true, groups = "smoke")
+    public void testOnewaySearch() throws Exception{
+        expediaFlightsPage = new ExpediaFlightsPage();
+        expediaFlightsPage.navigateToFlightsPage();
+        expediaFlightsPage.onewaySearch();
+        waitUntilWebElementVisible(expediaFlightsPage.buttonNonStop);
+        Assert.assertTrue(expediaFlightsPage.buttonNonStop.isDisplayed(), "One way flight search failed.");
     }
 
     @Test(enabled = false)
@@ -35,6 +47,24 @@ public class ExpediaFlightsPageTest extends BaseAPI {
         expediaFlightsPage = new ExpediaFlightsPage();
         expediaFlightsPage.navigateToFlightsPage();
         Assert.assertTrue(expediaFlightsPage.verifyCountryCodeOptions(), "The Country Code Options are displayed incorrectly.");
+    }
+
+    @Test(enabled = false)
+    public void testChangeOrCancelTrip() throws Exception{
+        expediaFlightsPage = new ExpediaFlightsPage();
+        expediaFlightsPage.navigateToFlightsPage();
+        expediaFlightsPage.changeOrCancelTrip();
+        driver.switchTo().frame(3);
+        waitUntilWebElementVisible(expediaFlightsPage.chatWithVirtualAgent);
+        Assert.assertTrue(expediaFlightsPage.chatWithVirtualAgent.isDisplayed(),"Change or Cancel trip doesn't invoke the Virtual Chat.");
+    }
+
+    @Test(enabled = false)
+    public void testUseCreditOrCoupon() throws Exception{
+        expediaFlightsPage = new ExpediaFlightsPage();
+        expediaFlightsPage.navigateToFlightsPage();
+        expediaSignInPage = expediaFlightsPage.useCreditOrCoupon();
+        Assert.assertTrue(expediaSignInPage.headerSignIn.isDisplayed());
     }
 
     @Test(enabled = false)
@@ -58,7 +88,7 @@ public class ExpediaFlightsPageTest extends BaseAPI {
         Assert.assertTrue(expediaFlightsPage.verifyLinksFindYourNextDest(), "One or more links are broken.");
     }
 
-    @Test
+    @Test(enabled = false)
     public void testsLinksTitlesSwitchRoutine() throws Exception {
         expediaFlightsPage = new ExpediaFlightsPage();
         expediaFlightsPage.navigateToFlightsPage();

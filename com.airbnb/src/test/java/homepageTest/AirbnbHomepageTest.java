@@ -17,14 +17,14 @@ public class AirbnbHomepageTest extends BaseAPI {
     AirbnbBecomeAHostPage airbnbBecomeAHostPage;
     AirbnbAdventuresPage airbnbAdventuresPage;
 
-    @Test(enabled = false)
+    @Test(enabled = true, groups = "sanity")
     public void testNavigateToOnlineExperiencesPage() {
         AirbnbHomepage airbnbHomepage = new AirbnbHomepage();
         airbnbOnlineExperiencesPage = airbnbHomepage.navigateToOnlineExperiencesPage();
         Assert.assertTrue(airbnbOnlineExperiencesPage.headerOnlineExperiencesPage.isDisplayed());
     }
 
-    @Test(enabled = false)
+    @Test(enabled = true, groups = "sanity")
     public void testNavigateToBecomeAHostPage() {
         AirbnbHomepage airbnbHomepage = new AirbnbHomepage();
         airbnbBecomeAHostPage = airbnbHomepage.navigateToBecomeAHostPage();
@@ -65,7 +65,7 @@ public class AirbnbHomepageTest extends BaseAPI {
         Assert.assertEquals(actualNumOfLanguages, expectedNumOfLanguages, "The number of languages is incorrect.");
     }
 
-    @Test(enabled = true)
+    @Test(enabled = false, groups = "smoke")
     public void testLanguages() throws IOException {
         AirbnbHomepage airbnbHomepage = new AirbnbHomepage();
         Assert.assertTrue(airbnbHomepage.verifyLanguages(), "The languages are displayed incorrectly.");
