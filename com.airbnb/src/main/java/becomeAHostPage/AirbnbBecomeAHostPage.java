@@ -28,13 +28,13 @@ public class AirbnbBecomeAHostPage extends BaseAPI {
 
     @FindBy(xpath = WebElementBecomeHost)
     WebElement becomeHostButton;
-    @FindBy(css = WebElementGetStartedButton)
+    @FindBy(xpath = WebElementGetStartedButton)
     WebElement getStartedButton;
     @FindBy(xpath = WebElementCountryDropDown)
     WebElement countryDropDown;
     @FindBy(css = WebElementInputPhoneNumber)
     WebElement inputPhoneNumber;
-    @FindBy(css = WebElementContinueClick)
+    @FindBy(xpath = WebElementContinueClick)
     WebElement clickOnContinue;
     @FindBy(xpath = WebElementEntirePlaceDropDown)
     WebElement entirePlace;
@@ -62,6 +62,8 @@ public class AirbnbBecomeAHostPage extends BaseAPI {
     WebElement signUpWithMac;
     @FindBy(xpath = WebElementEarningPotentialInfo)
     WebElement earningPotential;
+    @FindBy(xpath =WebElementAgreeButton)
+    WebElement agreeButton;
     @FindBy(xpath = WebElementExploreHosting)
     WebElement exploreHosting;
     @FindBy(xpath = WebElementWhyHostOnAirbnb)
@@ -70,12 +72,8 @@ public class AirbnbBecomeAHostPage extends BaseAPI {
     WebElement hostSupport;
     @FindBy(xpath = WebElementHostSearchBar)
     WebElement hostSearchBar;
-    @FindBy(xpath = WebElementHostHelp)
-    WebElement hostHelp;
-    @FindBy(xpath = WebElementHelpHowIBook)
-    WebElement helpHowIBook;
-    @FindBy(css=WebElementHelpHowIBookYes)
-    WebElement helpHowIBookYes;
+    @FindBy(xpath =WebElementSuccessListing)
+    WebElement successListing;
     @FindBy(xpath=WebElementHowToEarnMoneyWithAirbnb)
     WebElement howToEarnMoneyWithAirbnb;
     @FindBy(xpath = WebElementGuidesForHost)
@@ -91,20 +89,25 @@ public class AirbnbBecomeAHostPage extends BaseAPI {
 
 
 
-    //---------------------------Methods test1:Sign-UP--------------------------------------------
+    /**
+     * Test case:1
+     * Navigate to become a host button
+     * click on get started button
+     * move to the tab and select the country code
+     * enter phone number
+     * click on SignUp Button to sign UP
+     */
 
     public void clickOnbecomeHostButton() {
-        new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(becomeHostButton));
-        becomeHostButton.click();
+      clickOnTheElement(becomeHostButton);
     }
 
     public void clickOnGetStartedButton() {
-        //new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(getStartedButton));
-        getStartedButton.click();
+      clickOnTheElement(getStartedButton);
     }
 
     public void selectCountry() {
-        new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(countryDropDown ));
+       waitForVisibilityOfElement(countryDropDown);
         Select select = new Select(countryDropDown);
         select.selectByVisibleText("Algeria (+213)");
     }
@@ -114,56 +117,64 @@ public class AirbnbBecomeAHostPage extends BaseAPI {
     3-Create a formatted string using these groups in '($1) $2-$3' pattern.*/
     public void convertPhoneNumber(String phoneNumber){
         String input = "1234567890";
-        String number = input.replaceFirst("(\\d{3})(\\d{3})(\\d+)", "($1) $2-$3");
+        String number= input.replaceFirst("(\\d{3})(\\d{3})(\\d+)", "($1) $2-$3");
     }
+
     public void phoneInput() {
-        convertPhoneNumber("2134566789");
-        inputPhoneNumber.sendKeys("2134566789");
+        convertPhoneNumber("45667899");
+        inputPhoneNumber.sendKeys("45667899");
     }
     public void clickOnContinueToSignUp() {
         clickOnbecomeHostButton();
         clickOnGetStartedButton();
         selectCountry();
         phoneInput();
-        clickOnContinue.click();
+       clickOnTheElement(clickOnContinue);
     }
-    //----------------------------------Test2:sign up with invalid data------------------------------------------
+    /**
+     * Test case:2
+     * Navigate to become a host button
+     * click on get started button
+     * move to the tab and select the country
+     * enter Invalid phone number
+     */
 
     // method to check if the phone number is valid
     public boolean checkPhoneNumber(String phone){
-        try{
-            boolean isValid =  phone.matches("\\d{3}-\\d{3}-\\d{4}");
-            System.out.println(phone+" : "+isValid);
-            return isValid;
-        }catch
-        (Exception e) {
-            System.out.println("Phone number is too short or contains invalid characters.");
-        }
-        return true;
+
+            boolean valid =  phone.matches("\\d{3}-\\d{3}-\\d{4}");
+            System.out.println(phone+" : "+valid);
+            return true;
     }
+
     public void invalidInput(){
         clickOnbecomeHostButton();
         clickOnGetStartedButton();
         selectCountry();
         checkPhoneNumber("123");
-        inputPhoneNumber.sendKeys("123");
-        clickOnContinue.click();
+        sendKeysToElement(inputPhoneNumber,"123");
+        clickOnTheElement(clickOnContinue);
     }
-    //----------------Methods test3 :Entire Place Drop Down-----------------------------
+    /**
+     * Test case:3
+     * Navigate to become a host button
+     * click on Entire Place Drop Down
+     * Select Entire place from DropDown
+     */
     public void clickOnEntirePlace() {
         clickOnbecomeHostButton();
-        entirePlace.click();
+        clickOnTheElement(entirePlace);
         chooseRoomOption("Entire place");
     }
     public void clickOnEntirePlaceMark() {
-        entirePlaceChoice.click(); }
+        clickOnTheElement(entirePlaceChoice); }
 
     public void clickOnPrivateRoomMark() {
-        privateRoomChoice.click();
+      clickOnTheElement(privateRoomChoice);
     }
 
     public void clickOnSharedRoomMark() {
-        sharedRoomChoice.click();
+      clickOnTheElement(sharedRoomChoice);
     }
     //I created a switch case to go through the Entire Place Drop Down
     public void chooseRoomOption(String option) {
@@ -180,10 +191,13 @@ public class AirbnbBecomeAHostPage extends BaseAPI {
         }
     }
 
-    //----------------------Methods test4 :How many guests in DropDown-------------------------------
 
+    /**
+     * Test case:4
+     * Navigate to become a host button
+     * select Num Of guests DropDown
+     */
     public void numberOfGuests(int numGuests) {
-        //going through the drop down and choosing how many guests I want (4)
         List<WebElement> guests = driver.findElements(By.xpath("//div[@aria-labelledby='capacity-dropdown']"));
         int s = guests.size();
         for (WebElement element : guests) {
@@ -193,10 +207,15 @@ public class AirbnbBecomeAHostPage extends BaseAPI {
     public void howManyGuests() {
         clickOnbecomeHostButton();
         numberOfGuests(4);
-        guestCapacity.click();
+       clickOnTheElement(guestCapacity);
     }
- //------------------------------------method test5 :validate number of guests DropDown---------------------
 
+    /**
+     * Test case:5
+     * Navigate to become a host button
+     * select Num Of guests DropDown
+     * validate number of guests
+     */
     public int numberOfGuestsInTheDropDown() {
      clickOnbecomeHostButton();
      //created a List to go through the drop down
@@ -209,11 +228,16 @@ public class AirbnbBecomeAHostPage extends BaseAPI {
      int numOfGuests=16;
      return numOfGuests;
  }
-    //-----------------------------Methods test6:hostHelpLink--------------------------------------------------
-
+    /**
+     * Test case:6
+     * Navigate to become a host button
+     * click on the link "How we support host"
+     *Move to the new opening window
+     * click on SignUp
+     */
     public void hostHelpCustomerService() {
         clickOnbecomeHostButton();
-        hostSupport.click();
+        clickOnTheElement(hostSupport);
         //best thing I learn today:this method is used to switch to a new window
 
         String winHandleBefore = driver.getWindowHandle();
@@ -225,24 +249,36 @@ public class AirbnbBecomeAHostPage extends BaseAPI {
         new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath("//div[text()='Sign up']")));
         new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(By.xpath("//div[text()='Sign up']"))).click();
     }
-    //----------------------------------test7 GuidesForHosting-------------------------------------------------
-
+    /**
+     * Test case:7
+     * Navigate to become a host button
+     * click on the link "How we support host"
+     *Move to the new opening window
+     * click on guides tab
+     *mouseHover Success Listening
+     */
     public void guidesHost(){
         clickOnbecomeHostButton();
-        hostSupport.click();
+        clickOnTheElement(hostSupport);
         //we switch to a new window
 
         String winHandleBefore = driver.getWindowHandle();
         for (String winHandle : driver.getWindowHandles()) {
             driver.switchTo().window(winHandle);
         }
+        clickOnTheElement(guidesHost);
         //I mouse Hover Guides Tab and click on it
         Actions action = new Actions(driver);
-        action.moveToElement(guidesHost).click().build().perform();
+        action.moveToElement(successListing).click().build().perform();
     }
 
-//----------------------------------Methods test8:Receive Notification---------------------------------------------
-
+    /**
+     * Test case:8
+     * Navigate to become a host button
+     * input email address
+     * input phone number
+     * check the box to receive Notification
+     */
     public void inputEmail() {
         emailAddress.sendKeys("lamiabedjou@gmail.com");
     }
@@ -253,11 +289,16 @@ public class AirbnbBecomeAHostPage extends BaseAPI {
         clickOnbecomeHostButton();
         inputEmail();
         phoneNumberTosend();
-        //check the box to receive Notification to my email
         emailNotCheckBox.isEnabled();
     }
 
-//---------methods test9:Protected while Hosting Link-----------------------------------------
+    /**
+     * Test case:9
+     * Navigate to become a host button
+     * click on Discovering the world of hosting
+     * Switch to a new window
+     * scroll down the page and Click on ThumbUp
+     */
 
     public void clickOnProtectedHostLink() {
         protectHost.click();
@@ -271,46 +312,75 @@ public class AirbnbBecomeAHostPage extends BaseAPI {
             driver.switchTo().window(winHandle);
         }
         // give Thumb Up :helpful Article
-        helpfulArticle.click();
+        clickOnTheElement(helpfulArticle);
     }
 
-    //-------------------methods test10:SignUpWithFacebook---------------------------------------------------
-
+    /**
+     * Test case:10
+     * Navigate to become a host button
+     * click on get Started
+     * click on SignUp with Facebook
+     * switch to a new window
+     * click on agree and continue
+     */
     public void useFacebookToSignUp() {
         clickOnbecomeHostButton();
         clickOnGetStartedButton();
         new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(By.xpath("//button[@data-testid='social-auth-button-facebook']"))).click();
         getStartedWithFacebook.click();
+        switchToNewTab(1);
+        clickOnTheElement(agreeButton);
+
     }
 
-    //----------------------test11:SignUpWith Mac----------------------------------------------------------------
+    /**
+     * Test case:11
+     * Navigate to become a host button
+     * click on get Started
+     * click on SignUp with Mac
+     */
     public void choseMacToSignUp() {
         clickOnbecomeHostButton();
         clickOnGetStartedButton();
-        new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(By.xpath("//div[text()='Continue with Apple']"))).click();
-       signUpWithMac.click();}
+        clickOnTheElement(signUpWithMac);}
+    /**
+     * Test case:12
+     * Navigate to become a host button
+     * click on earning potential
+     * validate the page displays
+     */
 
-    //------------------------------method test12:EarningPotentialInfo-----------------------------------------
-
-    public void validateInfoPopUpDisplay() {
+     public void validateInfoPopUpDisplay() {
         clickOnbecomeHostButton();
         boolean actualPageIsDisplayed = earningPotential.isDisplayed();
         Assert.assertEquals(actualPageIsDisplayed, true, "Expected page does not exist");
     }
 
-    //------------------------------Methods test13:ExploreHostingLink--------------------------------------------
+    /**
+     * Test case:13
+     * Navigate to become a host button
+     * click on explore hosting link
+     *click on why hosting on airbnb video
+     * validate that the video is there
+     */
 
     public void exploreHostingWord() {
         clickOnbecomeHostButton();
-        exploreHosting.click();
-        whyHostOnAirbnb.click();
+        clickOnTheElement(exploreHosting);
+        clickOnTheElement(whyHostOnAirbnb);
     }
 
-    //-------------------------Methods test14:HostCustomerService--------------------------------------------
+    /**
+     * Test case:14
+     * Navigate to become a host button
+     * click on explore hosting Support link
+     * Switch to a new window
+     * put input in the search bar
+     */
 
     public void hostCustomerService() {
         clickOnbecomeHostButton();
-        hostSupport.click();
+       clickOnTheElement(hostSupport);
         //switch to the new window after clicking on Host Support Link
 
         String winHandleBefore = driver.getWindowHandle();
@@ -328,19 +398,35 @@ public class AirbnbBecomeAHostPage extends BaseAPI {
 
     }
 
-   //-------------------------------test15:how to earn money with airBNB----------------------------------------------
+    /**
+     * Test case:15
+     * Navigate to become a host button
+     * click on How to earn money with airbnb
+     * validate the page displays
+     */
+
     public boolean earnMoneyAirbnb(){
         clickOnbecomeHostButton();
         howToEarnMoneyWithAirbnb.isDisplayed();
         return true;
     }
-
- //-----------------------------------Test16;test Privacy Policy-----------------------------------------------
+    /**
+     * Test case:16
+     * Navigate to become a host button
+     * click on Privacy policy
+     * validate the text
+     */
   public void privacyPolicyairbnb(){
         clickOnbecomeHostButton();
-        privacyPolicy.isDisplayed();
+      System.out.println(privacyPolicy.getText());
   }
-//-----------------------------------Test17:RegisterForWebinar-------------------------------------------------
+    /**
+     * Test case:17
+     * Navigate to become a host button
+     * click on Learn from a real host lik
+     * move to a new opening window
+     * select a date for webinar and click on register
+     */
     public void chooseDateForWebinar(){
         clickOnbecomeHostButton();
         LearnFromArealHost.click();
@@ -349,28 +435,34 @@ public class AirbnbBecomeAHostPage extends BaseAPI {
             driver.switchTo().window(winHandle);
         }
         datePickedForWebinar.click();
-    }//------------------------------test 18:navigate to Is my space a good fit for-------------------------
+    }
+    /**
+     * Test case:18
+     * Navigate to become a host button
+     * get the URL
+     * Validate The URL
+     */
     public String validateNavigationToUrl() {
         clickOnbecomeHostButton();
         //get the URL of the currently opened web page in the browser.
         String url = driver.getCurrentUrl();
         return url;
     }
+    /**
+     * Test case:19
+     * Navigate to become a host button
+     * Select Image to Download
+     * Download Image to destination
+     */
 
-//-----------------------------------------Test19:SaveImageInSelenium------------------------------------------
-public void saveImageFileOnSite() {
+public void downloadPicture() {
         clickOnbecomeHostButton();
     try {
-        //Getting the Image Path
-        String airbnbImage = image.getAttribute("src");
-        System.out.println(airbnbImage);
-        //convert Image path to Java URL using URL Class
-        java.net.URL imageURL = new URL(airbnbImage);
-        //Read the image object from URL
-        BufferedImage saveImage = ImageIO.read(imageURL);
-        //write image on the disk
-        ImageIO.write(saveImage, "jpg", new File("airbnb.jpg"));
-
+        String airbnbImage = image.getAttribute("src"); //Getting the Image Path
+        java.net.URL imageURL = new URL(airbnbImage);//convert Image path to Java URL using URL Class
+        BufferedImage saveImage = ImageIO.read(imageURL); //Read the image object from URL
+        String path=System.getProperty("user.dir")+"/C/Users/Lamia/IdeaProjects";
+        ImageIO.write(saveImage, "jpg", new File(path));   //Download image to the path
     } catch (Exception e) {
         e.printStackTrace();
     }

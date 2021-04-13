@@ -8,108 +8,108 @@ import org.testng.annotations.Test;
 public class AirbnbBecomeAHostPageTest extends BaseAPI {
     AirbnbBecomeAHostPage airbnbBecomeAHostPage;
 
-    @Test
+    @Test(enabled = false)
     public void testSignUp() {
-        AirbnbBecomeAHostPage airbnbBecomeAHostPage = new AirbnbBecomeAHostPage();
+        airbnbBecomeAHostPage = new AirbnbBecomeAHostPage();
         airbnbBecomeAHostPage.clickOnContinueToSignUp();
     }
-    @Test
+    @Test(enabled = false)
     public void testForInvalidSignUp(){
-        AirbnbBecomeAHostPage airbnbBecomeAHostPage = new AirbnbBecomeAHostPage();
+        airbnbBecomeAHostPage = new AirbnbBecomeAHostPage();
         airbnbBecomeAHostPage.invalidInput();
     }
-    @Test
+    @Test(enabled = false)
     public void testRoomOptionDropDown(){
-        AirbnbBecomeAHostPage airbnbBecomeAHostPage=new AirbnbBecomeAHostPage();
+       airbnbBecomeAHostPage=new AirbnbBecomeAHostPage();
         airbnbBecomeAHostPage.clickOnEntirePlace();
     }
-   @Test
+   @Test(enabled = false)
     public void testNumberOfGuest() {
-       AirbnbBecomeAHostPage airbnbBecomeAHostPage = new AirbnbBecomeAHostPage();
+       airbnbBecomeAHostPage = new AirbnbBecomeAHostPage();
        airbnbBecomeAHostPage.howManyGuests();
    }
-   @Test
+   @Test(enabled = false)
    public void testNumberOfGuestDropDown(){
-       AirbnbBecomeAHostPage airbnbBecomeAHostPage = new AirbnbBecomeAHostPage();
+       airbnbBecomeAHostPage = new AirbnbBecomeAHostPage();
        int actualDropDownGuests=airbnbBecomeAHostPage.numberOfGuestsInTheDropDown();
        Assert.assertEquals(actualDropDownGuests,16);
    }
-    @Test
+    @Test(enabled = false)
     public void testHelpHowToBookOnAirbnb(){
         AirbnbBecomeAHostPage airbnbBecomeAHostPage = new AirbnbBecomeAHostPage();
         airbnbBecomeAHostPage.hostHelpCustomerService();
     }
-    @Test
+    @Test(enabled = false)
     public void testGuidesHost(){
-        AirbnbBecomeAHostPage airbnbBecomeAHostPage = new AirbnbBecomeAHostPage();
+        airbnbBecomeAHostPage = new AirbnbBecomeAHostPage();
         airbnbBecomeAHostPage.guidesHost();
     }
 
-   @Test
+   @Test(enabled = false)
     public void testReceiveNotification(){
-       AirbnbBecomeAHostPage airbnbBecomeAHostPage = new AirbnbBecomeAHostPage();
+    airbnbBecomeAHostPage = new AirbnbBecomeAHostPage();
        airbnbBecomeAHostPage.checkTheBoxForNotification();
    }
-  @Test
+  @Test(enabled = false)
     public void testProtectedHost(){
-      AirbnbBecomeAHostPage airbnbBecomeAHostPage = new AirbnbBecomeAHostPage();
+      airbnbBecomeAHostPage = new AirbnbBecomeAHostPage();
       airbnbBecomeAHostPage.protectedHostGiveThumbUp();
   }
-  @Test
+  @Test(enabled =false)
     public void testSignUpWithFacebook(){
-      AirbnbBecomeAHostPage airbnbBecomeAHostPage = new AirbnbBecomeAHostPage();
+       airbnbBecomeAHostPage = new AirbnbBecomeAHostPage();
       airbnbBecomeAHostPage.useFacebookToSignUp();
   }
-  @Test
+  @Test(enabled = false)
   public void testMac(){
-      AirbnbBecomeAHostPage airbnbBecomeAHostPage = new AirbnbBecomeAHostPage();
+     airbnbBecomeAHostPage = new AirbnbBecomeAHostPage();
       airbnbBecomeAHostPage.choseMacToSignUp();
   }
-  @Test
+  @Test(enabled = false)
     public void testPotentialLink(){
-      AirbnbBecomeAHostPage airbnbBecomeAHostPage = new AirbnbBecomeAHostPage();
+     airbnbBecomeAHostPage = new AirbnbBecomeAHostPage();
       airbnbBecomeAHostPage.validateInfoPopUpDisplay();
   }
-  @Test
+  @Test(enabled = false)
     public void testHostingWordVideo(){
-      AirbnbBecomeAHostPage airbnbBecomeAHostPage = new AirbnbBecomeAHostPage();
+        airbnbBecomeAHostPage = new AirbnbBecomeAHostPage();
       airbnbBecomeAHostPage.exploreHostingWord();
   }
-  @Test
+  @Test(enabled = false)
     public void testHostCustomerSupport() {
       AirbnbBecomeAHostPage airbnbBecomeAHostPage = new AirbnbBecomeAHostPage();
       airbnbBecomeAHostPage.hostCustomerService();
   }
 
-   @Test
+   @Test(enabled = false)
    public void testLearnToEarnMoneyWithAirbnb(){
-       AirbnbBecomeAHostPage airbnbBecomeAHostPage = new AirbnbBecomeAHostPage();
+        airbnbBecomeAHostPage = new AirbnbBecomeAHostPage();
        boolean actualPageDisplayed =airbnbBecomeAHostPage.earnMoneyAirbnb();
        Assert.assertEquals(actualPageDisplayed, true, "Expected page does not exist");
    }
 
-    @Test
+    @Test(enabled = false)
     public void testPrivacyPolicy(){
-        AirbnbBecomeAHostPage airbnbBecomeAHostPage = new AirbnbBecomeAHostPage();
+        airbnbBecomeAHostPage = new AirbnbBecomeAHostPage();
         airbnbBecomeAHostPage.privacyPolicyairbnb();
     }
-    @Test
+    @Test(enabled = false)
     public void TestRegisterForWebinar(){
-        AirbnbBecomeAHostPage airbnbBecomeAHostPage = new AirbnbBecomeAHostPage();
+        airbnbBecomeAHostPage = new AirbnbBecomeAHostPage();
         airbnbBecomeAHostPage.chooseDateForWebinar();
     }
-    @Test
+    @Test(enabled = false)
     public void testNavigationToIsMySpaceAGoodFit(){
-        AirbnbBecomeAHostPage airbnbBecomeAHostPage = new AirbnbBecomeAHostPage();
+        airbnbBecomeAHostPage = new AirbnbBecomeAHostPage();
         String actualUrl= airbnbBecomeAHostPage.validateNavigationToUrl();
         String expectedUrl="https://www.airbnb.com/host/homes";
         Assert.assertEquals(actualUrl,expectedUrl,"URL's do not match");
 
     }
-    @Test
-    public void TestSaveImageSelenium(){
-        AirbnbBecomeAHostPage airbnbBecomeAHostPage = new AirbnbBecomeAHostPage();
-        airbnbBecomeAHostPage.saveImageFileOnSite();
+    @Test(enabled = true)
+    public void TestDownloadPictureSelenium(){
+        airbnbBecomeAHostPage = new AirbnbBecomeAHostPage();
+        airbnbBecomeAHostPage.downloadPicture();
     }
 
   }

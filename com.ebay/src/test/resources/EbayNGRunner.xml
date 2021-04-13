@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+<suite name="Ebay test Suite">
+    <test name="CR1">
+        <parameter name="BrowserName" value="chrome"/>
+        <parameter name="BrowserVersion" value="90"/>
+        <parameter name="url" value="https://www.ebay.com"/>
+        <classes>
+        <class name="ebayhomegardenpagetest.EbayHomeGardenPageTest"></class>
+            <class name="sellPageTest.SellPageTest"></class>
+        </classes>
+    </test>
+</suite>

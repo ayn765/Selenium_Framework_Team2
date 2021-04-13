@@ -3,16 +3,17 @@ package becomeAHostPage;
 public class AirbnbBecomeAHostPageLocators {
 
   public static final String WebElementBecomeHost="//a[@href=\"/host/homes\"]";
-  public static final String WebElementGetStartedButton="#FMP-target > div._x7jndg > div._1mc41qp > a > span._163rr5i > span";
+  public static final String WebElementGetStartedButton="//*[@id=\"FMP-target\"]/div[5]/div/a/span[1]";
   public static final String WebElementCountryDropDown="//*[@id='country']";
   public static final String WebElementInputPhoneNumber="#phoneNumber";
-  public static final String WebElementContinueClick="span._m9v25n";
+  public static final String WebElementContinueClick="//button[@data-testid='signup-login-submit-btn']";
   public static final String WebElementEntirePlaceDropDown="//div[@aria-labelledby='room_type-dropdown']";
   public static final String WebElementEntirePlaceChoice="//div[text()='Entire place']";
   public static final String WebElementPrivateRoomChoice="//div[text()='Guests have their own private room for sleeping. Other areas could be shared.']";
   public static final String WebElementSharedRoomChoice="//div[text()='Guests sleep in a bedroom or a common area that could be shared with others.']";
   public static final String WebElementGuestCapacity="//div[@aria-labelledby='capacity-dropdown']";
-  public static final String WebElementFindWebinar="//a[text()='Find a webinar']";
+  public static final String WebElementSuccessListing="//a[@href=\"/resources/hosting-homes/g/setting-up-a-successful-listing-3\"]";
+  public static final String WebElementAgreeButton="//button[@data-testid=\"signup-login-submit-btn\"]";
   public static final String WebElementEmail="#email";
   public static final String WebElementPhoneNumber="#phone";
   public static final String WebElementEmailNotCheckBox="#email-communications";
@@ -26,9 +27,6 @@ public class AirbnbBecomeAHostPageLocators {
   public static final String WebElementWhyHostOnAirbnb="//div[text()='Why host on Airbnb?']";
   public static final String WebElementHostSupport="//a[text()='How we support Hosts']";
   public static final String WebElementHostSearchBar="//div[@class='_9jnsit']";
-  public static final String WebElementHostHelp="//a[@href='/help']";
-  public static final String WebElementHelpHowIBook="//a[@href='/help/article/380/how-do-i-book-a-place-on-airbnb']";
-  public static final String WebElementHelpHowIBookYes="#site-content > section > div._12t7zck > div > div > div._1ltht4b > div > button";
   public static final String WebElementHowToEarnMoneyWithAirbnb="//a[@href='/resources/hosting-homes/a/how-to-earn-money-on-airbnb-282']";
   public static final String WebElementGuidesForHost="//div[text()='Guides']";
   public static final String WebElementPrivacyPolicy="//a[@href='/terms/privacy_policy']";

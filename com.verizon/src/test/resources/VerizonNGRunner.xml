@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+<suite name="Verizon test Suite">
+    <test name="CR1">
+        <parameter name="BrowserName" value="chrome"/>
+        <parameter name="BrowserVersion" value="90"/>
+        <parameter name="url" value="https://www.verizon.com"/>
+        <classes>
+        <class name=""></class>
+        </classes>
+    </test>
+</suite>
