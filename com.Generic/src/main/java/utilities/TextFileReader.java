@@ -43,10 +43,7 @@ public class TextFileReader extends BaseAPI{
     public String readToString(String path) {
         String data = "";
         try {
-
-            // default StandardCharsets.UTF_8
             data = Files.readString(Paths.get(path));
-            System.out.println(data);
 
         } catch (IOException e) {
             e.printStackTrace();

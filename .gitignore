@@ -17,7 +17,7 @@ buildNumber.properties
 /.idea
 *.iml
 /target
-
+/reporting.testReports
 # Compiled class file
 *.class
 

@@ -2,7 +2,6 @@ package flightsPageTest;
 
 import common.BaseAPI;
 import flightsPage.ExpediaFlightsPage;
-import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import signIn.ExpediaSignInPage;
@@ -24,7 +23,7 @@ public class ExpediaFlightsPageTest extends BaseAPI {
         Assert.assertTrue(expediaFlightsPage.linkTravelWithChild.isDisplayed(), "The Airline Age Rules Page is not properly displayed.");
     }
 
-    @Test(enabled = true, groups = "smoke")
+    @Test(enabled = false, groups = "smoke")
     public void testOnewaySearch() throws Exception{
         expediaFlightsPage = new ExpediaFlightsPage();
         expediaFlightsPage.navigateToFlightsPage();
@@ -95,11 +94,25 @@ public class ExpediaFlightsPageTest extends BaseAPI {
         Assert.assertTrue(expediaFlightsPage.verifyLinksTitlesSwitchRoutine(), "Titles of one or more links are incorrect.");
     }
 
-//    @Test
-//    public void test() throws IOException {
-//        expediaFlightsPage = new ExpediaFlightsPage();
-//        expediaFlightsPage.test();
-//    }
+    @Test(groups = "regression")
+    public void testHelpChat() throws Exception {
+        expediaFlightsPage = new ExpediaFlightsPage();
+        expediaFlightsPage.navigateToFlightsPage();
+        expediaFlightsPage.navigateToHelpChat();
+        waitUntilWebElementVisible(expediaFlightsPage.chatWithVirtualAgent);
+        Assert.assertTrue(expediaFlightsPage.chatWithVirtualAgent.isDisplayed(), "The help chat test failed.");
+    }
+    @Test(groups = "regression")
+    public void testDropDownFlightClass() throws Exception {
+        expediaFlightsPage = new ExpediaFlightsPage();
+        expediaFlightsPage.navigateToFlightsPage();
+        Assert.assertTrue(expediaFlightsPage.verifyDropdownFlightClass(), "The Flight Class Dropdown is not displayed correctly.");
+    }
 
-
+    @Test(groups = "smoke")
+    public void testFooterLinks() throws Exception{
+        expediaFlightsPage = new ExpediaFlightsPage();
+        expediaFlightsPage.navigateToFlightsPage();
+        Assert.assertTrue(expediaFlightsPage.verifyFooterLinks());
+    }
 }

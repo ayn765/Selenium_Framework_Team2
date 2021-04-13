@@ -33,7 +33,9 @@ public class ExpediaFlightsPageLocators extends BaseAPI {
     public static final String WEBELEMENT_MESSAGE_ERROR_PHONE_NUM = "#phoneNumber-error";
     public static final String WEBELEMENTS_LINKS_FIND_YOUR_NEXT_DEST = "li.uitk-carousel-item>div>div>div>div>a";
     public static final String WEBELEMENTS_LINKS_SWITCH_ROUTINE = ".uitk-card-aloha-content-section.uitk-card-aloha-content-section-has-link>a";
-
-
+    public static final String WEBELEMENT_BUTTON_HELP = ".uitk-button-floating.launch-button";
+    public static final String WEBELEMENT_BUTTON_FLIGHT_CLASS = "a#preferred-class-input-trigger>svg.uitk-icon.uitk-icon-medium";
+    public static final String WEBELEMENTS_DROPDOWN_FLIGHT_CLASS = "div.uitk-menu-container-text-nowrap>div>a";
+    public static final String WEBELEMENT_LINKS_FOOTER = ".uitk-flex-align-items-center.uitk-flex-wrap.uitk-flex-row>li>a";
 
 }

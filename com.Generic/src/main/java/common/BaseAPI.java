@@ -33,7 +33,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.*;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class BaseAPI {
 
@@ -195,9 +194,11 @@ public class BaseAPI {
     public void javaScriptExecutorClickOnElement(WebElement element) {
         JavascriptExecutor jse = (JavascriptExecutor) driver;
         try {
+            waitUntilWebElementVisible(element);
             jse.executeScript("arguments[0].click()", element);
         } catch (Exception e) {
             e.printStackTrace();
+            System.out.println("Unable to click on the element with JSExecutor.");
         }
     }
 
@@ -212,14 +213,32 @@ public class BaseAPI {
         }
     }
 
-    public void jsScrollIntoView(WebElement elements) {
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", elements);
+    public void jsScrollIntoView(WebElement element) {
+        try {
+            waitUntilWebElementVisible(element);
+            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", element);
+
+        }catch (Exception e){
+            e.printStackTrace();
+            System.out.println("Unable to scroll into view.");
+        }
     }
 
     public void removeAttributeNone(WebElement element) {
         ((JavascriptExecutor) driver).executeScript("arguments[0].removeAttribute('style')", element);
 
     }
+    public void playEmbeddedVideo(WebElement buttonPlay){
+
+        try {
+            javaScriptExecutorClickOnElement(buttonPlay);
+            System.out.println("Clicked \"Play\" on embedded Video player");
+        } catch (Exception e) {
+            e.printStackTrace();
+            clickElement(buttonPlay);
+        }
+    }
+
 
     public void sendKeysToElement(WebElement element, String keysToSend) {
 
@@ -356,6 +375,44 @@ public class BaseAPI {
         }
     }
 
+    public void dismissAlert() {
+        try {
+            driver.switchTo().alert().dismiss();
+        } catch (Exception e) {
+            System.out.println("The alert was not detected or couldn't be dismissed.");
+        }
+    }
+    public void closePopUp(WebElement popUp, WebElement dismissPopUp){
+        try {
+            driverWait.until(ExpectedConditions.visibilityOf(popUp));
+            if (popUp.isDisplayed()) {
+                dismissPopUp.click();
+                System.out.println("Pop-up closed.");
+                driver.switchTo().defaultContent();
+            } else {
+                System.out.println("Pop-up was not displayed.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void switchToiFrameByIndex(int index){
+        try{
+            driver.switchTo().frame(index);
+        System.out.println("Switched to iFrame.");
+        }catch (Exception e){
+            e.printStackTrace();
+            System.out.println("Unable to switch to iFrame.");
+        }
+    }
+
+    public void sliderBarAction(WebElement slider){
+        Actions actions = new Actions(driver);
+        actions.clickAndHold(slider);
+        actions.moveByOffset(40,0).build().perform();
+    }
+
     /**
      * Assertion Helper Methods
      */
@@ -402,33 +459,30 @@ public class BaseAPI {
         return flag;
     }
 
-
-    public void verifyLinksTitles(List<WebElement> linkElements, String attribute) {
-        Iterator<WebElement> links = linkElements.iterator();
-        boolean flag = false;
+    //Get URLs from the List of WebElements, navigate to each URL to get titles and compare all titles to data from Excel doc
+    public boolean verifyLinksTitles(List<WebElement> linkElements, String attribute, String excelDocPath, String sheetName) throws IOException {
+        Iterator<WebElement> iterator = linkElements.iterator();
         String url;
-        while (links.hasNext()) {
-            url = links.next().getAttribute(attribute);
-            if ((url == null) || (url.isEmpty())) {
-                System.out.println("URL is either not configured for " + attribute + " tag or it is empty");
-                continue;
-            }
-            try {
-                driver.navigate().to(url);
-                System.out.println(driver.getTitle());
-                driver.navigate().back();
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-                e.printStackTrace();
-            }
+        List<String> links = new ArrayList<>();
+        ArrayList<String> titles = new ArrayList<>();
+        while (iterator.hasNext()) {
+            url = iterator.next().getAttribute(attribute);
+            links.add(url);
         }
+        for (String x : links) {
+            driver.navigate().to(x);
+            String pageTitle = driver.getTitle();
+            titles.add(pageTitle);
+        }
+
+        return compareListStringsToExcelDoc(titles, excelDocPath, sheetName);
     }
 
     public boolean compareListWebElementsToExcelDoc(List<WebElement> elements, String excelDocPath, String sheetName) throws IOException {
 
         dataReader = new DataReader();
         String[] excelData = dataReader.fileReaderStringArrayXSSF(excelDocPath, sheetName);
-//        waitUntilWebElementListVisible(elements);
+        waitUntilWebElementListVisible(elements);
         boolean flag = false;
         int count = 0;
 

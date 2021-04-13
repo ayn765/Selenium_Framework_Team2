@@ -105,6 +105,18 @@ public class ExpediaFlightsPage extends BaseAPI {
     @FindBy(css = WEBELEMENTS_LINKS_SWITCH_ROUTINE)
     public List<WebElement> linksSwitchRoutine;
 
+    @FindBy(css = WEBELEMENT_BUTTON_HELP)
+    public WebElement buttonHelp;
+
+    @FindBy(css = WEBELEMENTS_DROPDOWN_FLIGHT_CLASS)
+    public List<WebElement> dropDownFlightClass;
+
+    @FindBy(css = WEBELEMENT_BUTTON_FLIGHT_CLASS)
+    public WebElement buttonFlightClass;
+
+    @FindBy(css = WEBELEMENT_LINKS_FOOTER)
+    public List<WebElement> linksFooter;
+
 
     public void navigateToFlightsPage() throws AWTException {
         pressEscapeKey();
@@ -185,6 +197,20 @@ public class ExpediaFlightsPage extends BaseAPI {
 
         boolean flag = compareListStringsToExcelDoc(titles, System.getProperty("user.dir") + "/src/test/resources/ExpediaTestData.xlsx", "YourNextDestTitles");
         return flag;
+    }
+
+    public void navigateToHelpChat(){
+        driver.switchTo().frame(3);
+        clickElement(buttonHelp);
+    }
+
+    public boolean verifyDropdownFlightClass() throws IOException {
+        clickElement(buttonFlightClass);
+        return compareListWebElementsToExcelDoc(dropDownFlightClass, System.getProperty("user.dir") + "/src/test/resources/ExpediaTestData.xlsx", "FlightClass");
+    }
+
+    public boolean verifyFooterLinks(){
+        return verifyLinks(linksFooter, "href");
     }
 
 //    public void verifyLinksTitlesFindYourNextDest() {
