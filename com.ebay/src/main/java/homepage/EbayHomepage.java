@@ -1,4 +1,4 @@
-package homepage;
+package homepagetest;
 
 public class EbayHomepage {
 }
