@@ -13,6 +13,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import utilities.DataReader;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -166,6 +167,7 @@ public class CBSSportsFantasyPageTest extends BaseAPI {
         softAssert.assertTrue(cbsSportsFantasyPage.navigateToFantasyBasketballPage().verifyLinksSideMenuResearch(), "One or more links on Side Menu Research on Fantasy Football Page are broken.");
         softAssert.assertAll();
     }
+
     /**
      * Test#9
      * 1. Navigate to CBSSports website.
@@ -181,6 +183,7 @@ public class CBSSportsFantasyPageTest extends BaseAPI {
         cbsSportsFantasyPage.navigateToFantasyPage();
         Assert.assertTrue(cbsSportsFantasyPage.navigateToFantasyHockeyPage().verifySliderBar(), "The slider bar test failed.");
     }
+
     /**
      * Test#10
      * 1. Navigate to CBSSports website.
@@ -191,7 +194,7 @@ public class CBSSportsFantasyPageTest extends BaseAPI {
      */
 
     @Test(groups = "regression")
-    public void testTabsPlayerNewsExpandedOnHockeyPage(){
+    public void testTabsPlayerNewsExpandedOnHockeyPage() {
         cbsSportsFantasyPage = new CBSSportsFantasyPage();
         cbsSportsFantasyPage.navigateToFantasyPage();
         Assert.assertTrue(cbsSportsFantasyPage.navigateToFantasyHockeyPage().verifyTabsPlayerNewsExpanded());
@@ -221,7 +224,7 @@ public class CBSSportsFantasyPageTest extends BaseAPI {
      */
 
     @Test(groups = "regression")
-    public void testHeaderOnCollegePage(){
+    public void testHeaderOnCollegePage() {
         cbsSportsFantasyPage = new CBSSportsFantasyPage();
         cbsSportsFantasyPage.navigateToFantasyPage();
         Assert.assertTrue(cbsSportsFantasyPage.navigateToFantasyCollegePage().verifyHeader());
@@ -236,11 +239,29 @@ public class CBSSportsFantasyPageTest extends BaseAPI {
      * 5. Verify that the error message is displayed.
      */
 
-    @Test(groups = "smoke")
-    public void testInvalidLoginOnPropsGamePage(){
+    @Test(groups = "regression")
+    public void testInvalidLoginOnPropsGamePage() {
         cbsSportsFantasyPage = new CBSSportsFantasyPage();
         cbsSportsFantasyPage.navigateToFantasyPage();
         Assert.assertTrue(cbsSportsFantasyPage.navigateToFantasyPropsGamePage().invalidLogIn().isDisplayed());
     }
 
+    /**
+     * Test#14
+     * 1.Navigate to CBSSports website.
+     * 2. Click Fantasy Tab to Navigate to Fantasy Page.
+     * 3. Select checkbox to agree to terms.
+     * 4. Enter email address to subscribe to emails.
+     * 5. Click submit.
+     * 6. Verify that correct message is displayed.
+     */
+
+    @Test(groups = "smoke")
+    public void testEmailSignUp() {
+        cbsSportsFantasyPage = new CBSSportsFantasyPage();
+        cbsSportsFantasyPage.emailsSignUp();
+        String expectedSignUpMessage = "Thanks for signing up!";
+        waitUntilWebElementVisible(cbsSportsFantasyPage.messageSignUp);
+        Assert.assertEquals(cbsSportsFantasyPage.messageSignUp.getText(), expectedSignUpMessage, "The Sign Up message is incorrect.");
+    }
 }

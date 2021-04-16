@@ -13,6 +13,9 @@
 
     <dependencies>
 
+
+
+
         <dependency>
             <groupId>io.github.bonigarcia</groupId>
             <artifactId>webdrivermanager</artifactId>
@@ -61,10 +64,9 @@
             <artifactId>extentreports</artifactId>
 
         </dependency>
-
         <dependency>
-            <groupId>io.cucumber</groupId>
-            <artifactId>cucumber-java</artifactId>
+            <groupId>org.apache.pdfbox</groupId>
+            <artifactId>pdfbox</artifactId>
 
         </dependency>
 

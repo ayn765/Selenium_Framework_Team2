@@ -7,10 +7,16 @@
 
         <parameter name="browserName" value="chrome"/>
         <parameter name="browserVersion" value="90"/>
-        <parameter name="url" value="https://www.espn.com/"/>
+        <parameter name="url" value="https://www.espn.com/soccer"/>
 
+        <groups>
+            <run>
+                <include name="smoke"/>
+                <exclude name="regression"/>
+            </run>
+        </groups>
         <classes>
-<!--            <class name=""/>-->
+            <class name="soccer.ESPNSoccerPageTest"/>
         </classes>
 
     </test>

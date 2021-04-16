@@ -7,10 +7,15 @@
 
         <parameter name="browserName" value="chrome"/>
         <parameter name="browserVersion" value="90"/>
-        <parameter name="url" value="https://www.bankofamerica.com/"/>
-
+        <parameter name="url" value="https://www.bankofamerica.com/smallbusiness/"/>
+        <groups>
+            <run>
+                <include name="smoke"/>
+                <exclude name="regression"/>
+            </run>
+        </groups>
         <classes>
-<!--            <class name=""/>-->
+            <class name="smallBusiness.BankOfAmericaSmallBusinessPageTest"/>
         </classes>
 
     </test>

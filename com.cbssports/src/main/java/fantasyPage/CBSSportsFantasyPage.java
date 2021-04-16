@@ -73,6 +73,18 @@ public class CBSSportsFantasyPage extends BaseAPI {
     @FindBy(css = WEBELEMENT_HOVER_TO_PROPS_GAME)
     public WebElement hoverToPropsGame;
 
+    @FindBy(css = WEBELEMENT_INPUT_EMAIL_SIGN_UP)
+    public WebElement inputEmailSignUp;
+
+    @FindBy(css = WEBELEMENT_CHECKBOX_AGREE_TO_TERMS)
+    public WebElement checkboxAgreeToTerms;
+
+    @FindBy(css = WEBELEMENT_BUTTON_SUBMIT_SIGN_UP)
+    public WebElement buttonSubmitSignUp;
+
+    @FindBy(css = WEBELEMENT_MESSAGE_SIGN_UP)
+    public WebElement messageSignUp;
+
     public void navigateToFantasyPage() {
         hoverOverElement(tabHoverToFantasyPage);
         clickElement(dropdownSelectFantasy);
@@ -131,5 +143,11 @@ public class CBSSportsFantasyPage extends BaseAPI {
         hoverOverElement(hoverToPropsGame);
         clickElement(tabPropsGame);
         return new CBSSportsFantasyPropsGamePage();
+    }
+
+    public void emailsSignUp(){
+        clickElement(checkboxAgreeToTerms);
+        sendKeysToElement(inputEmailSignUp, "someEmail@someEmail.com");
+        clickElement(buttonSubmitSignUp);
     }
 }

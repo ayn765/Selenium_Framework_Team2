@@ -1,8 +1,11 @@
 package common;
 
+
 import com.relevantcodes.extentreports.ExtentReports;
 import com.relevantcodes.extentreports.LogStatus;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.text.PDFTextStripper;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
@@ -15,10 +18,11 @@ import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 import org.testng.ITestContext;
 import org.testng.ITestResult;
-import org.testng.annotations.*;
 import org.testng.annotations.Optional;
+import org.testng.annotations.*;
 import reporting.ExtentManager;
 import reporting.ExtentTestManager;
 import utilities.DataReader;
@@ -26,19 +30,22 @@ import utilities.TextFileReader;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.*;
 import java.util.List;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 public class BaseAPI {
 
     public static WebDriver driver;
     public static WebDriverWait driverWait;
-    public TextFileReader textFileReader;
+    public static TextFileReader textFileReader;
     public Robot robot;
     public static Actions actions;
     public static ExtentReports extent;
@@ -146,7 +153,7 @@ public class BaseAPI {
         String fileName = testName + ".png";
         File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
         File newScreenshotFile = new File(System.getProperty("user.dir") + File.separator + "src" + File.separator +
-                "main" + File.separator + "java" + File.separator + "reporting" + File.separator + "screenshots" + File.separator + fileName);
+                "main" + File.separator + "java" + File.separator + "reporting" + File.separator + fileName);
 
         try {
             FileHandler.copy(screenshot, newScreenshotFile);
@@ -166,6 +173,9 @@ public class BaseAPI {
     /**
      * Action Helper Methods
      */
+
+
+
 
     public void pressEnterKey() throws AWTException {
         robot = new Robot();
@@ -190,11 +200,19 @@ public class BaseAPI {
         }
 
     }
-
+    public void javaScriptExecutorClickOnElementNoWait(WebElement element) {
+        JavascriptExecutor jse = (JavascriptExecutor) driver;
+        try {
+            jse.executeScript("arguments[0].click()", element);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Unable to click on the element with JSExecutor.");
+        }
+    }
     public void javaScriptExecutorClickOnElement(WebElement element) {
         JavascriptExecutor jse = (JavascriptExecutor) driver;
         try {
-            waitUntilWebElementVisible(element);
+            waitUntilWebElementClickable(element);
             jse.executeScript("arguments[0].click()", element);
         } catch (Exception e) {
             e.printStackTrace();
@@ -218,7 +236,7 @@ public class BaseAPI {
             waitUntilWebElementVisible(element);
             ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", element);
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Unable to scroll into view.");
         }
@@ -228,7 +246,8 @@ public class BaseAPI {
         ((JavascriptExecutor) driver).executeScript("arguments[0].removeAttribute('style')", element);
 
     }
-    public void playEmbeddedVideo(WebElement buttonPlay){
+
+    public void playEmbeddedVideo(WebElement buttonPlay) {
 
         try {
             javaScriptExecutorClickOnElement(buttonPlay);
@@ -362,6 +381,53 @@ public class BaseAPI {
             System.out.println("UNABLE TO HOVER OVER ELEMENT");
         }
     }
+    public void hoverOverElementAndClick(WebElement element) {
+        try {
+            actions = new Actions(driver);
+            waitUntilWebElementVisible(element);
+            actions.moveToElement(element);
+            actions.click().build().perform();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("UNABLE TO HOVER OVER ELEMENT AND CLICK");
+        }
+    }
+
+    public void mouseHoverJScript(WebElement HoverElement) {
+        try {
+            if (isElementPresent(HoverElement)) {
+
+                String mouseOverScript = "if(document.createEvent){var evObj = document.createEvent('MouseEvents');evObj.initEvent('mouseover', true, false); arguments[0].dispatchEvent(evObj);} else if(document.createEventObject) { arguments[0].fireEvent('onmouseover');}";
+                ((JavascriptExecutor) driver).executeScript(mouseOverScript,
+                        HoverElement);
+
+            } else {
+                System.out.println("Element was not visible to hover " + "\n");
+
+            }
+        } catch (StaleElementReferenceException e) {
+            System.out.println("Element with " + HoverElement
+                    + "is not attached to the page document"
+                    + e.getStackTrace());
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Error occurred while hovering"
+                    + e.getStackTrace());
+        }
+    }
+
+    public static boolean isElementPresent(WebElement element) {
+        boolean flag = false;
+        try {
+            if (element.isDisplayed()
+                    || element.isEnabled())
+                flag = true;
+        } catch (Exception e) {
+            flag = false;
+        }
+        return flag;
+    }
 
     public void switchToNewWindow() {
         String parentWindow = driver.getWindowHandle();
@@ -382,7 +448,8 @@ public class BaseAPI {
             System.out.println("The alert was not detected or couldn't be dismissed.");
         }
     }
-    public void closePopUp(WebElement popUp, WebElement dismissPopUp){
+
+    public void closePopUp(WebElement popUp, WebElement dismissPopUp) {
         try {
             driverWait.until(ExpectedConditions.visibilityOf(popUp));
             if (popUp.isDisplayed()) {
@@ -397,20 +464,42 @@ public class BaseAPI {
         }
     }
 
-    public void switchToiFrameByIndex(int index){
-        try{
+    public void switchToiFrameByIndex(int index) {
+        try {
             driver.switchTo().frame(index);
-        System.out.println("Switched to iFrame.");
-        }catch (Exception e){
+            System.out.println("Switched to iFrame.");
+        } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Unable to switch to iFrame.");
         }
     }
 
-    public void sliderBarAction(WebElement slider){
+    public void switchToiFrameByWebElement(WebElement element) {
+        try {
+            driver.switchTo().frame(element);
+            System.out.println("Switched to iFrame.");
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Unable to switch to iFrame.");
+        }
+    }
+
+    public void switchToNewTab(int tabIndexToSwitchTo) {
+
+        List<String> tabs = new ArrayList<>(driver.getWindowHandles());
+
+        try {
+            driver.switchTo().window(tabs.get(tabIndexToSwitchTo));
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Unable to switch to a new tab.");
+        }
+    }
+
+    public void sliderBarAction(WebElement slider) {
         Actions actions = new Actions(driver);
         actions.clickAndHold(slider);
-        actions.moveByOffset(40,0).build().perform();
+        actions.moveByOffset(40, 0).build().perform();
     }
 
     /**
@@ -476,6 +565,13 @@ public class BaseAPI {
         }
 
         return compareListStringsToExcelDoc(titles, excelDocPath, sheetName);
+    }
+
+    public String getStringFromTextFile(String path) {
+        String string = "";
+        textFileReader = new TextFileReader();
+        string = textFileReader.readToString(path);
+        return string;
     }
 
     public boolean compareListWebElementsToExcelDoc(List<WebElement> elements, String excelDocPath, String sheetName) throws IOException {
@@ -593,6 +689,112 @@ public class BaseAPI {
         return flag;
     }
 
+    public void verifyContentInPDf(String url, String expectedContent) {
+        //specify the url of the pdf file
+        driver.get(url);
+        try {
+            String pdfContent = readPdfContent(url);
+            Assert.assertTrue(pdfContent.contains(expectedContent), "The content doesn't match.");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public  String readPdfContent(String url) throws IOException {
+
+        URL pdfUrl = new URL(url);
+        InputStream in = pdfUrl.openStream();
+        BufferedInputStream bf = new BufferedInputStream(in);
+        PDDocument doc = PDDocument.load(bf);
+        int numberOfPages = getPageCount(doc);
+        System.out.println("The total number of pages "+numberOfPages);
+        String content = new PDFTextStripper().getText(doc);
+        doc.close();
+
+        return content;
+    }
+
+    public static int getPageCount(PDDocument doc) {
+        //get the total number of pages in the pdf document
+        int pageCount = doc.getNumberOfPages();
+        return pageCount;
+
+    }
+
+
+
+//    public boolean verifyPDFContent(String strURL, String reqTextInPDF) {
+//
+//        boolean flag = false;
+//
+//        PDFTextStripper pdfStripper = null;
+//        PDDocument pdDoc = null;
+//        COSDocument cosDoc = null;
+//        String parsedText = null;
+//
+//        try {
+//            URL url = new URL(strURL);
+//            BufferedInputStream file = new BufferedInputStream(url.openStream());
+//            PDFParser parser = new PDFParser(file);
+//
+//            parser.parse();
+//            cosDoc = parser.getDocument();
+//            pdfStripper = new PDFTextStripper();
+//            pdfStripper.setStartPage(1);
+//            pdfStripper.setEndPage(1);
+//
+//            pdDoc = new PDDocument(cosDoc);
+//            parsedText = pdfStripper.getText(pdDoc);
+//        } catch (MalformedURLException e2) {
+//            System.err.println("URL string could not be parsed "+e2.getMessage());
+//        } catch (IOException e) {
+//            System.err.println("Unable to open PDF Parser. " + e.getMessage());
+//            try {
+//                if (cosDoc != null)
+//                    cosDoc.close();
+//                if (pdDoc != null)
+//                    pdDoc.close();
+//            } catch (Exception e1) {
+//                e.printStackTrace();
+//            }
+//        }
+//
+//        System.out.println("+++++++++++++++++");
+//        System.out.println(parsedText);
+//        System.out.println("+++++++++++++++++");
+//
+//        if(parsedText.contains(reqTextInPDF)) {
+//            flag=true;
+//        }
+//
+//        return flag;
+//    }
+
+//    public boolean verifyPDFContent(String strURL, String text) {
+//
+//        String output ="";
+//        boolean flag = false;
+//        try{
+//            URL url = new URL(strURL);
+//            BufferedInputStream file = new BufferedInputStream(url.openStream());
+//            PDDocument document = null;
+//            try {
+//                document = PDDocument.load(file);
+//                output = new PDFTextStripper().getText(document);
+//                System.out.println(output);
+//            } finally {
+//                if (document != null) {
+//                    document.close();
+//                }
+//            }
+//        }catch(Exception e){
+//            e.printStackTrace();
+//        }
+//        if(output.contains(text)){
+//            flag =  true;
+//        }
+//        return flag;
+//    }
+
     /**
      * Wait helper methods:
      */
@@ -608,7 +810,7 @@ public class BaseAPI {
     }
 
     public void waitUntilWebElementVisible(WebElement element) {
-      driverWait = new WebDriverWait(driver, 10);
+        driverWait = new WebDriverWait(driver, 10);
         try {
             element = driverWait.until(ExpectedConditions.visibilityOf(element));
         } catch (Exception e) {
@@ -628,7 +830,7 @@ public class BaseAPI {
     }
 
     public void waitUntilWebElementClickable(WebElement element) {
-       driverWait = new WebDriverWait(driver, 10);
+        driverWait = new WebDriverWait(driver, 10);
         try {
             element = driverWait.until(ExpectedConditions.elementToBeClickable(element));
         } catch (Exception e) {
@@ -647,6 +849,10 @@ public class BaseAPI {
             System.out.println("ELEMENTS ARE NOT PRESENT");
         }
 
+    }
+
+    public void implicitWait() {
+        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
     }
 
 }

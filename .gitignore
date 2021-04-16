@@ -17,7 +17,7 @@ buildNumber.properties
 /.idea
 *.iml
 /target
-/reporting.testReports
+*.testReports
 # Compiled class file
 *.class
 
@@ -44,3 +44,5 @@ hs_err_pid*
 
 
 
+/com.chase/src/main/java/reporting/testReports/
+/com.chase/src/main/java/reporting/testReports/

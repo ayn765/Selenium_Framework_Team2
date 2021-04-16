@@ -76,6 +76,12 @@ public class AirbnbHomepage extends BaseAPI {
     @FindBy(css = webElementListOfLanguages)
     public List<WebElement> listOfLanguages;
 
+    @FindBy(xpath = webElementButtonCurrency)
+    public WebElement currency;
+
+    @FindBy(css = webElementsListCurrency)
+    public List<WebElement> listCurrency;
+
     @FindBy(css = webElementExploreNearbyDest)
     public WebElement exploreNearbyDest;
 
@@ -156,7 +162,20 @@ public class AirbnbHomepage extends BaseAPI {
     return flag;
     }
 
+    public boolean verifyNumberOfCurrency(){
+        clickElement(languageIcon);
+        clickElement(currency);
+        int expectedNumOfCurrency = 40;
+        if(expectedNumOfCurrency == listCurrency.size()){
+            return true;
+        }else return false;
+    }
 
+    public boolean verifyCurrencyOptions() throws Exception {
+        clickElement(languageIcon);
+        clickElement(currency);
+        return compareListWebElementsToExcelDoc(listCurrency, System.getProperty("user.dir") + "/src/test/resources/TestData.xlsx", "CurrencyOptions");
+    }
 
     public void invalidPhoneNumLogin() {
         buttonMainMenu.click();

@@ -21,6 +21,8 @@ public class AirbnbHomepageLocators {
     public static final String webElementSearchButton = "span._m9v25n";
     public static final String webElementLanguageIcon = "[type=button]._q730rga";
     public static final String webElementListOfLanguages = "._19s389u>li";
+    public static final String webElementButtonCurrency = "//button/span[contains(text(),'Currency')]";
+    public static final String webElementsListCurrency = "._19s389u>li>button>div:nth-child(1)";
     public static final String webElementExploreNearbyDest = "#Koan-query__description";
     public static final String webElementButtonMainMenu = "button._1usxwsg6";
     public static final String webElementButtonLogin = "//div[contains(text(),'Log in')]";
