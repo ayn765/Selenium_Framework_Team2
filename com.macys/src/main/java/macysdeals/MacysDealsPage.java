@@ -30,8 +30,17 @@ public class MacysDealsPage extends BaseAPI {
     WebElement shopKidsDeals;
     @FindBy(xpath = WebElementFiltersShopKids)
     WebElement filtersShopKids;
-    @FindBy(xpath =WebElementLink)
-    WebElement link;
+    @FindBy(xpath = WebElementJewelery)
+    WebElement jewelery;
+    @FindBy(xpath = WebElementJeweleryFilterSave)
+    WebElement filterJewelery;
+    @FindBy(xpath = WebElementJeweleryItem)
+    WebElement jeweleryItem;
+    @FindBy(id = WebElementAddBag)
+    WebElement addToBag;
+    @FindBy(id =WebElementContinueShopping)
+    WebElement continueShopping;
+
 
 
     public void navigateDeals() {
@@ -70,7 +79,7 @@ public class MacysDealsPage extends BaseAPI {
      * Test case:3
      * Navigate to Deals
      * click Kids
-     * Filter he search by best seller
+     * Filter the search by best seller
      */
 
     public void shop() {
@@ -80,6 +89,28 @@ public class MacysDealsPage extends BaseAPI {
         Select sel=new Select(filtersShopKids);
          sel.selectByValue("BEST_SELLERS");
    }
+    /**
+     * Test case:4
+     * Navigate to Deals
+     * click jewelery
+     * Filter the search by big save
+     * click on an Item
+     * click add to bag
+     * click on Continue Shopping
+     * go back to the jewelery page
+     */
+    public void jewelery(){
+        navigateDeals();
+        clickOnTheElement(jewelery);
+        clickOnTheElement(filterJewelery);
+        clickOnTheElement(jeweleryItem);
+        clickOnTheElement(addToBag);
+        switchToNewTab(1);
+        clickOnTheElement(continueShopping);
+        driver.navigate().back();
+        driver.navigate().refresh();
+
+    }
 
    }
 

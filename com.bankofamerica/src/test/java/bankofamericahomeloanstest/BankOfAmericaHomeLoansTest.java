@@ -2,13 +2,12 @@ package bankofamericahomeloanstest;
 
 import bankofamerica.BankOfAmericaHomeLoansPage;
 import common.BaseAPI;
-import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import utilities.DataReader;
 
 import java.io.IOException;
-import java.util.List;
+
 
 public class BankOfAmericaHomeLoansTest extends BaseAPI {
     BankOfAmericaHomeLoansPage bankOfAmericaHomeLoansPage;
@@ -65,10 +64,27 @@ public class BankOfAmericaHomeLoansTest extends BaseAPI {
        Assert.assertEquals(actualPageTitle,expectedTitle);
    }
 
-   @Test
+   @Test(enabled = false)
     public void testVideo(){
        bankOfAmericaHomeLoansPage=new BankOfAmericaHomeLoansPage();
        bankOfAmericaHomeLoansPage.isVideoPlaying();
    }
+   @Test(enabled = false)
+    public void testViewMapForNewConstructionHome(){
+       bankOfAmericaHomeLoansPage=new BankOfAmericaHomeLoansPage();
+       bankOfAmericaHomeLoansPage.findNewConstructionHome();
+   }
+  @Test(enabled = false)
+    public void testValidateSearchBYPrice(){
+      bankOfAmericaHomeLoansPage=new BankOfAmericaHomeLoansPage();
+      bankOfAmericaHomeLoansPage.searchHomeByPrice();
+      String actualResult=getTextFromElement(bankOfAmericaHomeLoansPage.HomeResultSearch);
+      Assert.assertEquals(actualResult,"24 new home communities found");
 
+}
+    @Test(enabled =false)
+    public void testAppointment(){
+        bankOfAmericaHomeLoansPage=new BankOfAmericaHomeLoansPage();
+        bankOfAmericaHomeLoansPage.scheduleAppointment();
+    }
 }

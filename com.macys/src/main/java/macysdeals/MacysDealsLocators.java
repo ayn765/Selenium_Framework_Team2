@@ -6,12 +6,11 @@ public class MacysDealsLocators {
     public static final String WebElementShopCategoryDropDown="//*[@id=\"shopByDepartmentDropdownLabel\"]";
     public static final String WebElementShopKidsDeal="//*[@id=\"row_2\"]/ul/li/div/map/area[5]" ;
     public static final String WebElementFiltersShopKids="//*[@id=\"filterResultsTop\"]/ul/li";
-    public static final String WebElementLink="//*[@id=\"row_4\"]/ul/li[2]/div/div/div[3]/a[5]\n";
-
-
-
-
-
+    public static final String WebElementJewelery="//area[@href=\"/shop/jewelry-watches/jewelry-sale?id=22000\"]";
+    public static final String WebElementJeweleryFilterSave="//a[@href=\"/shop/jewelry-watches/jewelry-sale?id=22000\"]\n";
+    public static final String WebElementJeweleryItem="//*[@id=\"1818667\"]/div[2]/div";
+    public static final String WebElementAddBag="bag-add-1818667";
+    public static final String WebElementContinueShopping="atbIntContinueShopping";
 
 
 

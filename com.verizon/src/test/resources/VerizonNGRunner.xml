@@ -7,7 +7,7 @@
         <parameter name="BrowserVersion" value="90"/>
         <parameter name="url" value="https://www.verizon.com"/>
         <classes>
-        <class name=""></class>
+        <class name="verizonDevicesTest.VerizonDevicesTest"></class>
         </classes>
     </test>
 </suite>

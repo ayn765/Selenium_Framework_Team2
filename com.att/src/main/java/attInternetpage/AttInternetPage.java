@@ -295,9 +295,8 @@ public void moveToTextHeader(){
     /**
      * Test case:14
      * Navigate to ATT home Page
-     * navigate to internet
-     * Scroll down to the header"So many reasons to love AT&T Internet"
-     * validating the text
+     * navigate to sign in
+     * use data provider with multiple email and password
      */
 public void signIn(String email, String passwordUser){
     clickOnTheElement(account);

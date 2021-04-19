@@ -1,12 +1,13 @@
 package bankofamerica;
 
 import common.BaseAPI;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
-
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 
 import java.util.List;
@@ -54,10 +55,28 @@ public class BankOfAmericaHomeLoansPage extends BaseAPI {
     WebElement refinanceVideo;
     @FindBy(css=WebElementVideoPlayPauseButton)
     WebElement videoPlayPauseButton;
-
-
-
-
+    @FindBy(id=WebElementFindHome)
+    WebElement findHome;
+    @FindBy(xpath=WebElementNewConstruction)
+    WebElement newConstruction;
+    @FindBy(xpath=WebElementMapChoice)
+    WebElement mapChoice;
+    @FindBy(className = WebElementMapStreetSide)
+    WebElement mapStreetSide;
+    @FindBy(xpath = WebElementHomeOhio)
+    WebElement homeOhio;
+    @FindBy(xpath =WebElementHomeOhioColumbus)
+    WebElement homeOhioColumbus;
+    @FindBy(xpath =WebElementHomeOhioByPrice)
+    WebElement homeOhioByPrice;
+    @FindBy(xpath=WebElementHomeResultSearch)
+    public WebElement HomeResultSearch;
+    @FindBy(id=WebElementScheduleAppt)
+    WebElement scheduleAppt;
+    @FindBy(id= WebElementStepsAppointment)
+    WebElement stepsAppt;
+    @FindBy(xpath=WebElementInfoTab)
+    WebElement infoTab;
     /**
      * Test case:1
      * Navigate to Home Loans
@@ -176,6 +195,59 @@ public class BankOfAmericaHomeLoansPage extends BaseAPI {
             }
             return false;//return "false" in case both conditions fail
         }
+/**
+ * Test case:8
+ * Navigate to Home Loans
+ * click on Find home link
+ * click on new construction
+ * switch to a new window
+ * mouse hove map
+ * select view map by Street View
+ */
+ public void findNewConstructionHome(){
+     navigateHomeLoans();
+     clickOnTheElement(findHome);
+     clickOnTheElement(newConstruction);
+     windoHandle();
+     waitForVisibilityOfElement(mapChoice);
+     mouseHoverElement(mapChoice);
+     clickOnTheElement(mapStreetSide);
+ }
+    /**
+     * Test case:9
+     * Navigate to Home Loans
+     * click on Find home link
+     * click on new construction
+     *click on Ohio
+     *click on columbus
+     * select search by Price
+     * validate how many houses
+     */
+    public void searchHomeByPrice(){
+        navigateHomeLoans();
+        clickOnTheElement(findHome);
+        clickOnTheElement(newConstruction);
+        windoHandle();
+        clickOnTheElement(homeOhio);
+        clickOnTheElement(homeOhioColumbus);
+        Select select= new Select(homeOhioByPrice);
+        select.selectByVisibleText("Price");
+    }
 
-
+    /**
+     * Test case:10
+     * Navigate to Home Loans
+     * click on Schedule Appointment
+     * click on The link steps for the appt
+     * switch to a new tab
+     *get the text from the tab
+     */
+    public void scheduleAppointment(){
+        navigateHomeLoans();
+        clickOnTheElement(scheduleAppt);
+        clickOnTheElement(stepsAppt);
+        switchToNewTab(1);
+        String tabMessage= infoTab.getText();
+        System.out.println(tabMessage);
+    }
     }
