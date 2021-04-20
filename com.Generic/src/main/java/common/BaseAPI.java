@@ -15,9 +15,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.io.FileHandler;
 import org.openqa.selenium.opera.OperaDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.support.ui.*;
 import org.testng.Assert;
 import org.testng.ITestContext;
 import org.testng.ITestResult;
@@ -37,6 +35,7 @@ import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.time.Duration;
 import java.util.List;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
@@ -45,6 +44,7 @@ public class BaseAPI {
 
     public static WebDriver driver;
     public static WebDriverWait driverWait;
+    public static Wait wait;
     public static TextFileReader textFileReader;
     public Robot robot;
     public static Actions actions;
@@ -53,7 +53,7 @@ public class BaseAPI {
 
     public DataReader dataReader;
     public Properties properties = new Properties();
-
+    public static String pathFromUserDir = System.getProperty("user.dir");
     String propertiesFilePath = "src/main/resources/secret.properties";
 
     @BeforeSuite(alwaysRun = true)
@@ -112,11 +112,11 @@ public class BaseAPI {
         extent.flush();
     }
 
-    @AfterMethod(alwaysRun = true)
-    public static void tearDown() {
-        driver.close();
-        driver.quit();
-    }
+//    @AfterMethod(alwaysRun = true)
+//    public static void tearDown() {
+//        driver.close();
+//        driver.quit();
+//    }
 
     @AfterSuite(alwaysRun = true)
     private void afterSuiteCloseExtent() {
@@ -175,8 +175,6 @@ public class BaseAPI {
      */
 
 
-
-
     public void pressEnterKey() throws AWTException {
         robot = new Robot();
         try {
@@ -200,6 +198,7 @@ public class BaseAPI {
         }
 
     }
+
     public void javaScriptExecutorClickOnElementNoWait(WebElement element) {
         JavascriptExecutor jse = (JavascriptExecutor) driver;
         try {
@@ -209,6 +208,7 @@ public class BaseAPI {
             System.out.println("Unable to click on the element with JSExecutor.");
         }
     }
+
     public void javaScriptExecutorClickOnElement(WebElement element) {
         JavascriptExecutor jse = (JavascriptExecutor) driver;
         try {
@@ -247,6 +247,11 @@ public class BaseAPI {
 
     }
 
+    public void changeAttributeWithJavaScript() {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("document.getElementsByClassName('heading')[0].setAttribute('style', 'background-color: red')");
+    }
+
     public void playEmbeddedVideo(WebElement buttonPlay) {
 
         try {
@@ -270,6 +275,19 @@ public class BaseAPI {
             System.out.println("UNABLE TO SEND KEYS TO WEB ELEMENT");
         }
     }
+
+    public void clearInputFieldAndSendKeysToElement(WebElement element, String keysToSend) {
+        try {
+//            waitUntilWebElementVisible(element);
+            element.sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
+            element.sendKeys(keysToSend);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("UNABLE TO SEND KEYS TO WEB ELEMENT");
+        }
+    }
+
 
     public void clickElement(WebElement elementToClick) {
 
@@ -340,7 +358,7 @@ public class BaseAPI {
     public void selectFromDropDownByIndex(WebElement dropdown, int index) {
         Select select = new Select(dropdown);
         try {
-            waitUntilWebElementVisible(dropdown);
+//            waitUntilWebElementVisible(dropdown);
             select.selectByIndex(index);
         } catch (Exception e) {
             e.printStackTrace();
@@ -381,6 +399,7 @@ public class BaseAPI {
             System.out.println("UNABLE TO HOVER OVER ELEMENT");
         }
     }
+
     public void hoverOverElementAndClick(WebElement element) {
         try {
             actions = new Actions(driver);
@@ -499,7 +518,7 @@ public class BaseAPI {
     public void sliderBarAction(WebElement slider) {
         Actions actions = new Actions(driver);
         actions.clickAndHold(slider);
-        actions.moveByOffset(40, 0).build().perform();
+        actions.moveByOffset(60, 0).build().perform();
     }
 
     /**
@@ -567,6 +586,22 @@ public class BaseAPI {
         return compareListStringsToExcelDoc(titles, excelDocPath, sheetName);
     }
 
+    //Extracts text from List<WebElement> and compares it to expected string
+    public boolean compareListElementsToExpectedString(List<WebElement>elements, String expectedString){
+        boolean flag = false;
+        int falseCount = 0;
+        for(WebElement option : elements){
+            if(option.getText().equals(expectedString)){
+                flag = true;
+            }else{
+                flag = false;
+                falseCount++;
+            }if(falseCount>0){
+                flag = false;
+            }
+        } return flag;
+    }
+
     public String getStringFromTextFile(String path) {
         String string = "";
         textFileReader = new TextFileReader();
@@ -578,7 +613,7 @@ public class BaseAPI {
 
         dataReader = new DataReader();
         String[] excelData = dataReader.fileReaderStringArrayXSSF(excelDocPath, sheetName);
-        waitUntilWebElementListVisible(elements);
+//        waitUntilWebElementListVisible(elements);
         boolean flag = false;
         int count = 0;
 
@@ -699,14 +734,15 @@ public class BaseAPI {
             e.printStackTrace();
         }
     }
-    public  String readPdfContent(String url) throws IOException {
+
+    public String readPdfContent(String url) throws IOException {
 
         URL pdfUrl = new URL(url);
         InputStream in = pdfUrl.openStream();
         BufferedInputStream bf = new BufferedInputStream(in);
         PDDocument doc = PDDocument.load(bf);
         int numberOfPages = getPageCount(doc);
-        System.out.println("The total number of pages "+numberOfPages);
+        System.out.println("The total number of pages " + numberOfPages);
         String content = new PDFTextStripper().getText(doc);
         doc.close();
 
@@ -720,80 +756,6 @@ public class BaseAPI {
 
     }
 
-
-
-//    public boolean verifyPDFContent(String strURL, String reqTextInPDF) {
-//
-//        boolean flag = false;
-//
-//        PDFTextStripper pdfStripper = null;
-//        PDDocument pdDoc = null;
-//        COSDocument cosDoc = null;
-//        String parsedText = null;
-//
-//        try {
-//            URL url = new URL(strURL);
-//            BufferedInputStream file = new BufferedInputStream(url.openStream());
-//            PDFParser parser = new PDFParser(file);
-//
-//            parser.parse();
-//            cosDoc = parser.getDocument();
-//            pdfStripper = new PDFTextStripper();
-//            pdfStripper.setStartPage(1);
-//            pdfStripper.setEndPage(1);
-//
-//            pdDoc = new PDDocument(cosDoc);
-//            parsedText = pdfStripper.getText(pdDoc);
-//        } catch (MalformedURLException e2) {
-//            System.err.println("URL string could not be parsed "+e2.getMessage());
-//        } catch (IOException e) {
-//            System.err.println("Unable to open PDF Parser. " + e.getMessage());
-//            try {
-//                if (cosDoc != null)
-//                    cosDoc.close();
-//                if (pdDoc != null)
-//                    pdDoc.close();
-//            } catch (Exception e1) {
-//                e.printStackTrace();
-//            }
-//        }
-//
-//        System.out.println("+++++++++++++++++");
-//        System.out.println(parsedText);
-//        System.out.println("+++++++++++++++++");
-//
-//        if(parsedText.contains(reqTextInPDF)) {
-//            flag=true;
-//        }
-//
-//        return flag;
-//    }
-
-//    public boolean verifyPDFContent(String strURL, String text) {
-//
-//        String output ="";
-//        boolean flag = false;
-//        try{
-//            URL url = new URL(strURL);
-//            BufferedInputStream file = new BufferedInputStream(url.openStream());
-//            PDDocument document = null;
-//            try {
-//                document = PDDocument.load(file);
-//                output = new PDFTextStripper().getText(document);
-//                System.out.println(output);
-//            } finally {
-//                if (document != null) {
-//                    document.close();
-//                }
-//            }
-//        }catch(Exception e){
-//            e.printStackTrace();
-//        }
-//        if(output.contains(text)){
-//            flag =  true;
-//        }
-//        return flag;
-//    }
 
     /**
      * Wait helper methods:
@@ -855,5 +817,11 @@ public class BaseAPI {
         driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
     }
 
+//    public void fluentWait(){
+//        wait = new FluentWait(driver)
+//                .withTimeout(Duration.ofSeconds(10))
+//                .pollingEvery(Duration.ofSeconds(10))
+//                .ignoring(Exception.class);
+//    }
 }
 

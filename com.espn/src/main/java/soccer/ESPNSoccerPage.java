@@ -5,7 +5,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.testng.annotations.DataProvider;
+import utilities.DataReader;
 
+import java.awt.*;
 import java.io.IOException;
 import java.util.List;
 
@@ -102,8 +105,20 @@ public class ESPNSoccerPage extends BaseAPI {
     @FindBy(css = WEB_ELEMENT_HEADER_TABLES_RESULT)
     public WebElement headerTablesResult;
 
-    @FindBy(css = "ul.quicklinks_list>li.quicklinks_list__item>a[name='&lpos=soccer:quicklinks:1:soccerchampionspickem']")
+    @FindBy(css = WEB_ELEMENTS_QUICK_LINKS)
     public List<WebElement> quickLinks;
+
+    @FindBy(xpath = WEB_ELEMENT_BUTTON_LOG_IN)
+    public WebElement buttonLogIn;
+
+    @FindBy(css = WEB_ELEMENT_BUTTON_LOG_IN)
+    public WebElement buttonErrorMessageLogIn;
+
+    @FindBy(xpath = WEB_ELEMENT_BUTTON_LOG_IN_PROFILE)
+    public WebElement buttonLogInProfile;
+
+    @FindBy(css = WEB_ELEMENT_ERROR_MESSAGE_LOGIN)
+    public WebElement errorMessageLogin;
 
 
     public boolean verifyTabsTopPagesTitles() throws IOException {
@@ -179,7 +194,26 @@ public class ESPNSoccerPage extends BaseAPI {
     }
 
     public boolean verifyQuickLinksTitles() throws IOException {
-        return verifyLinksTitles(quickLinks, "href", System.getProperty("user.dir") + "/src/test/resources/ESPNTestData.xlsx", "QuickLinksTitles" );
+        return verifyLinksTitles(quickLinks, "href", System.getProperty("user.dir") + "/src/test/resources/ESPNTestData.xlsx", "QuickLinksTitles");
     }
+
+    public void doLogin(String email, String password) throws Exception {
+        clickElement(userProfile);
+        clickElement(buttonLogInProfile);
+        switchToiFrameByWebElement(iframe);
+        sendKeysToElement(inputEmail, email);
+        sendKeysToElement(inputPassword, password);
+        pressEnterKey();
+    }
+
+    @DataProvider
+
+    public Object[][] getInvalidTestData() throws Exception {
+        DataReader dataReader = new DataReader();
+        String path = System.getProperty("user.dir") + "/src/test/resources/ESPNTestData.xlsx";
+        Object[][] testData = dataReader.fileReaderArrayStringArraysXSSF(path, "InvalidLoginData");
+        return testData;
+    }
+
 
 }

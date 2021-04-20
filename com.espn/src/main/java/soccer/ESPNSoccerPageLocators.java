@@ -33,6 +33,8 @@ public class ESPNSoccerPageLocators {
     public static final String WEB_ELEMENT_DROPDOWN_ENGLISH_PREMIER_LEAGUE = "section>div:nth-child(1)>select:nth-child(2)";
     public static final String WEB_ELEMENT_HEADER_TABLES_RESULT = "h1.headline.headline__h1.dib";
     public static final String WEB_ELEMENTS_QUICK_LINKS = "ul.quicklinks_list>li.quicklinks_list__item>a[name='&lpos=soccer:quicklinks:1:soccerchampionspickem']";
-
+    public static final String WEB_ELEMENT_BUTTON_LOG_IN = "//li[@class='user hover']/a[contains(text(),'Log In')]";
+    public static final String WEB_ELEMENT_BUTTON_LOG_IN_PROFILE = "//li[2]/div/div/ul[1]/li[7]/a";
+    public static final String WEB_ELEMENT_ERROR_MESSAGE_LOGIN = "div[ng-repeat]";
 
 }

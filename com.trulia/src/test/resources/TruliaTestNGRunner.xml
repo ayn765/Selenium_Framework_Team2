@@ -7,10 +7,10 @@
 
         <parameter name="browserName" value="chrome"/>
         <parameter name="browserVersion" value="90"/>
-        <parameter name="url" value="https://www.trulia.com/"/>
+        <parameter name="url" value="https://www.trulia.com/mortgages/"/>
 
         <classes>
-<!--            <class name=""/>-->
+            <class name="mortgage.TruliaMortgagePageTest"/>
         </classes>
 
     </test>

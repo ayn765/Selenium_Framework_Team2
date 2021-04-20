@@ -190,4 +190,26 @@ public class DataReader extends BaseAPI {
     }
 
 
+    // RETURNS ARRAY OF STRING ARRAYS (XSSF) - Excel sheet should have header row (this method will skip reading header row)
+    public String[][] fileReaderArrayStringArraysXSSF(String path, String sheetName) throws IOException {
+        String[][] data;
+        File file = new File(path);
+        FileInputStream fis = new FileInputStream(file);
+
+        xssfWorkbook = new XSSFWorkbook(fis);
+        xssfSheet = xssfWorkbook.getSheet(sheetName);
+        numberOfRows = xssfSheet.getLastRowNum();
+        numberOfCol = xssfSheet.getRow(0).getLastCellNum();
+        data = new String[numberOfRows][numberOfCol];
+
+        for (int i = 1; i <= numberOfRows; i++) {
+            xssfRows = xssfSheet.getRow(i);
+            for (int j = 0; j < numberOfCol; j++) {
+                xssfCell = xssfRows.getCell(j);
+                String cellData = getCellValueXSSF(xssfCell);
+                data[i-1][j] = cellData;
+            }
+        }
+        return data;
+    }
 }

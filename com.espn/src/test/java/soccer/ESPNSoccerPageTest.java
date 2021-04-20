@@ -175,10 +175,31 @@ public class ESPNSoccerPageTest extends BaseAPI {
      * 3. Validate that the titles of Quick Links are correct.
      */
 
-    @Test(groups = "smoke")
+    @Test(groups = "regression")
     public void testQuickLinksTitles() throws IOException {
         espnSoccerPage = new ESPNSoccerPage();
         Assert.assertTrue(espnSoccerPage.verifyQuickLinksTitles(), "The titles of the pages are incorrect.");
+    }
+
+    /**
+     * Test#13
+     * 1. Navigate to ESPN Soccer webpage.
+     * 2.Click on Profile Icon.
+     * 3. Enter email address.
+     * 4. Enter invalid password.
+     * 5. Validate that user is unable to log in and the error message is displayed correctly.
+     *
+     */
+
+    @Test (dataProviderClass = ESPNSoccerPage.class, dataProvider = "getInvalidTestData", groups = "smoke")
+    public void doInvalidLogIn(String email, String password) throws Exception {
+        espnSoccerPage = new ESPNSoccerPage();
+        espnSoccerPage.doLogin(email, password);
+        waitUntilWebElementVisible(espnSoccerPage.errorMessageLogin);
+        String actualErrorMessage = getTextFromElement(espnSoccerPage.errorMessageLogin);
+        String expectedErrorMessage = "The credentials you entered are incorrect.\n" +
+                "Reminder: Passwords are case sensitive.";
+        Assert.assertEquals(actualErrorMessage, expectedErrorMessage, "The error message is incorrect.");
     }
 
 }
