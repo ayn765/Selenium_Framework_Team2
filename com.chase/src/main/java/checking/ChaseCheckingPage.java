@@ -69,20 +69,20 @@ public class ChaseCheckingPage extends BaseAPI {
     @FindBy(xpath = WEB_ELEMENT_EXPECTED_BRANCH)
     public WebElement expectedBranch;
 
-//        @FindBy(css = )
-//    public WebElement
+    @FindBy(css = WEB_ELEMENT_LINK_KIDS_ACCOUNT_SEE_MORE)
+    public WebElement linkKidsAccountSeeMore;
 
-    //    @FindBy(css = )
-//    public WebElement
+    @FindBy(css = WEB_ELEMENT_PLAY_VIDEO_KIDS_ACCOUNTS)
+    public WebElement videoKidsAccounts;
 
-    //    @FindBy(css = )
-//    public WebElement
+    @FindBy(css = WEB_ELEMENT_BUTTON_TURN_ON_AUDIO_DESCRIPTION)
+    public WebElement buttonTurnOnVideoDescription;
 
-    //    @FindBy(css = )
-//    public WebElement
+    @FindBy(css = WEB_ELEMENTS_TABS_FIRST_BANKING)
+    public List<WebElement> tabsFirstBanking;
 
-    //    @FindBy(css = )
-//    public WebElement
+    @FindBy(css = WEB_ELEMENT_IFRAME_VIDEO)
+    public WebElement iFrameVideo;
 
 
     public void getSpecialOffer() {
@@ -113,8 +113,8 @@ public class ChaseCheckingPage extends BaseAPI {
 
     public String getFlipCardTextZelle() {
         clickElement(flipCardZelle);
-        String actualText = element.getText();
         waitUntilWebElementVisible(element);
+        String actualText = element.getText();
         return actualText;
     }
 
@@ -123,4 +123,23 @@ public class ChaseCheckingPage extends BaseAPI {
         inputZipcode.sendKeys("20001");
         clickElement(buttonSearchZipcode);
     }
+
+    public void playVideoKidsAccounts()  {
+        clickElement(linkKidsAccountSeeMore);
+        switchToNewTab(1);
+        playEmbeddedVideo(videoKidsAccounts);
+        switchToiFrameByWebElement(iFrameVideo);
+//        waitUntilWebElementVisible(buttonTurnOnVideoDescription);
+    }
+    public boolean verifyLinksTabsFirstBanking(){
+        clickElement(linkKidsAccountSeeMore);
+        switchToNewTab(1);
+        return verifyLinks(tabsFirstBanking, "href");
+    }
+    public boolean verifyLinksTitlesFirstBanking() throws IOException {
+        clickElement(linkKidsAccountSeeMore);
+        switchToNewTab(1);
+        return getUrlsAndTitlesFromListWebElementAndCompareToExcelDoc(tabsFirstBanking, "href", pathFromUserDir + "/src/main/resources/ChaseTestData.xlsx","FirstBankingLinks");
+    }
+
 }

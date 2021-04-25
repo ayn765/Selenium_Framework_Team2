@@ -20,32 +20,34 @@ public class ChaseCheckingPageTest extends BaseAPI {
      * 5. Verify that the page displays correct message.
      */
 
-    @Test(groups = "regression")
-    public void testSpecialOfferSignUp(){
+    @Test(groups = "regression", enabled = false)
+    public void testSpecialOfferSignUp() {
         chaseCheckingPage = new ChaseCheckingPage();
         chaseCheckingPage.getSpecialOffer();
         String expectedThankYouMessage = "Check your email for your Checking coupon code, then click \"Open an account\"";
         Assert.assertEquals(chaseCheckingPage.messageThankYou.getText(), expectedThankYouMessage, "The message is not displayed correctly.");
 
     }
+
     /**
      * Test#2
      * 1. Navigate to Chase Checking Page.
      * 2. Verify that titles of the links in 'Chose what's right for you' section display correctly.
      */
 
-    @Test(groups = "regression")
+    @Test(groups = "regression", enabled = false)
     public void testCarouselLinksTitlesChoseWhatRight() throws IOException {
         chaseCheckingPage = new ChaseCheckingPage();
         Assert.assertTrue(chaseCheckingPage.verifyCarouselLinksTitlesChoseWhatRight());
     }
+
     /**
      * Test#3
      * 1. Navigate to Chase Checking Page.
      * 2. Verify that titles of the tabs in 'Compare Accounts' section display correctly.
      */
 
-    @Test(groups = "regression")
+    @Test(groups = "regression", enabled = false)
     public void testTabsTitlesCompareAccounts() throws Exception {
         chaseCheckingPage = new ChaseCheckingPage();
         Assert.assertTrue(chaseCheckingPage.verifyTabsCompareAccounts(), "The tab titles are displayed incorrectly.");
@@ -60,8 +62,8 @@ public class ChaseCheckingPageTest extends BaseAPI {
      * 5. Verify that the account is added the title is displayed.
      */
 
-    @Test(groups = "regression")
-    public void testAddChaseTotalCheckingToCompare(){
+    @Test(groups = "regression", enabled = false)
+    public void testAddChaseTotalCheckingToCompare() {
         chaseCheckingPage = new ChaseCheckingPage();
         chaseCheckingPage.addChaseTotalCheckingToCompare();
         Assert.assertTrue(chaseCheckingPage.headerChaseTotalChecking.isDisplayed(), "The Chase Total Checking was not added to compare accounts.");
@@ -75,7 +77,7 @@ public class ChaseCheckingPageTest extends BaseAPI {
      * 3. Verify that the pdf content is accurate.
      */
 
-    @Test(groups = "regression")
+    @Test(groups = "regression", enabled = false)
     public void testPDFAdditionalServices() throws IOException {
         chaseCheckingPage = new ChaseCheckingPage();
         String expectedContent = "Additional Banking Services and Fees for Personal Accounts";
@@ -90,8 +92,8 @@ public class ChaseCheckingPageTest extends BaseAPI {
      * 3. Verify that the attribute of Zelle element aria-expanded changed to true.
      */
 
-    @Test(groups = "regression")
-    public void testFlipCardZelle(){
+    @Test(groups = "regression", enabled = false)
+    public void testFlipCardZelle() {
         chaseCheckingPage = new ChaseCheckingPage();
         chaseCheckingPage.flipCardZelle();
         Assert.assertEquals(chaseCheckingPage.element.getAttribute("aria-expanded"), "true", "The attribute is incorrect. The element may not be displayed correctly.");
@@ -105,11 +107,11 @@ public class ChaseCheckingPageTest extends BaseAPI {
      * 3. Verify that the text on the flipped side of Zelle icon is correct.
      */
 
-    @Test(groups = "regression")
-    public void testFlipCardTextZelle(){
+    @Test(groups = "regression", enabled = false)
+    public void testFlipCardTextZelle() {
         chaseCheckingPage = new ChaseCheckingPage();
         String expectedText = getStringFromTextFile(System.getProperty("user.dir") + "/src/test/resources/ZelleFlipCard.txt");
-        String actualText = (chaseCheckingPage.getFlipCardTextZelle());
+        String actualText = (chaseCheckingPage.getFlipCardTextZelle().trim());
         Assert.assertEquals(actualText, expectedText, "The text on Zelle Flip Card is incorrect.");
     }
 
@@ -122,12 +124,49 @@ public class ChaseCheckingPageTest extends BaseAPI {
      * 5. Verify that thr search returns a correct location.
      */
 
-    @Test(groups = "smoke")
-    public void testFindYourBranch(){
+    @Test(groups = "regression", enabled = false)
+    public void testFindYourBranch() {
         chaseCheckingPage = new ChaseCheckingPage();
         chaseCheckingPage.findYourBranch();
         Assert.assertTrue(chaseCheckingPage.expectedBranch.isDisplayed(), "The expected branch is not displayed.");
     }
+
+    /**
+     * Test#9
+     * 1. Navigate to Chase Checking Page.
+     * 2. Click 'See Details' under Accounts for children' section.
+     * 3. Click 'play' to watch a video.
+     * 4. Verify that the video is playing as expected.
+     */
+
+    @Test(groups = "smoke", enabled = false)
+    public void testVideoKidsAccounts()  {
+        chaseCheckingPage = new ChaseCheckingPage();
+        chaseCheckingPage.playVideoKidsAccounts();
+        Assert.assertTrue(chaseCheckingPage.buttonTurnOnVideoDescription.isDisplayed(), "The video is not displayed correctly.");
+    }
+
+    /**
+     * Test#10
+     */
+
+    @Test(groups = "smoke", enabled = false)
+    public void testLinksTabsFirstBanking(){
+        chaseCheckingPage = new ChaseCheckingPage();
+        Assert.assertTrue(chaseCheckingPage.verifyLinksTabsFirstBanking(), "One or more links are broken.");
+    }
+
+    /**
+     * Test#11
+     */
+
+    @Test(groups = "smoke", enabled = true)
+    public void testLinksTitlesTabsFirstBanking() throws IOException {
+        chaseCheckingPage = new ChaseCheckingPage();
+        Assert.assertTrue(chaseCheckingPage.verifyLinksTitlesFirstBanking());
+    }
+
+
 }
 
 

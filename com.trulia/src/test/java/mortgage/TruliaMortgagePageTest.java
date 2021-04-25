@@ -34,7 +34,7 @@ public class TruliaMortgagePageTest extends BaseAPI {
     }
     /**
      * Test#2
-     * 1.Navigate to Trulia Mortgages Page
+     * 1. Navigate to Trulia Mortgages Page
      * 2. Enter zipcode in to the field.
      * 3. Click 'get pre-qualified'.
      * 4. Validate that the 3 options are displayed correctly.
@@ -49,7 +49,7 @@ public class TruliaMortgagePageTest extends BaseAPI {
 
     /**
      * Test#3
-     * 1.Navigate to Trulia Mortgages Page
+     * 1. Navigate to Trulia Mortgages Page
      * 2. Enter zipcode in to the field.
      * 3. Click 'get pre-qualified'.
      * 4. Validate that the links of 3 options ave valid.
@@ -150,7 +150,7 @@ public class TruliaMortgagePageTest extends BaseAPI {
      * 2. Validate that 'Most-asked mortgage questions' are displayed correctly.
      */
 
-    @Test(enabled = true)
+    @Test(enabled = false)
     public void testMortgageQuestions() throws IOException {
         truliaMortgagePage = new TruliaMortgagePage();
         Assert.assertTrue(truliaMortgagePage.verifyMortgageQuestions());
@@ -181,10 +181,54 @@ public class TruliaMortgagePageTest extends BaseAPI {
         truliaMortgagePage = new TruliaMortgagePage();
         Assert.assertTrue(truliaMortgagePage.verifyLinksTitlesMortgageResources(),"One or more titles are incorrect");
     }
+
+    /**
+     * Test#12
+     * 1. Navigate to Trulia Mortgages Page
+     * 2. Navigate to Affordability Calculator Page
+     * 3. Hover over each help box so that the help text is displayed.
+     * 4. Validate that the text in every text box is displayed correctly.
+     */
+
     @Test(enabled = false)
-    public void testHoverHelpText() throws InterruptedException {
+    public void testHoverHelpText() throws InterruptedException, IOException {
         truliaMortgagePage = new TruliaMortgagePage();
-        truliaMortgagePage.verifyHoverHelp();
+        Assert.assertTrue(truliaMortgagePage.verifyHoverHelp(), "The text of one or more help boxes is incorrect.");
+    }
+    /**
+     * Test#13
+     * 1.Navigate to Trulia Mortgages Page
+     * 2. Click tab 'Refinance'.
+     * 3. Enter Property Value.
+     * 4. Enter Current Balance.
+     * 5. Check 'Served in US Military' checkbox.
+     * 6. Click 'See Rates'
+     * 7. Validate that user is able to proceed with chosen refinance option.
+     */
+
+    @Test(enabled = false)
+    public void testRefinanceSearch(){
+        truliaMortgagePage = new TruliaMortgagePage();
+        truliaMortgagePage.doRefinance();
+        Assert.assertTrue(truliaMortgagePage.buttonNext.isDisplayed(), "User is not able to proceed with refinance option selection.");
+    }
+    /**
+     * Test#14
+     * 1. Validate that the title of Mortgage Page is displayed correctly.
+     */
+
+    @Test (enabled = false)
+    public void testTitle(){
+        truliaMortgagePage = new TruliaMortgagePage();
+        String expectedTitle = "Mortgages | Trulia";
+        Assert.assertEquals(driver.getTitle(), expectedTitle, "The title of the page is incorrect.");
+
+    }
+
+    @Test(enabled = true)
+    public void testMortgageDropdown() throws Exception {
+        truliaMortgagePage = new TruliaMortgagePage();
+        Assert.assertTrue(truliaMortgagePage.verifyDropdownMortgage());
     }
 
 

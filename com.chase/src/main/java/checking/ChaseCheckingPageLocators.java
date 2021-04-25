@@ -19,9 +19,11 @@ public class ChaseCheckingPageLocators {
     public static final String WEB_ELEMENT_INPUT_ZIPCODE = "input[placeholder='Please enter a ZIP code, or an address, city and state.']";
     public static final String WEB_ELEMENT_BUTTON_SEARCH_ZIPCODE = "search-button.chaseanalytics-track-link";
     public static final String WEB_ELEMENT_EXPECTED_BRANCH = "//span[contains(text(),'Union Kitchen - Shaw')]";
-//    public static final String WEB_ELEMENT_ = "";
-//    public static final String WEB_ELEMENT_ = "";
-//    public static final String WEB_ELEMENT_ = "";
+    public static final String WEB_ELEMENT_LINK_KIDS_ACCOUNT_SEE_MORE = "#MainCtrl1_firstCheckingLearnMore";
+    public static final String WEB_ELEMENT_PLAY_VIDEO_KIDS_ACCOUNTS = "#benefits-section > div.video-container > div > div > img";
+    public static final String WEB_ELEMENT_BUTTON_TURN_ON_AUDIO_DESCRIPTION = "#audioId";
+    public static final String WEB_ELEMENT_IFRAME_VIDEO = "body>iframe";
+    public static final String WEB_ELEMENTS_TABS_FIRST_BANKING = ".tab-section>ul>li>a";
 
 
 

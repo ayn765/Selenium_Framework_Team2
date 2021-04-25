@@ -14,7 +14,7 @@ public class ExpediaFlightsPageTest extends BaseAPI {
     ExpediaFlightsPage expediaFlightsPage;
     ExpediaSignInPage expediaSignInPage;
 
-    @Test(enabled = false, groups = "smoke")
+    @Test(enabled = true, groups = "smoke")
     public void testAirlineAgeRules() throws AWTException {
         expediaFlightsPage = new ExpediaFlightsPage();
         expediaFlightsPage.navigateToFlightsPage();
@@ -109,10 +109,18 @@ public class ExpediaFlightsPageTest extends BaseAPI {
         Assert.assertTrue(expediaFlightsPage.verifyDropdownFlightClass(), "The Flight Class Dropdown is not displayed correctly.");
     }
 
-    @Test(groups = "smoke")
+    @Test(groups = "regression")
     public void testFooterLinks() throws Exception{
         expediaFlightsPage = new ExpediaFlightsPage();
         expediaFlightsPage.navigateToFlightsPage();
         Assert.assertTrue(expediaFlightsPage.verifyFooterLinks());
+    }
+
+    @Test(groups = "smoke", enabled = false)
+    public void testTitleExpediaFlights() throws AWTException {
+        expediaFlightsPage = new ExpediaFlightsPage();
+        expediaFlightsPage.navigateToFlightsPage();
+        String expectedTitle = "Expedia Flights";
+        Assert.assertEquals(driver.getTitle(), expectedTitle, "Titles do not match");
     }
 }

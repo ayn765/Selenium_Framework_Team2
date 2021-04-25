@@ -55,7 +55,7 @@ public class ESPNSoccerPageTest extends BaseAPI {
      * 5. Validate that the error message displayed correctly.
      */
 
-    @Test(groups = "regression")
+    @Test(groups = "smoke")
     public void testInvalidLogin() {
         espnSoccerPage = new ESPNSoccerPage();
         espnSoccerPage.logIn();
@@ -98,6 +98,7 @@ public class ESPNSoccerPageTest extends BaseAPI {
         String name = "Jack!";
         Assert.assertEquals(espnSoccerPage.userFirstName.getText(), name, "The User First Name is not displayed correctly. Sign up test failed.");
     }
+
     /**
      * Test#7
      * 1. Navigate to ESPN Soccer webpage.
@@ -109,6 +110,7 @@ public class ESPNSoccerPageTest extends BaseAPI {
         espnSoccerPage = new ESPNSoccerPage();
         Assert.assertTrue(espnSoccerPage.verifyTitlesLeftSideMenu());
     }
+
     /**
      * Test#8
      * 1. Navigate to ESPN Soccer webpage.
@@ -124,6 +126,7 @@ public class ESPNSoccerPageTest extends BaseAPI {
         waitUntilWebElementVisible(espnSoccerPage.titleRadio);
         Assert.assertTrue(espnSoccerPage.titleRadio.isDisplayed(), "The radio title is not displayed. The 'Listen Live' link may not be working");
     }
+
     /**
      * Test#9
      * 1. Navigate to ESPN Soccer webpage.
@@ -138,8 +141,9 @@ public class ESPNSoccerPageTest extends BaseAPI {
         espnSoccerPage.findScores();
         String expectedScoreMessage = "Scores for April 29, 2021";
         waitUntilWebElementVisible(espnSoccerPage.resultScore);
-        Assert.assertEquals(espnSoccerPage.resultScore.getText(),expectedScoreMessage, "The date is displayed incorrectly.");
+        Assert.assertEquals(espnSoccerPage.resultScore.getText(), expectedScoreMessage, "The date is displayed incorrectly.");
     }
+
     /**
      * Test#10
      * 1. Navigate to ESPN Soccer webpage.
@@ -154,8 +158,9 @@ public class ESPNSoccerPageTest extends BaseAPI {
         espnSoccerPage.selectFromEnglishPremierLeague();
         String expectedTableMessage = "Russian Premier League Table 2020-21";
         waitUntilWebElementVisible(espnSoccerPage.headerTablesResult);
-        Assert.assertEquals(espnSoccerPage.headerTablesResult.getText(),expectedTableMessage, "The league is displayed incorrectly.");
+        Assert.assertEquals(espnSoccerPage.headerTablesResult.getText(), expectedTableMessage, "The league is displayed incorrectly.");
     }
+
     /**
      * Test#11
      * 1. Navigate to ESPN Soccer webpage.
@@ -184,14 +189,13 @@ public class ESPNSoccerPageTest extends BaseAPI {
     /**
      * Test#13
      * 1. Navigate to ESPN Soccer webpage.
-     * 2.Click on Profile Icon.
+     * 2. Click on Profile Icon.
      * 3. Enter email address.
      * 4. Enter invalid password.
      * 5. Validate that user is unable to log in and the error message is displayed correctly.
-     *
      */
 
-    @Test (dataProviderClass = ESPNSoccerPage.class, dataProvider = "getInvalidTestData", groups = "smoke")
+    @Test(dataProviderClass = ESPNSoccerPage.class, dataProvider = "getInvalidTestData", groups = "smoke")
     public void doInvalidLogIn(String email, String password) throws Exception {
         espnSoccerPage = new ESPNSoccerPage();
         espnSoccerPage.doLogin(email, password);
@@ -202,7 +206,19 @@ public class ESPNSoccerPageTest extends BaseAPI {
         Assert.assertEquals(actualErrorMessage, expectedErrorMessage, "The error message is incorrect.");
     }
 
+    /**
+     * Test#14
+     * 1. Navigate to ESPN Soccer webpage.
+     * 2. Validate that the title of the page is displayed correctly.
+     */
+
+    @Test(groups = "smoke")
+    public void testTitle() throws IOException {
+        espnSoccerPage = new ESPNSoccerPage();
+        String expectedTitle = "Soccer Teams, Scores, Stats, News, Fixtures, Results, Tables - ESPN";
+        Assert.assertEquals(driver.getTitle(), expectedTitle, "The title of the page is displayed incorrectly.");
+
+    }
+
 }
-
-
 

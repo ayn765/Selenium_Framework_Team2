@@ -30,6 +30,13 @@ public class TruliaMortgagePageLocators {
     public static final String WEB_ELEMENT_LINKS_MORTGAGE_RESOURCES = "div.NFEkp>ul.ljHPkT>li>a";
     public static final String WEB_ELEMENTS_HOVER_HELP_BOX = "div>div>div>div>span>div>svg";
     public static final String WEB_ELEMENTS_TEXT_HOVER_HELP_BOX = "#tooltip-container-tooltip-i > div";
+    public static final String WEB_ELEMENT_TAB_REFINANCE = "#tab_refinance_11";
+    public static final String WEB_ELEMENT_PROPERTY_VALUE = "input[name=propertyValue]";
+    public static final String WEB_ELEMENT_CHECKBOX_MILITARY = "div.bNdNuM>div>label>div>div.kBgjjw>input";
+    public static final String WEB_ELEMENT_BUTTON_SEE_RATES = "//div[contains(text(),'See Rates')]";
+    public static final String WEB_ELEMENT_INPUT_CURRENT_BALANCE = "input[name=currentBalance]";
+    public static final String WEB_ELEMENT_BUTTON_NEXT = "//div[3]/div/table/tbody/tr[3]/td[9]/div/div/button";
+    public static final String WEB_ELEMENT_DROPDOWN_MORTGAGE = "#__next>div>header>nav>ul>li";
 
 
 
