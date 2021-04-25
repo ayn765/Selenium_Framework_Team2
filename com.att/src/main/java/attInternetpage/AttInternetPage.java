@@ -212,11 +212,11 @@ public void navigateToAccountDropDown(){
  public int calculateItemsInsideOfDrop(){
      WebElement ul_element = driver.findElement(By.xpath("//*[@id=\"profile-unauth\"]/div[2]/ul"));
      List<WebElement> li_All = ul_element.findElements(By.className("cta wcgn-account-dropdown"));
-     int AccountNUMlinks = li_All.size();
+     int accountNUMlinks = li_All.size();
      for (int i = 0; i < li_All.size(); i++) {
          System.out.println(li_All.get(i).getText());
      }
-     return AccountNUMlinks;
+     return accountNUMlinks;
  }
     /**
      * Test case:9
