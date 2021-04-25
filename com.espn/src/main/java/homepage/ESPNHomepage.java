@@ -36,7 +36,6 @@ public class ESPNHomepage extends BaseAPI {
     WebElement followSoccer;
 
 
-
     /**
      * Test case:1
      * Navigate to Espn Home Page
@@ -55,9 +54,12 @@ public class ESPNHomepage extends BaseAPI {
     /**
      * Test case:2
      * Navigate to Espn Home Page
-     * click on image Link
-     * validate the new window Title
+     * click on subscribe
+     * enter email
+     * enter password
+     * login
      */
+
   public void checkTitle(){
         clickOnTheElement(homePageImage);
   }

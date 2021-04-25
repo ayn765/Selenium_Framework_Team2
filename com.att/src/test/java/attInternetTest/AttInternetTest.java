@@ -16,6 +16,11 @@ public class AttInternetTest extends BaseAPI {
         String expectedLink = "https://www.att.com/internet/fiber/";
         Assert.assertEquals(actualLink, expectedLink);
     }
+    @Test
+    public void testPrintPriceTable(){
+        attInternetPage = new AttInternetPage();
+        attInternetPage.getTableRows();
+    }
 
     @Test(enabled = false)
     public void testSendMessageToCustomerService() {

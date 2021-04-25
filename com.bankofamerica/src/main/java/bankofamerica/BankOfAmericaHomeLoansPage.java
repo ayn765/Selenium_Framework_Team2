@@ -1,13 +1,12 @@
 package bankofamerica;
 
 import common.BaseAPI;
-import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.WebDriverWait;
+
 
 
 import java.util.List;
@@ -181,7 +180,7 @@ public class BankOfAmericaHomeLoansPage extends BaseAPI {
         scrollToElementJScript(refinanceVideo);
         try {
             waitForVisibilityOfElement(videoPlayPauseButton);
-          videoPlayPauseButton.click();
+             videoPlayPauseButton.click();
             if(videoPlayPauseButton.getAttribute("data-control").equals("Play")){
                 System.out.println("This Youtube video wasn't playing but we clicked on it to play the video.");
             }else{
@@ -218,8 +217,8 @@ public class BankOfAmericaHomeLoansPage extends BaseAPI {
      * Navigate to Home Loans
      * click on Find home link
      * click on new construction
-     *click on Ohio
-     *click on columbus
+     * click on Ohio
+     * click on columbus
      * select search by Price
      * validate how many houses
      */

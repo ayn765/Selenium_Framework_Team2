@@ -83,7 +83,8 @@ public class AttInternetPage extends BaseAPI {
     WebElement submit;
     @FindBy(css=WebElementErrorText)
     public WebElement errorText;
-
+    @FindBy(xpath=WebElementPricesTable)
+    public WebElement pricesTable;
 
 
 
@@ -102,10 +103,31 @@ public class AttInternetPage extends BaseAPI {
      * Test case:2
      * Navigate to ATT home Page
      * Click on Att Internet  Button to open page
-     * click on chat Icon
-     * send chat
+     * click on plan and prices
+     *select the table of plan and prices
+     * print all the rows of the table in console
      */
-
+   public void getTableRows() {
+        navigateToInternet();
+        clickOnTheElement(internetTab);
+        clickOnTheElement(planAndPrices);
+       scrollToElementJScript(pricesTable);
+       // Get all the rows in the table
+       List<WebElement> allRows = driver.findElements(By.xpath("//*[@id=\"DYNAMIC_COMPONENT4-container\"]/div[3]/table"));
+       for (WebElement row : allRows) {
+           List<WebElement> cells = row.findElements(By.id("r0-c0-DYNAMIC_COMPONENT-Table-4 "));
+           for (WebElement cell : cells) {
+               System.out.println(cell.getText());
+           }
+       }
+   }
+        /**
+             * Test case:3
+             * Navigate to ATT home Page
+             * Click on Att Internet  Button to open page
+             * click on chat Icon
+             * send chat
+             */
     public void sendChat() {
         navigateToInternet();
         waitForVisibilityOfElement(chat);
@@ -116,7 +138,7 @@ public class AttInternetPage extends BaseAPI {
     }
 
     /**
-     * Test case:3
+     * Test case:4
      * Navigate to ATT home Page
      * Click on Att Internet  Button to open page
      * click on Deals Link
@@ -129,7 +151,7 @@ public class AttInternetPage extends BaseAPI {
     }
 
     /**
-     * Test case:4
+     * Test case:5
      * Navigate to ATT home Page
      * Click on Att Internet  Button to open page
      * click on Plan and Prices
@@ -143,7 +165,7 @@ public class AttInternetPage extends BaseAPI {
     }
 
     /**
-     * Test case:5
+     * Test case:6
      * Navigate to ATT home Page
      * Click on Att Internet  Button to open page
      * click on Equipment
@@ -163,7 +185,7 @@ public class AttInternetPage extends BaseAPI {
         driver.navigate().refresh();
     }
 /**
- * Test case:6
+ * Test case:7
  * Navigate to ATT home Page
  * mouse hover Feedback Button
  * get the Button Background color
@@ -176,7 +198,7 @@ public void backgroundColor(){
     feedbackButton.getCssValue("background-color");
 }
 /**
- * Test case:7
+ * Test case:8
  * Navigate to ATT home Page
  * mouse hover Account
  * calculate the number of elements inside of the drop Down
@@ -197,7 +219,7 @@ public void navigateToAccountDropDown(){
      return AccountNUMlinks;
  }
     /**
-     * Test case:8
+     * Test case:9
      * Navigate to ATT home Page
      * click on Favorite Icon
      * click on shop now
@@ -222,7 +244,7 @@ public void navigateToAccountDropDown(){
      driver.navigate().refresh();
  }
     /**
-     * Test case:9
+     * Test case:10
      * Navigate to ATT home Page
      * scroll down till Why Att Internet
      * click on the link
@@ -239,7 +261,7 @@ public void navigateToAccountDropDown(){
  }
 
 /**
- * Test case:10
+ * Test case:11
  * Navigate to ATT home Page
  * navigate to Internet
  * click on Feedback Button
@@ -260,7 +282,7 @@ public void giveFeedback(){
     clickOnTheElement(submitFeedback);
 }
     /**
-     * Test case:11
+     * Test case:12
      * Navigate to ATT home Page
      * Scroll down to the butTom of page
      * click on Facebook icon
@@ -271,7 +293,7 @@ public void checkAttOnFacebook(){
   clickOnTheElement(attFacebook);
 }
 /**
- * Test case:12
+ * Test case:13
  * Navigate to ATT home Page
  * navigate to internet
  * click on the link
@@ -282,7 +304,7 @@ public void planLink(){
   mouseHoverElement(link);
 }
     /**
-     * Test case:13
+     * Test case:14
      * Navigate to ATT home Page
      * navigate to internet
      * Scroll down to the header"So many reasons to love AT&T Internet"
@@ -293,7 +315,7 @@ public void moveToTextHeader(){
    scrollToElementJScript(textHeader);
 }
     /**
-     * Test case:14
+     * Test case:15
      * Navigate to ATT home Page
      * navigate to sign in
      * use data provider with multiple email and password

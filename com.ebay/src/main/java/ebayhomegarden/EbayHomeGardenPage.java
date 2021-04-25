@@ -197,9 +197,9 @@ public class EbayHomeGardenPage extends BaseAPI {
      * - Navigate Home&Garden Button to open page
      * - click on choose like new Button
      * - Navigate to the new open window
-     * -click on  Sort Featured items
-     * -select Sort items By lowest price
-     * -Validate how many result we get
+     * - click on  Sort Featured items
+     * - select Sort items By lowest price
+     * - eValidate how many result we get
      */
 
     public void sortItems() {
@@ -216,7 +216,7 @@ public class EbayHomeGardenPage extends BaseAPI {
      * - Navigate Home&Garden Button to open page
      * - click on Dinnerware
      * - set the price for Dinnerware to over 35$
-     * -validate the title(header) that appears
+     * - validate the title(header) that appears
      */
     public void dinnerWareChoosePrice() {
         navigateToHomeGarden();
@@ -231,7 +231,7 @@ public class EbayHomeGardenPage extends BaseAPI {
      * - Navigate Home&Garden Button to open page
      * - navigate to Smart Home
      * - navigate to Smart TV
-     * -click on the Arrow to have the full visibility of the Tv's Brands
+     * - click on the Arrow to have the full visibility of the Tv's Brands
      * -select Sony Tv Brand
      * -choose Which sony Tv we want
      * -click on Add to Cart
@@ -365,7 +365,7 @@ public void selectHomeItemsPrice(){
      * navigate to advanced search
      * input indoor plants in search bar
      * select category search
-     * clich search
+     * click search
      * validate the number of items for the search
      */
 public void advancedSearchHOMEGArden(){

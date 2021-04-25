@@ -17,10 +17,15 @@ import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
 import utilities.DataReader;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.URL;
+import java.nio.file.FileStore;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 
@@ -31,8 +36,7 @@ public class BaseAPI {
     public static WebDriverWait driverWait;
     public DataReader dataReader = new DataReader();
     public Properties properties = new Properties();
-
-
+    private FileStore videoPlayPauseButton;
 
 
     @Parameters({"browserName", "browserVersion", "url"})
@@ -46,11 +50,13 @@ public class BaseAPI {
         driver.manage().deleteAllCookies();
         driver.manage().window().maximize();
     }
+
     @AfterMethod
     public static void tearDown() {
         driver.close();
         driver.quit();
     }
+
     // Method to get local driver, based on the browserName parameter in testNG.xml runner file
     public static WebDriver getLocalDriver(String browserName) {
         if (browserName.toLowerCase().equals("chrome")) {
@@ -77,62 +83,63 @@ public class BaseAPI {
 
     //click on the element
     public void clickOnTheElement(WebElement elementToClick) {
-            try {
-                driverWait.until(ExpectedConditions.elementToBeClickable(elementToClick));
-                elementToClick.click();
-            } catch (StaleElementReferenceException staleElementReferenceException) {
-                staleElementReferenceException.printStackTrace();
-                System.out.println("ELEMENT IS STALE");
+        try {
+            driverWait.until(ExpectedConditions.elementToBeClickable(elementToClick));
+            elementToClick.click();
+        } catch (StaleElementReferenceException staleElementReferenceException) {
+            staleElementReferenceException.printStackTrace();
+            System.out.println("ELEMENT IS STALE");
 
-            } catch (ElementNotVisibleException elementNotVisibleException) {
-                elementNotVisibleException.printStackTrace();
-                System.out.println("ELEMENT IS NOT VISIBLE IN THE DOM");
+        } catch (ElementNotVisibleException elementNotVisibleException) {
+            elementNotVisibleException.printStackTrace();
+            System.out.println("ELEMENT IS NOT VISIBLE IN THE DOM");
 
-            } catch (Exception e) {
-                e.printStackTrace();
-                System.out.println("UNABLE TO CLICK ON WEB ELEMENT" );
-            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("UNABLE TO CLICK ON WEB ELEMENT");
         }
-
-
-//method to check if element is displayed
-public static boolean isElementDisplayed(WebElement element) {
-    boolean flag = false;
-    try {
-        if (element.isDisplayed()
-                || element.isEnabled())
-            flag = true;
-    } catch (NoSuchElementException e) {
-        flag = false;
-    } catch (StaleElementReferenceException e) {
-        flag = false;
     }
-    return flag;
-}
 
-//method to send text
-public void sendKeysToElement(WebElement element, String keysToSend) {
 
-    try {
-        driverWait.until(ExpectedConditions.visibilityOf(element));
-        element.sendKeys(keysToSend);
-        driverWait.until(ExpectedConditions.elementToBeClickable(element));
-        element.sendKeys(keysToSend);
-
-    } catch (StaleElementReferenceException staleElementReferenceException) {
-        staleElementReferenceException.printStackTrace();
-        System.out.println("ELEMENT IS STALE");
-
-    } catch (ElementNotVisibleException elementNotVisibleException) {
-        elementNotVisibleException.printStackTrace();
-        System.out.println("ELEMENT IS NOT VISIBLE IN THE DOM");
-
-    } catch (Exception e) {
-        e.printStackTrace();
-        System.out.println("UNABLE TO SEND KEYS TO WEB ELEMENT");
+    //method to check if element is displayed
+    public static boolean isElementDisplayed(WebElement element) {
+        boolean flag = false;
+        try {
+            if (element.isDisplayed()
+                    || element.isEnabled())
+                flag = true;
+        } catch (NoSuchElementException e) {
+            flag = false;
+        } catch (StaleElementReferenceException e) {
+            flag = false;
+        }
+        return flag;
     }
-}
-//mouse hover to element
+
+    //method to send text
+    public void sendKeysToElement(WebElement element, String keysToSend) {
+
+        try {
+            driverWait.until(ExpectedConditions.visibilityOf(element));
+            element.sendKeys(keysToSend);
+            driverWait.until(ExpectedConditions.elementToBeClickable(element));
+            element.sendKeys(keysToSend);
+
+        } catch (StaleElementReferenceException staleElementReferenceException) {
+            staleElementReferenceException.printStackTrace();
+            System.out.println("ELEMENT IS STALE");
+
+        } catch (ElementNotVisibleException elementNotVisibleException) {
+            elementNotVisibleException.printStackTrace();
+            System.out.println("ELEMENT IS NOT VISIBLE IN THE DOM");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("UNABLE TO SEND KEYS TO WEB ELEMENT");
+        }
+    }
+
+    //mouse hover to element
     public static void mouseHoverElement(WebElement element) {
         try {
             Actions hover = new Actions(driver);
@@ -149,7 +156,7 @@ public void sendKeysToElement(WebElement element, String keysToSend) {
         }
     }
 
-// get text from element
+    // get text from element
     public String getTextFromElement(WebElement element) {
         String elementText = "";
 
@@ -166,7 +173,7 @@ public void sendKeysToElement(WebElement element, String keysToSend) {
             System.out.println("ELEMENT IS NOT VISIBLE IN THE DOM");
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("UNABLE TO GET TEXT FROM WEB ELEMENT" );
+            System.out.println("UNABLE TO GET TEXT FROM WEB ELEMENT");
         }
 
         return elementText;
@@ -186,12 +193,13 @@ public void sendKeysToElement(WebElement element, String keysToSend) {
         }
     }
 
-  //window Handle Methode
-    public void windoHandle(){
-  String parentWindow = driver.getWindowHandle();
-     for (String winHandle : driver.getWindowHandles()) {
-        driver.switchTo().window(winHandle);
-    }}
+    //window Handle Methode
+    public void windoHandle() {
+        String parentWindow = driver.getWindowHandle();
+        for (String winHandle : driver.getWindowHandles()) {
+            driver.switchTo().window(winHandle);
+        }
+    }
 
 
     //list of webElements
@@ -216,6 +224,7 @@ public void sendKeysToElement(WebElement element, String keysToSend) {
 
         return elementList;
     }
+
     public void scrollToElementJScript(WebElement element) {
         JavascriptExecutor js = (JavascriptExecutor) driver;
 
@@ -236,7 +245,7 @@ public void sendKeysToElement(WebElement element, String keysToSend) {
 
     public void switchToNewTab(int tabIndexToSwitchTo) {
 
-        List<String> tabs = new ArrayList<> (driver.getWindowHandles());
+        List<String> tabs = new ArrayList<>(driver.getWindowHandles());
 
         try {
             driver.switchTo().window(tabs.get(tabIndexToSwitchTo));
@@ -271,7 +280,7 @@ public void sendKeysToElement(WebElement element, String keysToSend) {
 
         String[] actual = new String[actualList.size()];
 
-        for (int j = 0; j<actualList.size(); j++) {
+        for (int j = 0; j < actualList.size(); j++) {
             actual[j] = actualList.get(j).getAttribute(attribute).replaceAll("&amp;", "&").replaceAll("’", "'").replaceAll("<br>", "\n").trim();
             actual[j].replaceAll("&amp;", "&").replaceAll("’", "'").replaceAll("<br>", "\n").trim();
 //            escapeHtml4(actual[j]);
@@ -287,7 +296,7 @@ public void sendKeysToElement(WebElement element, String keysToSend) {
                 System.out.println("ACTUAL " + attribute.toUpperCase() + " " + (i + 1) + ": " + actual[i]);
                 System.out.println("EXPECTED " + attribute.toUpperCase() + " " + (i + 1) + ": " + expectedList[i] + "\n");
             } else {
-                System.out.println("FAILED AT INDEX " + (i+1) + "\nEXPECTED " + attribute.toUpperCase() + ": " + expectedList[i] +
+                System.out.println("FAILED AT INDEX " + (i + 1) + "\nEXPECTED " + attribute.toUpperCase() + ": " + expectedList[i] +
                         "\nACTUAL " + attribute.toUpperCase() + ": " + actual[i] + "\n");
                 falseCount++;
             }
@@ -318,29 +327,115 @@ public void sendKeysToElement(WebElement element, String keysToSend) {
         if (count > 0) {
             flag = false;
 
-        }return flag;
+        }
+        return flag;
     }
 
-    /**Lamia's Method to count number of element in an <UL> list
-     * -
-     */
+    //==============================My Methods==========================================================
+
+    //Convert phone number
+    public void convertPhoneNumber(String phoneNumber) {
+        String input = "1234567890";
+        String number = input.replaceFirst("(\\d{3})(\\d{3})(\\d+)", "($1) $2-$3");
+    }
+
+    // method to check if the phone number is valid
+    public boolean checkPhoneNumber(String phone) {
+
+        boolean valid = phone.matches("\\d{3}-\\d{3}-\\d{4}");
+        System.out.println(phone + " : " + valid);
+        return true;
+    }
 
     //Scroll till bottom Of the page
     public void scrollTillBottomPageJScript() {
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
     }
+
     //get current page URL
     public String getCurrentPageUrl() {
         String url = driver.getCurrentUrl();
         return url;
     }
+
     //get current page Title
     public String getCurrentPageTitle() {
         String title = driver.getTitle();
         return title;
+    }
 
-}}
+
+    //download picture
+    public void downloadPicture(WebElement element) {
+        try {
+            String airbnbImage = element.getAttribute("src"); //Getting the Image Path
+            java.net.URL imageURL = new URL(airbnbImage);//convert Image path to Java URL using URL Class
+            BufferedImage saveImage = ImageIO.read(imageURL); //Read the image object from URL
+            String path = System.getProperty("user.dir") + "user path";
+            ImageIO.write(saveImage, "jpg", new File(path));   //Download image to the path
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+   //get values of table
+       public void printTableValues() {
+        List<WebElement> allRows = driver.findElements(By.xpath(""));
+        for (WebElement row : allRows) {
+            List<WebElement> cells = row.findElements(By.id(""));
+            for (WebElement cell : cells) {
+                System.out.println(cell.getText());
+            }
+        }
+    }
+//check if video playing
+     public boolean isVideoPlaying(){
+        try {
+        if(videoPlayPauseButton.getAttribute("data-control").equals("Play")){
+            System.out.println("This Youtube video wasn't playing but we clicked on it to play the video.");
+        }else{
+            if(videoPlayPauseButton.getAttribute("data-control").equals("Pause")){
+                System.out.println("Youtube video is already playing.");
+                return true;
+            }
+        }
+       } catch (Exception e) {
+        e.printStackTrace();
+         }
+       return false;//return "false" in case both conditions fail
+}
+    //number of pictures in a page
+    public int numOfImageInThePage() {
+        int countImage = 0;
+        List<WebElement> listImages = driver.findElements(By.tagName("img"));
+        for (WebElement image : listImages) {
+            if (image.isDisplayed()) {
+                countImage++;
+                System.out.println(image.getAttribute("alt"));
+            }
+        }
+        System.out.println("Total Number of images in the page : " + countImage);
+        return countImage;
+    }
+
+    //number and name of all the links in website
+    public void nameAndNumberOfLinksInPage(){
+        String url="";
+        List<WebElement> allURLs = driver.findElements(By.tagName("a"));
+        System.out.println("Total links on the Wb Page: " + allURLs.size());
+        //We will iterate through the list and will check the elements in the list.
+        Iterator<WebElement> iterator = allURLs.iterator();
+        while (iterator.hasNext()) {
+            url = iterator.next().getText();
+            System.out.println(url);
+        }
+    }
+
+
+
+}
 
 
 

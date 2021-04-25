@@ -30,4 +30,5 @@ public class BankOfAmericaHomeLoansLocators {
     public static final String WebElementScheduleAppt="scheduleApptHomeLoans";
     public static final String WebElementStepsAppointment="linkToAppointmentVideo";
     public static final String WebElementInfoTab="//*[@id=\"leaving-site-defaultSpartaUILayer\"]/div/div[2]";
+    public static final String WebElementRewardLink="navHomeLoansPreferredRewards";
 }

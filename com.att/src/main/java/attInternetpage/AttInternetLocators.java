@@ -6,6 +6,7 @@ public class AttInternetLocators {
     public static final String WebElementChat = "//*[@id=\"tc-chat-bubble\"]/div[1]";//css
     public static final String WebElementChatInput = "#tcChat_txtInput_input";//css
     public static final String WebElementChatSend = "#tcChat_btnSend_img";//css
+    public static final String WebElementPricesTable="//*[@id=\"DYNAMIC_COMPONENT4-container\"]/div[3]/table";
     public static final String WebElementRewardCard = "//h3[text()='A $100 reward card']";
     public static final String WebElementInternetTab = "//*[@id=\"z1-tier1Nav\"]/a[3]/span";
     public static final String WebElementPlanAndPrices = "#HEADBAND01 > span > a > div > svg";

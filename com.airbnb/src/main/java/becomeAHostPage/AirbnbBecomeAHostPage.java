@@ -111,10 +111,7 @@ public class AirbnbBecomeAHostPage extends BaseAPI {
         Select select = new Select(countryDropDown);
         select.selectByVisibleText("Algeria (+213)");
     }
-    /*This method convert string to phone number with dashes
-    1-Break the string to 3 groups using regular expression '(\\d{3})(\\d{3})(\\d+)'.
-    2-First group contains 3 digits. Second contains 3 digits and last group contains all remaining digits.
-    3-Create a formatted string using these groups in '($1) $2-$3' pattern.*/
+
     public void convertPhoneNumber(String phoneNumber){
         String input = "1234567890";
         String number= input.replaceFirst("(\\d{3})(\\d{3})(\\d+)", "($1) $2-$3");

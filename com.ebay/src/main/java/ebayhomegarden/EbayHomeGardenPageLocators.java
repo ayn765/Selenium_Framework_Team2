@@ -8,7 +8,6 @@ public class EbayHomeGardenPageLocators {
     public static final String WebElementSearchButton = "#gh-btn";//css
     public static final String WebElementFashionMenu = "//a[@href='https://www.ebay.com/b/Fashion/bn_7000259856']";//xpath
     public static final String WebElementFashionWomenClothing = " //*[@id=\"s0-16-13_2-0-1[0]-0-0-0-38[0]-0-toggle-button\"]";
-    public static final String WebElementBabyGearDropDown = "//*[@id=\"s0-16-13-0-1[0]-0-0-0-38[0]-0-toggle-button\"]";//xpath
     public static final String WebElementChooseLikeNewButton = " div.b-promobanner__info > a";//css
     public static final String WebElementSortFeaturedItems = "//*[@id=\"s0-27-9-0-1[0]-0-1-6-5-35\"]/button/div";//xpath
     public static final String WebElementSortFeaturedItemsLowestPrice = "#s0-27-9-0-1\\[0\\]-0-1-6-5-35-7-45 > ul > li:nth-child(2) > a > span > svg";//css
