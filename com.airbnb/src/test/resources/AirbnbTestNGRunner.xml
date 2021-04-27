@@ -7,10 +7,10 @@
 
         <parameter name="browserName" value="chrome"/>
         <parameter name="browserVersion" value="90"/>
-        <parameter name="url" value="https://www.airbnb.com/"/>
+        <parameter name="url" value="https://careers.airbnb.com/"/>
 
         <classes>
-            <!--            <class name="homepageTest.HomepageTest"/>-->
+                        <class name="careersPageTest.AirbnbCareersPageTest"/>
         </classes>
 
     </test>
