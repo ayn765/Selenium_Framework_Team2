@@ -16,6 +16,7 @@ public class ExpediaThingsToDoLocators {
     public static final String WEB_ELEMENT_RECOMMENDED_BUTTON = "#sort-RECOMMENDED";
     public static final String WEB_ELEMENT_LOW_SORT_BUTTON = "#sort-PRICE_LOW_TO_HIGH";
     public static final String WEB_ELEMENT_HIGH_PRICE_BUTTON = "#sort-PRICE_HIGH_TO_LOW";
+    public static final String WEB_ELEMENT_FIND_DESTINATION = "#region-1570976 > div.uitk-carousel.no-touch.all-t-margin-three.all-b-margin-zero.all-l-margin-three";
 
 
 }

@@ -1,6 +1,7 @@
 package expediaThingsToDo;
 
 import common.BaseAPI;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -50,6 +51,9 @@ public class ExpediaThingsToDo extends BaseAPI {
 
     @FindBy(css = WEB_ELEMENT_HIGH_PRICE_BUTTON)
     public WebElement HighSortButton;
+
+    @FindBy(css = WEB_ELEMENT_FIND_DESTINATION)
+    public List <WebElement> FindDestination;
 
 
 
@@ -131,4 +135,9 @@ public class ExpediaThingsToDo extends BaseAPI {
         clickElement(HighSortButton);
 
     }
+
+    public void listDestinations() {
+        getListOfWebElements(By.cssSelector("#region-1570976 > div.uitk-carousel.no-touch.all-t-margin-three.all-b-margin-zero.all-l-margin-three"));
+    }
+
 }

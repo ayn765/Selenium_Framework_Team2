@@ -7,10 +7,10 @@
 
         <parameter name="browserName" value="chrome"/>
         <parameter name="browserVersion" value="90"/>
-        <parameter name="url" value="https://www.ebay.com/"/>
+        <parameter name="url" value="https://www.ebay.com/Electronics"/>
 
         <classes>
-            <!--            <class name="homepageTest.HomepageTest"/>-->
+                        <class name="ebayElectronics.EbayElectronicsTest"/>
         </classes>
 
     </test>

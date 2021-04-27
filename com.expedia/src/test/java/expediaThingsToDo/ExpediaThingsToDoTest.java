@@ -68,6 +68,11 @@ public class ExpediaThingsToDoTest extends BaseAPI {
         Assert.assertEquals(actualText, expectedText, "TITLES DO NOT MATCH");
     }
 
+    @Test
+    public void testDestinations(){
+        expediaThingsToDo = new ExpediaThingsToDo();
+        expediaThingsToDo.listDestinations();
 
+    }
 
 }
