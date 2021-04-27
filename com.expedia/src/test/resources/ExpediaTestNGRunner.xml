@@ -7,7 +7,7 @@
 
         <parameter name="browserName" value="chrome"/>
         <parameter name="browserVersion" value="90"/>
-        <parameter name="url" value="https://www.expedia.com/"/>
+        <parameter name="url" value="https://expedia.com/Activities/"/>
 
         <classes>
             <!--            <class name="homepageTest.HomepageTest"/>-->
