@@ -3,7 +3,6 @@ package homepageTest;
 import adventuresPage.AirbnbAdventuresPage;
 import becomeAHostPage.AirbnbBecomeAHostPage;
 import common.BaseAPI;
-import homepage.AirbnbHomepage;
 import onlineExperiencesPage.AirbnbOnlineExperiencesPage;
 import org.testng.Assert;
 import org.testng.annotations.Test;

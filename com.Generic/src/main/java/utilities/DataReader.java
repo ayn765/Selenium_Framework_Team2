@@ -81,7 +81,7 @@ public class DataReader extends BaseAPI {
             for (int j = 0; j < numberOfCol; j++) {
                 xssfCell = xssfRows.getCell(j);
                 cellData = getCellValueXSSF(xssfCell);
-                data[i-1][j] = cellData;
+                data[i - 1][j] = cellData;
             }
         }
         return data;
@@ -105,6 +105,7 @@ public class DataReader extends BaseAPI {
         }
         return value.toString();
     }
+
     // CREATES EXCEL WORKBOOK AND WRITES STRING VALUES INTO A SHEET (XSSF)
     public void excelStringWriter(String value, String path) throws IOException {
         xssfWorkbook = new XSSFWorkbook();
@@ -188,6 +189,111 @@ public class DataReader extends BaseAPI {
         fio.close();
         xssfWorkbook.close();
     }
+
+
+    // RETURNS INTEGER ARRAY (XSSF)
+    public int[] fileReaderIntegerXSSF(String path, String sheetName) throws IOException {
+        int[] data = {};
+        File file = new File(path);
+        FileInputStream fis = new FileInputStream(file);
+
+        xssfWorkbook = new XSSFWorkbook(fis);
+        xssfSheet = xssfWorkbook.getSheet(sheetName);
+        numberOfRows = xssfSheet.getLastRowNum();
+        numberOfCol = xssfSheet.getRow(0).getLastCellNum();
+        data = new int[numberOfRows + 1];
+
+        for (int i = 0; i < data.length; i++) {
+            xssfRows = xssfSheet.getRow(i);
+            for (int j = 0; j < numberOfCol; j++) {
+                xssfCell = xssfRows.getCell(j);
+                int cellData = (int) xssfCell.getNumericCellValue();
+                data[i] = cellData;
+            }
+        }
+        return data;
+
+    }
+
+
+
+
+
+
+
+
+
+    // HELPER METHODS TO GET VALUES FROM INDIVIDUAL CELLS - CALLED WITHIN READER METHODS
+    public String getCellValue(XSSFCell cell) {
+        Object value;
+
+        CellType dataType = cell.getCellType();
+        switch (dataType) {
+            case NUMERIC:
+                value = cell.getNumericCellValue();
+                break;
+            case STRING:
+                value = cell.getStringCellValue();
+                break;
+            case BOOLEAN:
+                value = cell.getBooleanCellValue();
+                break;
+            default:
+                value = cell.getRawValue();
+        }
+
+        return value.toString();
+    }
+    // RETURNS STRING ARRAY (XSSF)
+    public String[] fileReaderStringXSSF(String path, String sheetName) throws IOException {
+        String[] data;
+        File file = new File(path);
+        FileInputStream fis = new FileInputStream(file);
+
+        xssfWorkbook = new XSSFWorkbook(fis);
+        xssfSheet = xssfWorkbook.getSheet(sheetName);
+        numberOfRows = xssfSheet.getLastRowNum();
+
+        data = new String[numberOfRows];
+
+        for (int i = 1; i <= numberOfRows; i++) {
+            xssfRows = xssfSheet.getRow(i);
+            xssfCell = xssfRows.getCell(0);
+            String cellData = getCellValue(xssfCell);
+            data[i-1] = cellData;
+        }
+        return data;
+    }
+
+    public String[][] fileReaderArrayStringArraysXSSF(String path, String sheetName) throws IOException {
+        String[][] data;
+        File file = new File(path);
+        FileInputStream fis = new FileInputStream(file);
+
+        xssfWorkbook = new XSSFWorkbook(fis);
+        xssfSheet = xssfWorkbook.getSheet(sheetName);
+        numberOfRows = xssfSheet.getLastRowNum();
+        numberOfCol = xssfSheet.getRow(0).getLastCellNum();
+        data = new String[numberOfRows][numberOfCol];
+
+        for (int i = 1; i <= numberOfRows; i++) {
+            xssfRows = xssfSheet.getRow(i);
+            for (int j = 0; j < numberOfCol; j++) {
+                xssfCell = xssfRows.getCell(j);
+                String cellData = getCellValue(xssfCell);
+                data[i-1][j] = cellData;
+            }
+        }
+        return data;
+    }
+
+
+
+
+
+
+
+
 
 
 }
