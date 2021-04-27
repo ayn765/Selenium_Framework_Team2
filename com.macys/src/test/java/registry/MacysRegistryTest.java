@@ -3,7 +3,6 @@ package registry;
 import common.BaseAPI;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import org.testng.xml.dom.Tag;
 
 import java.io.IOException;
 

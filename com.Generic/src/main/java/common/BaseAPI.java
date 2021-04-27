@@ -112,11 +112,11 @@ public class BaseAPI {
         extent.flush();
     }
 
-//    @AfterMethod(alwaysRun = true)
-//    public static void tearDown() {
-//        driver.close();
-//        driver.quit();
-//    }
+    @AfterMethod(alwaysRun = true)
+    public static void tearDown() {
+        driver.close();
+        driver.quit();
+    }
 
     @AfterSuite(alwaysRun = true)
     private void afterSuiteCloseExtent() {

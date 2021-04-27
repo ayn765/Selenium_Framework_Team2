@@ -2,12 +2,6 @@ package fantasyPage;
 
 import common.BaseAPI;
 import fantasyPage.fantasyBaseball.CBSSportsFantasyBaseballPage;
-import fantasyPage.fantasyBasketball.CBSSportsFantasyBasketballPage;
-import fantasyPage.fantasyCollege.CBSSportsFantasyCollegePage;
-import fantasyPage.fantasyFootball.CBSSportsFantasyFootballPage;
-import fantasyPage.fantasyHockey.CBSSportsFantasyHockeyPage;
-import fantasyPage.fantasyPlay.CBSSportsFantasyPlayPage;
-import fantasyPage.fantasyPropsGamePage.CBSSportsFantasyPropsGamePage;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -22,13 +16,8 @@ public class CBSSportsFantasyPageTest extends BaseAPI {
     CBSSportsFantasyPage cbsSportsFantasyPage;
     DataReader dataReader;
     SoftAssert softAssert;
-    CBSSportsFantasyPlayPage cbsSportsFantasyPlayPage;
     CBSSportsFantasyBaseballPage cbsSportsFantasyBaseballPage;
-    CBSSportsFantasyBasketballPage cbsSportsFantasyBasketballPage;
-    CBSSportsFantasyHockeyPage cbsSportsFantasyHockeyPage;
-    CBSSportsFantasyFootballPage cbsSportsFantasyFootballPage;
-    CBSSportsFantasyPropsGamePage cbsSportsFantasyPropsGamePage;
-    CBSSportsFantasyCollegePage cbsSportsFantasyCollegePage;
+
 
 
     /**
@@ -208,7 +197,7 @@ public class CBSSportsFantasyPageTest extends BaseAPI {
      * 4. Validate that the tabs on Player News Menu are displayed correctly.
      */
 
-    @Test(groups = "regression")
+    @Test(enabled = false, groups = "regression")
     public void testLabelTabsPlayerNewsOnHockeyPage() throws IOException {
         cbsSportsFantasyPage = new CBSSportsFantasyPage();
         cbsSportsFantasyPage.navigateToFantasyPage();

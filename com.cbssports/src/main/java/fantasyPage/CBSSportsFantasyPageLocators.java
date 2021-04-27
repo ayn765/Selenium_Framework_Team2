@@ -21,7 +21,6 @@ public class CBSSportsFantasyPageLocators {
     public static final String WEBELEMENT_CHECKBOX_AGREE_TO_TERMS = ".CheckButton-checkmark.CheckButton-newsletter";
     public static final String WEBELEMENT_BUTTON_SUBMIT_SIGN_UP = "input[type=submit]";
     public static final String WEBELEMENT_MESSAGE_SIGN_UP = "div.Newsletter-stateSent>h3.Newsletter-title";
-//.nav-list-item.has-dropdown.the-dots
 
 
 

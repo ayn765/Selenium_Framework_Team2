@@ -7,10 +7,10 @@
 
         <parameter name="browserName" value="chrome"/>
         <parameter name="browserVersion" value="90"/>
-        <parameter name="url" value="https://www.verizon.com/"/>
+        <parameter name="url" value="https://www.verizon.com/products"/>
 
         <classes>
-<!--            <class name=""/>-->
+            <class name="accessoriesPage.VerizonAccessoriesPageTest"/>
         </classes>
 
     </test>

@@ -140,7 +140,7 @@ public class ChaseCheckingPageTest extends BaseAPI {
      */
 
     @Test(groups = "smoke", enabled = false)
-    public void testVideoKidsAccounts()  {
+    public void testVideoKidsAccounts() {
         chaseCheckingPage = new ChaseCheckingPage();
         chaseCheckingPage.playVideoKidsAccounts();
         Assert.assertTrue(chaseCheckingPage.buttonTurnOnVideoDescription.isDisplayed(), "The video is not displayed correctly.");
@@ -151,7 +151,7 @@ public class ChaseCheckingPageTest extends BaseAPI {
      */
 
     @Test(groups = "smoke", enabled = false)
-    public void testLinksTabsFirstBanking(){
+    public void testLinksTabsFirstBanking() {
         chaseCheckingPage = new ChaseCheckingPage();
         Assert.assertTrue(chaseCheckingPage.verifyLinksTabsFirstBanking(), "One or more links are broken.");
     }
@@ -160,13 +160,38 @@ public class ChaseCheckingPageTest extends BaseAPI {
      * Test#11
      */
 
-    @Test(groups = "smoke", enabled = true)
+    @Test(groups = "smoke", enabled = false)
     public void testLinksTitlesTabsFirstBanking() throws IOException {
         chaseCheckingPage = new ChaseCheckingPage();
         Assert.assertTrue(chaseCheckingPage.verifyLinksTitlesFirstBanking());
     }
 
+    /**
+     * Test#12
+     */
+
+    @Test(dataProviderClass = ChaseCheckingPage.class, dataProvider = "getInvalidTestData", enabled = false)
+    public void doInvalidLogIn(String email, String password) throws Exception {
+        chaseCheckingPage = new ChaseCheckingPage();
+        chaseCheckingPage.doLogin(email, password);
+        String actualErrorMessage = getTextFromElement(chaseCheckingPage.errorMessageLogin);
+        String expectedErrorMessage = "We can't find that username and password. You can reset your password or try again.";
+        Assert.assertEquals(actualErrorMessage, expectedErrorMessage, "The error message is incorrect.");
+    }
+
+    /**
+     * Test#13
+     */
+
+
+    @Test(groups = "smoke", enabled = false)
+    public void testIfVideoPlaying()  {
+        chaseCheckingPage = new ChaseCheckingPage();
+        chaseCheckingPage.playVideo();
+        Assert.assertTrue(chaseCheckingPage.verifyVideoPlaying());
+    }
 
 }
+
 
 

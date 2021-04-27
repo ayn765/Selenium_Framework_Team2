@@ -24,7 +24,17 @@ public class ChaseCheckingPageLocators {
     public static final String WEB_ELEMENT_BUTTON_TURN_ON_AUDIO_DESCRIPTION = "#audioId";
     public static final String WEB_ELEMENT_IFRAME_VIDEO = "body>iframe";
     public static final String WEB_ELEMENTS_TABS_FIRST_BANKING = ".tab-section>ul>li>a";
-
+    public static final String WEB_ELEMENT_BUTTON_SIGN_IN = "HeaderCtrl1_HeaderMain_CClampSignIn";
+    public static final String WEB_ELEMENT_INPUT_USER_ID = "#userId-text-input-field";
+    public static final String WEB_ELEMENT_INPUT_PASSWORD = "#password-text-input-field";
+    public static final String WEB_ELEMENT_BUTTON_SUBMIT = "button#signin-button";
+    public static final String WEB_ELEMENT_ERROR_MESSAGE_LOGIN = "#inner-logon-error";
+    public static final String WEB_ELEMENT_LINK_REFER_A_FRIEND = "p:nth-child(2)>u>a";
+    public static final String WEB_ELEMENT_PLAY_VIDEO = "#videoPlayButton";
+    public static final String WEB_ELEMENT_VIDEO_CONTROL = ".vjs-play-control.vjs-control";
+    public static final String WEB_ELEMENT_VOLUME_CONTROL_MUTE = "button[title=Mute]>span.vjs-control-text";
+    public static final String WEB_ELEMENT_TIME_VIDEO_CONTROL = "span.vjs-current-time-display>span";
+    public static final String WEB_ELEMENT_SLIDER_VIDEO = ".vjs-play-progress.vjs-slider-bar";
 
 
 

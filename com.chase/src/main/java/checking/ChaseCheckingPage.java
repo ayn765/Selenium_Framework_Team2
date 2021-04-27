@@ -4,6 +4,8 @@ import common.BaseAPI;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.testng.annotations.DataProvider;
+import utilities.DataReader;
 
 import java.io.IOException;
 import java.util.List;
@@ -84,6 +86,43 @@ public class ChaseCheckingPage extends BaseAPI {
     @FindBy(css = WEB_ELEMENT_IFRAME_VIDEO)
     public WebElement iFrameVideo;
 
+    @FindBy(css = WEB_ELEMENT_BUTTON_SIGN_IN)
+    public WebElement buttonSignIn;
+
+    @FindBy(css = WEB_ELEMENT_INPUT_USER_ID)
+    public WebElement inputUserID;
+
+    @FindBy(css = WEB_ELEMENT_INPUT_PASSWORD)
+    public WebElement inputPassword;
+
+    @FindBy(css = WEB_ELEMENT_BUTTON_SUBMIT)
+    public WebElement buttonSubmit;
+
+    @FindBy(css = WEB_ELEMENT_ERROR_MESSAGE_LOGIN)
+    public WebElement errorMessageLogin;
+
+    @FindBy(css = WEB_ELEMENT_LINK_REFER_A_FRIEND)
+    public WebElement linkReferAFriend;
+
+    @FindBy(css = WEB_ELEMENT_PLAY_VIDEO)
+    public WebElement playVideo;
+
+    @FindBy(css = WEB_ELEMENT_VIDEO_CONTROL)
+    public WebElement videoControl;
+
+    @FindBy(css = WEB_ELEMENT_VOLUME_CONTROL_MUTE)
+    public WebElement volumeControlMute;
+
+    @FindBy(css = WEB_ELEMENT_TIME_VIDEO_CONTROL)
+    public WebElement timeVideoControl;
+
+    @FindBy(css = WEB_ELEMENT_SLIDER_VIDEO)
+    public WebElement sliderVideo;
+
+
+//    @FindBy(css = )
+////    public WebElement
+
 
     public void getSpecialOffer() {
         clickElement(buttonContinueAndApply);
@@ -118,28 +157,57 @@ public class ChaseCheckingPage extends BaseAPI {
         return actualText;
     }
 
-    public void findYourBranch(){
+    public void findYourBranch() {
         clickElement(buttonFindYourBranch);
         inputZipcode.sendKeys("20001");
         clickElement(buttonSearchZipcode);
     }
 
-    public void playVideoKidsAccounts()  {
+    public void playVideoKidsAccounts() {
         clickElement(linkKidsAccountSeeMore);
         switchToNewTab(1);
         playEmbeddedVideo(videoKidsAccounts);
         switchToiFrameByWebElement(iFrameVideo);
 //        waitUntilWebElementVisible(buttonTurnOnVideoDescription);
     }
-    public boolean verifyLinksTabsFirstBanking(){
+
+    public boolean verifyLinksTabsFirstBanking() {
         clickElement(linkKidsAccountSeeMore);
         switchToNewTab(1);
         return verifyLinks(tabsFirstBanking, "href");
     }
+
     public boolean verifyLinksTitlesFirstBanking() throws IOException {
         clickElement(linkKidsAccountSeeMore);
         switchToNewTab(1);
-        return getUrlsAndTitlesFromListWebElementAndCompareToExcelDoc(tabsFirstBanking, "href", pathFromUserDir + "/src/main/resources/ChaseTestData.xlsx","FirstBankingLinks");
+        return getUrlsAndTitlesFromListWebElementAndCompareToExcelDoc(tabsFirstBanking, "href", pathFromUserDir + "/src/main/resources/ChaseTestData.xlsx", "FirstBankingLinks");
     }
 
+    public void doLogin(String userID, String password) throws Exception {
+        clickElement(buttonSignIn);
+
+        switchToNewTab(1);
+        sendKeysToElement(inputUserID, userID);
+        sendKeysToElement(inputPassword, password);
+        clickElement(buttonSubmit);
+    }
+
+    @DataProvider
+
+    public Object[][] getInvalidTestData() throws Exception {
+        DataReader dataReader = new DataReader();
+        String path = System.getProperty("user.dir") + "/src/main/resources/ChaseTestData.xlsx";
+        return dataReader.fileReaderArrayStringArraysXSSF(path, "InvalidSignIn");
+    }
+
+    public void playVideo(){
+        clickElement(linkReferAFriend);
+        switchToNewTab(1);
+        playEmbeddedVideo(playVideo);
+    }
+    public boolean verifyVideoPlaying(){
+        System.out.println(videoControl.getText());
+        return (videoControl.getText().equals("Clicked \"Play\" on embedded Video player\n" +
+                "Pause"));
+    }
 }

@@ -14,7 +14,7 @@ public class ExpediaFlightsPageTest extends BaseAPI {
     ExpediaFlightsPage expediaFlightsPage;
     ExpediaSignInPage expediaSignInPage;
 
-    @Test(enabled = true, groups = "smoke")
+    @Test(enabled = false, groups = "smoke")
     public void testAirlineAgeRules() throws AWTException {
         expediaFlightsPage = new ExpediaFlightsPage();
         expediaFlightsPage.navigateToFlightsPage();
@@ -94,7 +94,7 @@ public class ExpediaFlightsPageTest extends BaseAPI {
         Assert.assertTrue(expediaFlightsPage.verifyLinksTitlesSwitchRoutine(), "Titles of one or more links are incorrect.");
     }
 
-    @Test(groups = "regression")
+    @Test(enabled = false)
     public void testHelpChat() throws Exception {
         expediaFlightsPage = new ExpediaFlightsPage();
         expediaFlightsPage.navigateToFlightsPage();
@@ -102,14 +102,14 @@ public class ExpediaFlightsPageTest extends BaseAPI {
         waitUntilWebElementVisible(expediaFlightsPage.chatWithVirtualAgent);
         Assert.assertTrue(expediaFlightsPage.chatWithVirtualAgent.isDisplayed(), "The help chat test failed.");
     }
-    @Test(groups = "regression")
+    @Test(enabled = false)
     public void testDropDownFlightClass() throws Exception {
         expediaFlightsPage = new ExpediaFlightsPage();
         expediaFlightsPage.navigateToFlightsPage();
         Assert.assertTrue(expediaFlightsPage.verifyDropdownFlightClass(), "The Flight Class Dropdown is not displayed correctly.");
     }
 
-    @Test(groups = "regression")
+    @Test(enabled = false, groups = "regression")
     public void testFooterLinks() throws Exception{
         expediaFlightsPage = new ExpediaFlightsPage();
         expediaFlightsPage.navigateToFlightsPage();

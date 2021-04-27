@@ -211,8 +211,7 @@ public class ESPNSoccerPage extends BaseAPI {
     public Object[][] getInvalidTestData() throws Exception {
         DataReader dataReader = new DataReader();
         String path = System.getProperty("user.dir") + "/src/test/resources/ESPNTestData.xlsx";
-        Object[][] testData = dataReader.fileReaderArrayStringArraysXSSF(path, "InvalidLoginData");
-        return testData;
+        return dataReader.fileReaderArrayStringArraysXSSF(path, "InvalidLoginData");
     }
 
 

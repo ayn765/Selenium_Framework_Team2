@@ -28,7 +28,7 @@ public class ESPNSoccerPageTest extends BaseAPI {
      * 1. Navigate to ESPN Soccer webpage.
      * 2. Validate that all link on the top tabs are valid.
      */
-    @Test(groups = "regression")
+    @Test(enabled = false, groups = "regression")
     public void testTabsTopLinks() throws IOException {
         espnSoccerPage = new ESPNSoccerPage();
         Assert.assertTrue(espnSoccerPage.verifyTabTopLinksValid(), "One or more links are broken.");
@@ -55,7 +55,7 @@ public class ESPNSoccerPageTest extends BaseAPI {
      * 5. Validate that the error message displayed correctly.
      */
 
-    @Test(groups = "smoke")
+    @Test(groups = "regression")
     public void testInvalidLogin() {
         espnSoccerPage = new ESPNSoccerPage();
         espnSoccerPage.logIn();
@@ -105,7 +105,7 @@ public class ESPNSoccerPageTest extends BaseAPI {
      * 2. Validate that left side menu is displayed correctly.
      */
 
-    @Test(groups = "regression")
+    @Test(enabled = false, groups = "regression")
     public void testLeftSideMenu() throws IOException {
         espnSoccerPage = new ESPNSoccerPage();
         Assert.assertTrue(espnSoccerPage.verifyTitlesLeftSideMenu());
@@ -152,7 +152,7 @@ public class ESPNSoccerPageTest extends BaseAPI {
      * 4. Validate that the correct league is displayed on the page with the results.
      */
 
-    @Test(groups = "regression")
+    @Test(enabled = false, groups = "regression")
     public void test() throws InterruptedException {
         espnSoccerPage = new ESPNSoccerPage();
         espnSoccerPage.selectFromEnglishPremierLeague();
@@ -195,7 +195,7 @@ public class ESPNSoccerPageTest extends BaseAPI {
      * 5. Validate that user is unable to log in and the error message is displayed correctly.
      */
 
-    @Test(dataProviderClass = ESPNSoccerPage.class, dataProvider = "getInvalidTestData", groups = "smoke")
+    @Test(dataProviderClass = ESPNSoccerPage.class, dataProvider = "getInvalidTestData", enabled = false)
     public void doInvalidLogIn(String email, String password) throws Exception {
         espnSoccerPage = new ESPNSoccerPage();
         espnSoccerPage.doLogin(email, password);
@@ -212,7 +212,7 @@ public class ESPNSoccerPageTest extends BaseAPI {
      * 2. Validate that the title of the page is displayed correctly.
      */
 
-    @Test(groups = "smoke")
+    @Test(groups = "regression")
     public void testTitle() throws IOException {
         espnSoccerPage = new ESPNSoccerPage();
         String expectedTitle = "Soccer Teams, Scores, Stats, News, Fixtures, Results, Tables - ESPN";
