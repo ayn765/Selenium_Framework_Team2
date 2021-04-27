@@ -1,7 +1,7 @@
 package homepageTest;
 
 import common.BaseAPI;
-import homepage.AirbnbHomepage;
+import homepage.Homepage;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -12,7 +12,7 @@ public class AirbnbHomepageTest extends BaseAPI {
     @Test
     public void testTripSearch(){
 
-        AirbnbHomepage airbnbHomepage = new AirbnbHomepage();
+        Homepage airbnbHomepage = new Homepage();
 
         airbnbHomepage.sendKeysToDestination("New York");
         airbnbHomepage.createFlexibleSearch();

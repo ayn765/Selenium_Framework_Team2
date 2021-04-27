@@ -1,6 +1,6 @@
 package homepage;
 
-public class AirbnbHomepageLocators {
+public class HomepageLocators {
 
     public static final String webElementWhereAreYouGoingInput = "#bigsearch-query-detached-query";
     public static final String webElementCheckInAddDates = "//div[contains(text(),'Check in')]/following-sibling::div[contains(text(),'Add dates')]";

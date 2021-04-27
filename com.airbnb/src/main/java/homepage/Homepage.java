@@ -4,10 +4,10 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-import static homepage.AirbnbHomepageLocators.*;
-import static homepage.AirbnbHomepageLocators.webElementSearchButton;
+import static homepage.HomepageLocators.*;
+import static homepage.HomepageLocators.webElementSearchButton;
 
-public class AirbnbHomepage extends BaseAPI{
+public class Homepage extends BaseAPI{
 
     @FindBy (css = webElementWhereAreYouGoingInput)
     WebElement whereAreYouGoingInput;
@@ -30,7 +30,7 @@ public class AirbnbHomepage extends BaseAPI{
     @FindBy (css = webElementSearchButton)
     WebElement searchButton;
 
-    public AirbnbHomepage()  {
+    public Homepage()  {
         PageFactory.initElements(driver, this);
     }
 
