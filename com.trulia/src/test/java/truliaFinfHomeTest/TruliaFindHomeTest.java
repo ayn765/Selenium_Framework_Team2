@@ -165,7 +165,7 @@ Assert.assertTrue(isElementDisplayed(truliaFindHome.savedSearchHeader));
 
         Assert.assertEquals(actualAttributeValue,expectedAttributeValue,"Texts do not match");
     }
-    //Test Case # 1 (*)
+    //Test Case # 15 (*)
     @Test//(enabled = false)
     public void TestListOfMortgageOptions () throws Exception {
         truliaFindHome = new TruliaFindHome();

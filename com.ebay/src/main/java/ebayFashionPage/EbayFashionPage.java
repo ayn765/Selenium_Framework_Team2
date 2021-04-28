@@ -193,13 +193,13 @@ public class EbayFashionPage extends BaseAPI {
 
 
     }
-public void verifyMenClothingTab(){
+   public void verifyMenClothingTab(){
       clickElement(fashionTab);
       clickElement(menClothing);
-       hoverOverElement(shopMenClothing);
-        selectElement(selectCoatsAndJackets);
+      hoverOverElement(shopMenClothing);
+      selectElement(selectCoatsAndJackets);
 }
-public void adidasPage(){
+    public void adidasPage(){
     clickElement(fashionTab);
     topBrandsTab.click();
     clickElement(adidasOption);

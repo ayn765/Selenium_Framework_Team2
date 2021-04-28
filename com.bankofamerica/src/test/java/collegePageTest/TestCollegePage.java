@@ -134,13 +134,25 @@ public class TestCollegePage extends BaseAPI {
        collegePage.doSearchOpenAccount();
      Assert.assertTrue(isElementDisplayed(collegePage.openAnAccountResult));
     }
-
+    //Test Case 14
     @Test(enabled = false)
     public void testSearchBarSelect() {
         collegePage.doSearchBillPay();
         collegePage.doSelectRoutingNumber();
         Assert.assertTrue(isElementDisplayed(collegePage.routingResult));
     }
+    //Test Case 15
+    @Test(enabled = false)
+    public void testSwitchToIframe(){
+        collegePage = new CollegePage();
+        collegePage.numOfIframes();
+
+
+    }
+
+
+
+
 }
 
 

@@ -58,6 +58,41 @@ public class BaseAPI {
         driver.close();
         driver.quit();
     }
+    public static boolean isElementPresent(WebElement element) {
+        boolean flag = false;
+        try {
+            if (element.isDisplayed()
+                    || element.isEnabled())
+                flag = true;
+        } catch (Exception e) {
+            flag = false;
+        }
+        return flag;
+    }
+
+//    public void mouseHoverJScript(List<WebElement> HoverElement) {
+//        try {
+//            if (isElementPresent(HoverElement)) {
+//
+//                String mouseOverScript = "if(document.createEvent){var evObj = document.createEvent('MouseEvents');evObj.initEvent('mouseover', true, false); arguments[0].dispatchEvent(evObj);} else if(document.createEventObject) { arguments[0].fireEvent('onmouseover');}";
+//                ((JavascriptExecutor) driver).executeScript(mouseOverScript,
+//                        HoverElement);
+//
+//            } else {
+//                System.out.println("Element was not visible to hover " + "\n");
+//
+//            }
+//        } catch (StaleElementReferenceException e) {
+//            System.out.println("Element with " + HoverElement
+//                    + "is not attached to the page document"
+//                    + e.getStackTrace());
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            System.out.println("Error occurred while hovering"
+//                    + e.getStackTrace());
+//        }
+//    }
+
 
     // Method to get local driver, based on the browserName parameter in testNG.xml runner file
     public static WebDriver getLocalDriver(String browserName) {
@@ -106,6 +141,7 @@ public class BaseAPI {
         } catch (ElementNotInteractableException elementNotInteractableException) {
             elementNotInteractableException.printStackTrace();
             System.out.println("ELEMENT NOT INTERACTABLE");
+
 
         } catch (Exception ex) {
             ex.printStackTrace();

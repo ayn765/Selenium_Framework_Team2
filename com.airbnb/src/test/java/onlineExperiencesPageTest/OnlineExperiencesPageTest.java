@@ -12,7 +12,7 @@ public class OnlineExperiencesPageTest extends BaseAPI {
     OnlineExperiencesPage onlineExperiencesPage;
 
 
-    //Test Case # 1 (**)
+    //Test Case #  (**)
     @Test ( enabled = false)
     public void testNavigateToHomepage(){
 
@@ -20,7 +20,7 @@ public class OnlineExperiencesPageTest extends BaseAPI {
     onlineExperiencesPage.clickExperiencesPageButton();
     onlineExperiencesPage.verifyNavigationToAirbnbHomepage();
 }
-    //Test Case # 2*
+    //Test Case # *
    @Test (enabled = false)
     public void testLogInButton() {
 
@@ -40,7 +40,7 @@ public class OnlineExperiencesPageTest extends BaseAPI {
 
 
    }
-    //Test Case # 4 (**)
+    //Test Case #  (**)
     @Test(enabled = false)
     public void testSwitchingToFiltersTab(){
         onlineExperiencesPage = new OnlineExperiencesPage();
@@ -50,7 +50,7 @@ public class OnlineExperiencesPageTest extends BaseAPI {
 
     }
 
-    //Test Case # 5 *
+    //Test Case  *
    @Test(enabled = false)
    public void testSelectingDate(){
      onlineExperiencesPage = new OnlineExperiencesPage();
@@ -60,7 +60,7 @@ public class OnlineExperiencesPageTest extends BaseAPI {
        Assert.assertTrue(isElementSelected(onlineExperiencesPage.dateAprilTwentySeven));
 
     }
-    //Test Case # 6 (**)
+    //Test Case  (**)
     @Test(enabled = false)
     public void testGroupSizeButton() {
         onlineExperiencesPage = new OnlineExperiencesPage();
@@ -68,7 +68,7 @@ public class OnlineExperiencesPageTest extends BaseAPI {
 
         Assert.assertTrue(isElementSelected(onlineExperiencesPage.numberOfGuestsSelected));
     }
-    //Test Case # 7 *
+    //Test Case # *
     @Test(enabled = false)
     public void testSwitchWindowToSangriaPage(){
         onlineExperiencesPage = new OnlineExperiencesPage();

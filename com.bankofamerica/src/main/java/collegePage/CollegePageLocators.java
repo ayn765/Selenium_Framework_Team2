@@ -51,7 +51,7 @@ public class CollegePageLocators {
     public static final String WEB_ELEMENT_OPEN_ACCOUNT_RESULT="//span[text()='open an account']";//xpath cust
 
 
-
+    public static final String WEB_ELEMENT_ESTIMATED_CHILD_COST_OF_COLLEGE="#ItemTile_estimating_your_child_s_cost_of_college_________________________watch_video > div";//CSS
 
 
 
